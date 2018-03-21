@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       consumable_id: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       vendor_name: {
         type: Sequelize.STRING

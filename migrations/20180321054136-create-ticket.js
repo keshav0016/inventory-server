@@ -19,10 +19,10 @@ module.exports = {
         type: Sequelize.DATE
       },
       requested_asset_id: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       requested_consumable_id: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       item_type: {
         type: Sequelize.STRING
