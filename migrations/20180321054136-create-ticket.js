@@ -1,42 +1,52 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('tickets', {
       id: {
         allowNull: false,
         autoIncrement: true,
         type: Sequelize.INTEGER
       },
       user_id: {
+        type: Sequelize.INTEGER
+      },
+      ticket_number: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
+        autoIncrement: true,
+        primaryKey: true
       },
-      name: {
+      date: {
+        type: Sequelize.DATE
+      },
+      requested_asset_id: {
         type: Sequelize.STRING
       },
-      password: {
+      requested_consumable_id: {
         type: Sequelize.STRING
       },
-      role: {
+      item_type: {
         type: Sequelize.STRING
       },
-      token: {
-        type: Sequelize.ARRAY(Sequelize.TEXT)
+      quantity: {
+        type: Sequelize.INTEGER
       },
       department: {
         type: Sequelize.STRING
       },
+      status: {
+        type: Sequelize.STRING
+      },
       createdAt: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('tickets');
   }
 };

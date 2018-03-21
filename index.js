@@ -1,4 +1,5 @@
 
+
 const express = require('express');
 const app = express();
 const passport = require('./passport/config')
@@ -7,6 +8,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 const login = require('./controller/login')
+const create = require('./routes/employees')
 
 //passport initialization
 
@@ -17,7 +19,7 @@ app.use(cookieParser());
 
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: '*',
     credentials: true
 }));
 
@@ -29,6 +31,9 @@ app.use((error, req, res, next) => {
 
 //login route
 app.use('/login',login)
+//employees routes
+app.use('/employee',create)
+// app.use('/employee',list)
 
 
 app.listen(3001,() => {
