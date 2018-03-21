@@ -17,7 +17,7 @@ const delEmployee = require('./routes/employees/delete')
 
 //crud of tickets
 const createTicket = require('./routes/tickets/create')
-const listAssets = require('./routes/tickets/listofavailables')
+const listAssets = require('./routes/tickets/listOfAvailables')
 
 //passport initialization
 

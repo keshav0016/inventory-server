@@ -6,7 +6,7 @@ function listAvailables(req,res){
     var items = [];
     var assetLimit = 0;
     models.assets.findAll({
-        where:{current_status: 'available'},
+        where:{current_status: 'Available'},
         group: 'asset_id'
     })
     .then(assets=>{
