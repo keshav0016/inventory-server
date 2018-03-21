@@ -6,6 +6,7 @@ const tokenAuth = require('../../middleware/tokenAuth')
 function createEmployee(req, res) {
     models.users.create({
         user_id:req.body.user_id,
+        name:req.body.name,
         password:req.body.password,
         role:req.body.role,
         department:req.body.department

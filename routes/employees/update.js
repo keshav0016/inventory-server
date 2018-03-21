@@ -9,9 +9,10 @@ function updateEmployee(req, res) {
             user_id: req.body.user_id
         }
     })
-    .then(function (user) {
-        if (user) {
+    .then(function (users) {
+        if (users) {
             users.updateAttributes({
+                name:req.body.name,
                department:req.body.department,
                password:req.body.password,
                role:req.body.role
