@@ -3,7 +3,7 @@
 const express = require('express');
 const app = express();
 const passport = require('./passport/config')
-const bodyparser =  require('body-parser')
+const bodyParser =  require('body-parser')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
@@ -14,7 +14,7 @@ const login = require('./controller/login')
 
 app.use(passport.initialize());
 
-app.use(bodyparser.json());
+app.use(bodyParser.json());
 app.use(cookieParser());
 
 
