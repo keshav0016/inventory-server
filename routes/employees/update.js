@@ -1,5 +1,9 @@
-function update(req, res) {
-    console.log('got near update')
+const models = require('../../models/index')
+const router = require('express').Router()
+const tokenAuth = require('../../middleware/tokenAuth')
+
+
+function updateEmployee(req, res) {
     models.users.findOne({
         where: {
             user_id: req.body.user_id
@@ -20,11 +24,7 @@ function update(req, res) {
 }
 
 
-
-
-
-
-
-router.post("/update", update)
+//router.use(tokenAuth)
+router.post("/update", updateEmployee)
 
 module.exports = exports = router;

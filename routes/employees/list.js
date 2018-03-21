@@ -1,8 +1,17 @@
-function list(req, res) {
-    console.log('got near driver list')
-    models.users.findAll({where:{role:'employee'}}).then(function (user) {
+const models = require('../../models/index')
+const router = require('express').Router()
+const tokenAuth = require('../../middleware/tokenAuth')
+
+
+function listEmployee(req, res) {
+    models.users.findAll({
+        where:{role:'employee'}
+    })
+    .then(function (user) {
         res.json(user);
     })
 }
-router.get("/list", list)
-modules.exports = exports = router
+
+//router.use(tokenAuth)
+router.get("/list", listEmployee)
+module.exports = exports = router

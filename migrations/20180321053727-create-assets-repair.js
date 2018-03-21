@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       asset_id: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       vendor: {
         type: Sequelize.STRING

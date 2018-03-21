@@ -8,9 +8,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       asset_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         unique: true,
         primaryKey: true,
+        autoIncrement: true,
         required: true
       },
       serial_number: {

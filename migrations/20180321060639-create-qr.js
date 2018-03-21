@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       asset_id: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       qr_code_link: {
         type: Sequelize.STRING

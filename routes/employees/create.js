@@ -1,10 +1,9 @@
-const models = require('../models/index.js')
+const models = require('../../models/index')
 const router = require('express').Router()
-const tokenauth = require('../middleware/tokenauth')
+const tokenAuth = require('../../middleware/tokenAuth')
 
 
-function create(req, res) {
-    console.log('got near create')
+function createEmployee(req, res) {
     models.users.create({
         user_id:req.body.user_id,
         password:req.body.password,
@@ -16,6 +15,6 @@ function create(req, res) {
     })
 }
 
-//router.use(tokenauth)
-router.post("/create", create)
-modules.exports = exports = router
+//router.use(tokenAuth)
+router.post("/create", createEmployee)
+module.exports = exports = router

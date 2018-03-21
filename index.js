@@ -8,7 +8,12 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 const login = require('./controller/login')
-// const create = require('./routes/employees')
+
+//crud of employees
+const create = require('./routes/employees/create')
+const list = require('./routes/employees/list')
+const update = require('./routes/employees/update')
+const del = require('./routes/employees/delete')
 
 //passport initialization
 
@@ -32,8 +37,10 @@ app.use((error, req, res, next) => {
 //login route
 app.use('/login',login)
 //employees routes
-//app.use('/employee',create)
-// app.use('/employee',list)
+app.use('/employee',create)
+app.use('/employee',list)
+app.use('/employee',update)
+app.use('/employee',del)
 
 
 app.listen(3001,() => {

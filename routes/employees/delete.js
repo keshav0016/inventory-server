@@ -1,5 +1,8 @@
-function del(req, res) {
-    console.log('got near delete')
+const models = require('../../models/index')
+const router = require('express').Router()
+const tokenAuth = require('../../middleware/tokenAuth')
+
+function deleteEmployee(req, res) {
     models.users.destroy({
         where: {
             user_id: req.body.user_id
@@ -8,5 +11,6 @@ function del(req, res) {
         res.json(user);
     });
 }
-router.post("/delete", del)
-modules.exports = exports = router
+//router.use(tokenAuth)
+router.post("/delete", deleteEmployee)
+module.exports = exports = router
