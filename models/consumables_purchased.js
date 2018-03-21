@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        consumables_purchased.belongsTo(models.consumables,{foreignKey: consumable_id})
+        consumables_purchased.belongsTo(models.consumables,{foreignKey: 'consumable_id'})
       }
     }
   });

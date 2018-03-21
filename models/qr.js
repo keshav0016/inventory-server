@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        qr.belongsTo(models.assets,{foreignKey: asset_id})
+        qr.belongsTo(models.assets,{foreignKey: 'asset_id'})
       }
     }
   });

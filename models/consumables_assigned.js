@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        consumables_assigned.belongsTo(models.users,{foreignKey: user_id})
-        consumables_assigned.belongsTo(models.ticket,{foreignKey: ticket_number})
-        consumables_assigned.belongsTo(models.consumables,{foreignKey: consumable_id})
+        consumables_assigned.belongsTo(models.users,{foreignKey: 'user_id'})
+        consumables_assigned.belongsTo(models.ticket,{foreignKey: 'ticket_number'})
+        consumables_assigned.belongsTo(models.consumables,{foreignKey: 'consumable_id'})
       }
     }
   });

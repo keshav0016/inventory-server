@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        assets_repair.belongsTo(models.assets,{foreignKey: asset_id})
+        assets_repair.belongsTo(models.assets,{foreignKey: 'asset_id'})
       }
     }
   });

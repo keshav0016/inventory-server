@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: function(models) {
-        assets.belongsTo(models.users)
 
       }
     }
