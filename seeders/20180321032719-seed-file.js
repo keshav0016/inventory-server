@@ -1,6 +1,6 @@
 'use strict';
 const argon2=require('argon2')
-var password = ''
+var password = 
     argon2.hash('admin')
     .then(hash=>{
       password = hash;
