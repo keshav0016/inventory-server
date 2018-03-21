@@ -17,6 +17,7 @@ const delEmployee = require('./routes/employees/delete')
 
 //crud of tickets
 const createTicket = require('./routes/tickets/create')
+const listAssets = require('./routes/tickets/listofavailables')
 
 //passport initialization
 
@@ -48,6 +49,7 @@ app.use('/employee',delEmployee)
 
 //tickets routes
 app.use('/ticket',createTicket)
+app.use('/assets',listAssets)
 
 
 app.listen(3001,() => {

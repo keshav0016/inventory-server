@@ -4,7 +4,7 @@ const tokenAuth = require('../../middleware/tokenAuth')
 
 
 function listEmployee(req, res) {
-    var page = req.body.page
+    var page = req.query.page
     models.users.findAll({
         where:{role:'employee'},
         limit: 10,
@@ -21,5 +21,5 @@ function listEmployee(req, res) {
 }
 
 //router.use(tokenAuth)
-router.post("/list", listEmployee)
+router.get("/list", listEmployee)
 module.exports = exports = router
