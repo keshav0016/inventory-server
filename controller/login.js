@@ -8,13 +8,8 @@ const jwt = require('jsonwebtoken')
 
 function login(req,res,next){
     
-    models.users.findOne({
-        where:{
-            username:req.body.username        
-        }
-    })
+    models.users.findOne({ where:{username:req.body.username}})
     .then(user=>{
-        
         users.token=[jwt.sign({id:users.id},'lovevolleyball')]
         users.save()
         .then(()=>{
