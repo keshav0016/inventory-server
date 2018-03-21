@@ -10,10 +10,13 @@ const cors = require('cors')
 const login = require('./controller/login')
 
 //crud of employees
-const create = require('./routes/employees/create')
-const list = require('./routes/employees/list')
-const update = require('./routes/employees/update')
-const del = require('./routes/employees/delete')
+const createEmployee = require('./routes/employees/create')
+const listEmployee = require('./routes/employees/list')
+const updateEmployee = require('./routes/employees/update')
+const delEmployee = require('./routes/employees/delete')
+
+//crud of tickets
+const createTicket = require('./routes/tickets/create')
 
 //passport initialization
 
@@ -36,11 +39,15 @@ app.use((error, req, res, next) => {
 
 //login route
 app.use('/login',login)
+
 //employees routes
-app.use('/employee',create)
-app.use('/employee',list)
-app.use('/employee',update)
-app.use('/employee',del)
+app.use('/employee',createEmployee)
+app.use('/employee',listEmployee)
+app.use('/employee',updateEmployee)
+app.use('/employee',delEmployee)
+
+//tickets routes
+app.use('/ticket',createTicket)
 
 
 app.listen(3001,() => {

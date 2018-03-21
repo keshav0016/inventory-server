@@ -9,7 +9,7 @@ function updateEmployee(req, res) {
             user_id: req.body.user_id
         }
     })
-    .then(function (users) {
+    .then(users=> {
         if (users) {
             users.updateAttributes({
                 name:req.body.name,
@@ -17,11 +17,17 @@ function updateEmployee(req, res) {
                password:req.body.password,
                role:req.body.role
                 
-            }).then(function (user) {
-                res.json(user);
+            })
+            .then(function (user) {
+                res.json({user, message: 'employee has been updated'});
             });
         }
-    });
+    })
+    .catch(error=>{
+        res.json({
+            error: 'employee can not be updated'
+        })
+    })
 }
 
 

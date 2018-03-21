@@ -4,14 +4,22 @@ const tokenAuth = require('../../middleware/tokenAuth')
 
 
 function listEmployee(req, res) {
+    var page = req.body.page
     models.users.findAll({
-        where:{role:'employee'}
+        where:{role:'employee'},
+        limit: 10,
+        offset: (page - 1) * 10
     })
-    .then(function (user) {
-        res.json(user);
+    .then(user=> {
+        res.json({user, message:'employees list is found'});
+    })
+    .catch(error=>{
+        res.json({
+            error: 'employees list can not be found'
+        })
     })
 }
 
 //router.use(tokenAuth)
-router.get("/list", listEmployee)
+router.post("/list", listEmployee)
 module.exports = exports = router

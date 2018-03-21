@@ -7,9 +7,15 @@ function deleteEmployee(req, res) {
         where: {
             user_id: req.body.user_id
         }
-    }).then(function (user) {
-        res.json(user);
-    });
+    })
+    .then(user=> {
+        res.json({user, message: 'employee deleted'});
+    })
+    .catch(error=>{
+        res.json({
+            error: 'employee can not be deleted'
+        })
+    })
 }
 //router.use(tokenAuth)
 router.post("/delete", deleteEmployee)

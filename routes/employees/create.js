@@ -11,8 +11,14 @@ function createEmployee(req, res) {
         role:req.body.role,
         department:req.body.department
 
-    }).then(function (user) {
-        res.json(user);
+    })
+    .then(user=> {
+        res.json({user,message: 'employee created'});
+    })
+    .catch(error=>{
+        res.json({
+            error:'employee can not be created'
+        })
     })
 }
 
