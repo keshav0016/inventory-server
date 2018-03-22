@@ -19,11 +19,11 @@ function createAssetHandler(req, res, next){
     .save()
     .then(asset => {
         res.json({
-            message : 'Employee added successfully'
+            message : 'Asset added successfully'
         })
     })
     .catch(error => {
-        re.json({
+        res.json({
             error : 'Some error occurred'
         })
     })

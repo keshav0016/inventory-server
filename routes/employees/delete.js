@@ -3,11 +3,7 @@ const router = require('express').Router()
 const tokenAuth = require('../../middleware/tokenAuth')
 
 function deleteEmployee(req, res) {
-    models.users.destroy({
-        where: {
-            user_id: req.body.user_id
-        }
-    })
+    models.users.destroy({ where: { user_id: req.body.user_id, role : 'employee' }})
     .then(user=> {
         res.json({user, message: 'employee deleted'});
     })

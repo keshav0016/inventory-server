@@ -3,24 +3,26 @@ const router = require('express').Router()
 
 
 function listAssetHandler(req, res, next){
-    // var filter = req.query.filter.charAt(0).toUpperCase() + req.query.filter.slice(1).toLowerCase();
     var searchFilter = []
+    var page = req.query.page || 1
     var filter = {
         "Available" : true,
         "Assigned" : true,
         "Service" : true
     }
 
-    for(var key in filter){
-        if(req.query[key] === false){
-            filter[key] = false
-        }
-        if(filter[key] === true){
+    for(var key in req.query){
+        if(req.query[key] === "false"){
             searchFilter.push(key)
         }
     }
 
-    models.assets.findAll({ where : {current_status : {in : searchFilter}}})
+
+    if(searchFilter.length === 0){
+        searchFilter[0] = ""
+    }
+
+    models.assets.findAll({ where : {current_status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10})
     .then(assets => {
         res.json({
             assets : assets

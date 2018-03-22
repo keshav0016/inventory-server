@@ -1,12 +1,12 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-const tokenAuth = require('../../middleware/tokenAuth')
 
 
 function listEmployee(req, res) {
-    var page = req.query.page
+    var page = req.query.page || 1
+    var department = req.query.department || "%"
     models.users.findAll({
-        where:{role:'employee'},
+        where:{role:'employee', department : {like : department}},
         limit: 10,
         offset: (page - 1) * 10
     })
@@ -20,6 +20,5 @@ function listEmployee(req, res) {
     })
 }
 
-//router.use(tokenAuth)
 router.get("/list", listEmployee)
 module.exports = exports = router
