@@ -14,8 +14,8 @@ function login(req,res,next){
         return user.save()    
     })
     .then((user) => {
-        res.cookie('token',user.token[user.token.length-1],{encode:String})
-        res.json({success: true, user_id: user.user_id, role: users.role, token:users.token})
+        // res.cookie('token',user.token[user.token.length-1],{encode:String})
+        res.json({success: true, user_id: user.user_id, role: user.role, token:user.token})
     })
     .catch(error=>{
         next(error)

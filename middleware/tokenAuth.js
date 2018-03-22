@@ -1,10 +1,8 @@
 const express=require('express')
 const app = express();
-const cookieParser = require('cookie-parser')
 const models = require('../models/index.js')
 const jwt=require('jsonwebtoken')
 
-app.use(cookieParser())
 
 function tokenMiddleware(req,res,next){
     var token=req.cookies.token;

@@ -27,15 +27,15 @@ module.exports = (sequelize, DataTypes) => {
 
 
   users.beforeCreate((users, opts) => {
-    return argon2.hash(users.password).then(hash => {
+    return argon2.hash(users.password)
+    .then(hash => {
       users.password = hash
     })
   })
 
-  // users.beforeUpdate((users, opts) => {
-  //   return argon2.hash(users.password).then(hash => {
-  //     users.password = hash
-  //   })
-  // })
+  users.verifyPassword = function(userSubmittedPassword, user){
+    return argon2.verify(user.password, userSubmittedPassword)
+  }
+
   return users;
 };

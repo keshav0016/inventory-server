@@ -33,16 +33,16 @@ const createTicketRoute = require('./routes/ticketsEmployee/create')
 const listAvailablesRoute = require('./routes/ticketsEmployee/listOfAvailables')
 
 
+app.use(cors({
+    origin: '*',
+    credentials: true
+}));
 
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 
-app.use(cors({
-    origin: '*',
-    credentials: true
-}));
 
 
 
