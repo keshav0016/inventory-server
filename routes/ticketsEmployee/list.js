@@ -5,10 +5,7 @@ const router = require('express').Router()
 
 function listTicket(req,res){
     var page = req.body.page
-    models.ticket.findAll({
-        limit: 10,
-        offset: (page - 1)*10
-    })
+    models.ticket.findAll({where : {user_id : req.currentUser.user_id}, limit: 10, offset: (page - 1) * 10 })
     .then(ticketsListing=>{
         var ticketsPending = [];
         if(ticketsListing){

@@ -1,6 +1,5 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-const tokenAuth = require('../../middleware/tokenAuth')
 
 
 function updateEmployee(req, res) {
@@ -31,7 +30,6 @@ function updateEmployee(req, res) {
 }
 
 
-//router.use(tokenAuth)
 router.post("/update", updateEmployee)
 
 module.exports = exports = router;

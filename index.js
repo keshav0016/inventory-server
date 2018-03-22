@@ -2,12 +2,13 @@
 
 const express = require('express');
 const app = express();
-const passport = require('./passport/config')
+const passport = require('passport')
 const bodyParser =  require('body-parser')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 const login = require('./controller/login')
+const config = require('./passport/config')
 
 
 // import assets route
@@ -28,13 +29,11 @@ const deleteEmployeeRoute = require('./routes/employees/delete')
 
 
 // import tickets route
-const createTicketRoute = require('./routes/tickets/create')
-const listAvailablesRoute = require('./routes/tickets/listOfAvailables')
+const createTicketRoute = require('./routes/ticketsEmployee/create')
+const listAvailablesRoute = require('./routes/ticketsEmployee/listOfAvailables')
 
 
 
-// passport initialization
-app.use(passport.initialize());
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -53,8 +52,14 @@ app.use((error, req, res, next) => {
     next()
 });
 
+
+
+// passport initialization
+passport.use(config)
+app.use(passport.initialize());
+
 // login route
-app.use('/login',login)
+app.use('/',login)
 
 // employees routes
 app.use('/employee',createEmployeeRoute)

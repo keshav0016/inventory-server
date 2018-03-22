@@ -24,21 +24,18 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
+
+
   users.beforeCreate((users, opts) => {
-   
-    return argon2.hash(users.password, {
-      type: argon2.argon2d
-    }).then(hash => {
-      users.password = hash
-    })
-    
-  })
-  users.beforeUpdate((users,opts)=>{
-    return argon2.hash(users.password, {
-      type: argon2.argon2d
-    }).then(hash => {
+    return argon2.hash(users.password).then(hash => {
       users.password = hash
     })
   })
+
+  // users.beforeUpdate((users, opts) => {
+  //   return argon2.hash(users.password).then(hash => {
+  //     users.password = hash
+  //   })
+  // })
   return users;
 };

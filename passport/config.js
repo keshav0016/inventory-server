@@ -2,12 +2,12 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const models = require('../models/index')
 
-passport.use(new LocalStrategy( function verify(username,password,done){
+module.exports = exports = new LocalStrategy( function (user_id, password, done){
         
         models.users.findOne({
             
             where: {
-                username:username
+                user_id : user_id
                
             }
         })
@@ -32,7 +32,7 @@ passport.use(new LocalStrategy( function verify(username,password,done){
         })
        
     } 
-))   
+)
 
 
-module.exports= passport;
+// module.exports= passport;

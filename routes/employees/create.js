@@ -1,6 +1,5 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-const tokenAuth = require('../../middleware/tokenAuth')
 
 
 function createEmployee(req, res) {
@@ -22,6 +21,5 @@ function createEmployee(req, res) {
     })
 }
 
-//router.use(tokenAuth)
 router.post("/create", createEmployee)
 module.exports = exports = router
