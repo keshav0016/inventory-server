@@ -12,10 +12,7 @@ function updateEmployee(req, res) {
         if (users) {
             users.updateAttributes({
                 name:req.body.name,
-               department:req.body.department,
-               password:req.body.password,
-               role:req.body.role
-                
+               department:req.body.department
             })
             .then(function (user) {
                 res.json({user, message: 'employee has been updated'});

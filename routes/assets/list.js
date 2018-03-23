@@ -1,10 +1,14 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-
+const createAssetHandler = require('./create')
+const assignAssetHandler = require('./assign')
+const deleteAssetHandler = require('./delete')
+const formAssignAssetHandler = require('./formAssignAsset')
+const updateAssetHandler = require('./update')
 
 function listAssetHandler(req, res, next){
-    var searchFilter = []
     var page = req.query.page || 1
+    var searchFilter = []
     var filter = {
         "Available" : true,
         "Assigned" : true,
@@ -38,7 +42,11 @@ function listAssetHandler(req, res, next){
 
 
 
-
+router.use(createAssetHandler)
+router.use(assignAssetHandler)
+router.use(deleteAssetHandler)
+router.use(updateAssetHandler)
+router.use(formAssignAssetHandler)
 router.get('/list', listAssetHandler)
 
 

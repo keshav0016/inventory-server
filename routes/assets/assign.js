@@ -12,3 +12,4 @@ function assignAssetHandler(req, res, next){
 
 router.post('/assign', assignAssetHandler)
 
+module.exports = exports = router

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: function(models) {
         //users.hasMany(models.assets);
         //users.hasMany(models.consumables);
-        users.hasMany(models.ticket);
+        // users.hasMany(models.ticket);
         users.hasMany(models.consumables_purchased);
         users.hasMany(models.consumables_assigned);
         users.hasMany(models.qr);

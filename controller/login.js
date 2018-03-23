@@ -2,7 +2,6 @@ const models = require('../models/index')
 const router = require('express').Router()
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-// const cookieParser =require('cookie-parser')
 const jwt = require('jsonwebtoken')
 
 
