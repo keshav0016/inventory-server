@@ -5,6 +5,9 @@ const assignAssetHandler = require('./assign')
 const deleteAssetHandler = require('./delete')
 const formAssignAssetHandler = require('./formAssignAsset')
 const updateAssetHandler = require('./update')
+const recoverAssetHandler = require('./recoverFromEmployee')
+const repairAssetHandler = require('./repair')
+const recoverAssetRepairHandler = require('./recoverFromRepair')
 
 function listAssetHandler(req, res, next){
     var page = req.query.page || 1
@@ -41,7 +44,9 @@ function listAssetHandler(req, res, next){
 
 
 
-
+router.use(recoverAssetRepairHandler)
+router.use(repairAssetHandler)
+router.use(recoverAssetHandler)
 router.use(createAssetHandler)
 router.use(assignAssetHandler)
 router.use(deleteAssetHandler)
