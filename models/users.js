@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         users.hasMany(models.consumables_purchased);
         users.hasMany(models.consumables_assigned);
         users.hasMany(models.qr);
-        users.hasMany(models.assets_repair)
-        users.hasMany(models.assets_assigned);
+        // users.hasMany(models.assets_repair)
+        // users.hasMany(models.assets_assigned);
         
       }
     }

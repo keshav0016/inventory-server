@@ -8,6 +8,7 @@ const updateAssetHandler = require('./update')
 const recoverAssetHandler = require('./recoverFromEmployee')
 const repairAssetHandler = require('./repair')
 const recoverAssetRepairHandler = require('./recoverFromRepair')
+const historyAssetHandler = require('./history')
 
 function listAssetHandler(req, res, next){
     var page = req.query.page || 1
@@ -44,6 +45,7 @@ function listAssetHandler(req, res, next){
 
 
 
+router.use(historyAssetHandler)
 router.use(recoverAssetRepairHandler)
 router.use(repairAssetHandler)
 router.use(recoverAssetHandler)

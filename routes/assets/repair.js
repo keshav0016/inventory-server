@@ -5,7 +5,7 @@ const router = require('express').Router()
 
 function repairAssetHandler(req, res, next){
     var newRepairAsset = models.assets_repair.build({
-        asset_id: asset.asset_id,
+        asset_id: req.body.asset_id,
         vendor: req.body.vendor,
         from: req.body.from,
         expected_delivery: req.body.expected_delivery
