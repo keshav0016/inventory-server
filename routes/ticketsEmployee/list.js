@@ -6,7 +6,7 @@ const availableAssetHandler = require('./listOfAvailables')
 //listing tickets
 
 function listTicket(req,res){
-    var page = req.body.page
+    var page = req.body.page || 1
     var searchFilter = []
     var filter = {
         "Accepted" : true,
@@ -25,23 +25,20 @@ function listTicket(req,res){
         searchFilter[0] = ""
     }
 
-    var ticketsOfCurrentUser = [];
 
-    models.ticket.findAll({where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : ['date', 'DESC'] })
+    var pagination = {}
+
+
+    models.ticket.count({where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}}})
+    .then(numberOfRecords => {
+        pagination.totalPage = Math.ceil(numberOfRecords / 10);
+        pagination.currentPage = page;
+        return models.ticket.findAll({where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : ['date', 'DESC'] })
+    })
     .then(ticketsListing=>{
-        
-        if(ticketsListing){
-            ticketsOfCurrentUser.push(ticketsListing);
-            res.json({
-                tickets : ticketsPending
-            })
-        }
-        
-        else{
-            res.json({
-                message : 'tickets not found'
-            })
-        }
+        res.json({
+            ticketsListing
+        })        
     })
 }
 

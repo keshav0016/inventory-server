@@ -33,9 +33,9 @@ function createTicket(req,res){
 
     if(req.body.item_type === 'consumables'){
         models.consumables.findOne({where: {name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase(), current_status: "Available"}})
-        .then(asset => {
+        .then(consumable => {
             ticketObj.requested_asset_id = null;
-            ticketObj.consumable_id = consumable_id
+            ticketObj.requested_consumable_id = consumable.consumable_id
             var newTicket = models.ticket.build(ticketObj)
             return newTicket.save()
         })

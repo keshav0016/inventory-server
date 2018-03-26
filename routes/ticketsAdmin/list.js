@@ -5,6 +5,7 @@ const rejectAssetHandler = require('./rejectTicket')
 
 function listTicketToAdminHandler(req, res, next){
     var page = req.body.page || 1
+    var pagination = {}
     var searchFilter = []
     var filter = {
         "Accepted" : true,
@@ -20,19 +21,20 @@ function listTicketToAdminHandler(req, res, next){
 
 
     if(searchFilter.length === 0){
-        searchFilter = ["Accepted", "Rejected"]
+        searchFilter[0] = ""
     }
 
-    var ticketsListingToAdmin = [];
 
+    
+    
+    var ticketsListingToAdmin = [];
+    
     models.ticket.findAll({where : {status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : [['date', 'DESC']] })
     .then(ticketsListing => {
-
+        
         if(ticketsListing){
-            ticketsListingToAdmin.push(ticketsListing);
-            res.json({
-                tickets : ticketsListingToAdmin
-            })
+            ticketsListingToAdmin.push(...ticketsListing);
+            return models.ticket.count({where : {status : {notIn : searchFilter}}})
         }
         
         else{
@@ -40,6 +42,17 @@ function listTicketToAdminHandler(req, res, next){
                 message : 'tickets not found'
             })
         }
+    })
+    .then(numberOfRecords => {
+        pagination.totalPage = Math.ceil(numberOfRecords / 10);
+        pagination.currentPage = page;
+        res.json({
+            tickets: ticketsListingToAdmin,
+            pagination: pagination
+        })
+    })
+    .catch(error => {
+        error : error.message || "Tickets could not be listed"
     })
 }
 

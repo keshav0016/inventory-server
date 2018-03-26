@@ -30,10 +30,18 @@ function listAssetHandler(req, res, next){
         searchFilter[0] = ""
     }
 
-    models.assets.findAll({ where : {current_status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10})
+    var pagination = {}
+
+    models.assets.count({where : {current_status : {notIn : searchFilter}}})
+    .then(numberOfRecords => {
+        pagination.totalPage = Math.ceil(numberOfRecords / 10);
+        pagination.currentPage = page;
+        return models.assets.findAll({ where : {current_status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10})
+    })
     .then(assets => {
         res.json({
-            assets : assets
+            assets : assets,
+            pagination : pagination
         })
     })
     .catch(error => {

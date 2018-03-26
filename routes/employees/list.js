@@ -7,13 +7,16 @@ const deleteEmployeeHandler = require('./delete')
 function listEmployee(req, res) {
     var page = req.query.page || 1
     var department = req.query.department || "%"
-    models.users.findAll({
-        where:{role:'Employee', department : {like : department}},
-        limit: 10,
-        offset: (page - 1) * 10
+    var pagination = {}
+
+    models.user.count({where:{role:'Employee', department : {like : department}}})
+    .then(numberOfRecords => {
+        pagination.totalPage = Math.ceil(numberOfRecords / 10);
+        pagination.currentPage = page;
+        return models.users.findAll({where:{role:'Employee', department : {like : department}}, limit: 10, offset: (page - 1) * 10})
     })
     .then(user=> {
-        res.json({user, message:'employees list is found'});
+        res.json({user, message:'employees list is found', pagination});
     })
     .catch(error=>{
         res.json({

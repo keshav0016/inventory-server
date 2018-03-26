@@ -28,7 +28,7 @@ function assetHistoryHandler(req, res, next){
 
 
 
-router.post('/asset-history', assetHistoryHandler)
+router.post('/history', assetHistoryHandler)
 
 
 module.exports = exports = router
