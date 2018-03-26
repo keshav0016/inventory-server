@@ -25,7 +25,7 @@ function listAssetHandler(req, res, next){
     models.assets.findAll({ where : {current_status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10})
     .then(assets => {
         res.json({
-            assets : assets
+            assets : assets,
         })
     })
     .catch(error => {
