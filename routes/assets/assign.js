@@ -5,6 +5,10 @@ const router = require('express').Router()
 function assignAssetHandler(req, res, next){
     models.assets.findOne({ where : {asset_name : req.body.asset_name, current_status : "Available"}})
     .then(asset => {
+        asset.current_status = "Assigned"
+        return asset.save()
+    })
+    .then(asset => {
         var newAssetAssign = models.assets_assigned.build({
             asset_id : asset.asset_id,
             user_id : req.body.user_id,
