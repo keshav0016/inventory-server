@@ -11,26 +11,24 @@ const login = require('./controller/login')
 const config = require('./passport/config')
 
 
-// import assets route
-const createAssetRoute = require('./routes/assets/create')
-const listAssetRoute = require('./routes/assets/list')
-const updateAssetRoute = require('./routes/assets/update')
-const deleteAssetRoute = require('./routes/assets/update')
-const formAssignAssetRoute = require('./routes/assets/formAssignAsset')
+// import assets Router
+const assetRouter = require('./routes/assets/list')
+
+// import employees Router
+const employeeRouter = require('./routes/employees/list')
+
+// import consumables Router
+const consumableRouter = require('./routes/consumables/list') 
+
+// import ticketsAdmin Router
+const adminTicketRouter = require('./routes/ticketsAdmin/list')
+
+// import ticketsEmployee Router
+const employeeTicketRouter = require('./routes/ticketsEmployee/list')
 
 
 
-// import employees route
-const createEmployeeRoute = require('./routes/employees/create')
-const listEmployeeRoute = require('./routes/employees/list')
-const updateEmployeeRoute = require('./routes/employees/update')
-const deleteEmployeeRoute = require('./routes/employees/delete')
 
-
-
-// import tickets route
-const createTicketRoute = require('./routes/ticketsEmployee/create')
-const listAvailablesRoute = require('./routes/ticketsEmployee/listOfAvailables')
 
 
 app.use(cors({
@@ -39,11 +37,9 @@ app.use(cors({
 }));
 
 
+// Body parser and cookie parser initialization
 app.use(bodyParser.json());
 app.use(cookieParser());
-
-
-
 
 
 // global error handling
@@ -53,33 +49,38 @@ app.use((error, req, res, next) => {
 });
 
 
-
 // passport initialization
 passport.use(config)
 app.use(passport.initialize());
 
-// login route
+
+// login Router
 app.use('/',login)
 
-// employees routes
-app.use('/employee',createEmployeeRoute)
-app.use('/employee',listEmployeeRoute)
-app.use('/employee',updateEmployeeRoute)
-app.use('/employee',deleteEmployeeRoute)
 
-// tickets routes
-app.use('/ticket',createTicketRoute)
-app.use('/ticket',listAvailablesRoute)
+
+// Admin auth middleware
+
+// employees routes
+app.use('/employee',employeeRouter)
 
 
 
 // assets routes
-app.use('/asset', createAssetRoute)
-app.use('/asset', listAssetRoute)
-app.use('/asset', updateAssetRoute)
-app.use('/asset', deleteAssetRoute)
-app.use('/asset', formAssignAssetRoute)
+app.use('/asset', assetRouter)
 
+// consumables routes
+app.use('/consumables', consumableRouter)
+
+
+// admin ticket routes
+app.use('/admin/ticket', adminTicketRouter)
+
+
+// employee auth middleware
+
+// employee tickets routes
+app.use('/user/ticket', employeeTicketRouter)
 
 
 app.listen(3001,() => {

@@ -7,7 +7,7 @@ module.exports = exports = new LocalStrategy({usernameField : 'user_id', passwor
         models.users.findOne({ where: { user_id : req.body.user_id }})
         .then(user=>{
             if(!user){
-                return done(null, false, {message : 'incorrect username'})
+                return done(null, false, {message : 'incorrect user_id'})
             }
             else{
                 models.users.verifyPassword(req.body.password, user)
@@ -27,5 +27,3 @@ module.exports = exports = new LocalStrategy({usernameField : 'user_id', passwor
     } 
 )
 
-
-// module.exports= passport;
