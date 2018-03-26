@@ -1,6 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 const acceptAsset = require('./acceptAsset')
+const acceptConsumable = require('./acceptConsumable')
 
 
 

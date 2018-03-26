@@ -17,6 +17,9 @@ const assetRouter = require('./routes/assets/list')
 // import employees Router
 const employeeRouter = require('./routes/employees/list')
 
+// import consumables Router
+const consumableRouter = require('./routes/consumables/list') 
+
 // import ticketsAdmin Router
 const adminTicketRouter = require('./routes/ticketsAdmin/list')
 
@@ -65,6 +68,9 @@ app.use('/employee',employeeRouter)
 
 // assets routes
 app.use('/asset', assetRouter)
+
+// consumables routes
+app.use('/consumables', consumableRouter)
 
 
 // admin ticket routes
