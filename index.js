@@ -12,19 +12,19 @@ const config = require('./passport/config')
 
 
 // import assets Router
-const assetRouter = require('./routes/assets/list')
+const assetRouter = require('./routes/assets/index')
 
 // import employees Router
-const employeeRouter = require('./routes/employees/list')
+const employeeRouter = require('./routes/employees/index')
 
 // import consumables Router
-const consumableRouter = require('./routes/consumables/list') 
+const consumableRouter = require('./routes/consumables/index') 
 
 // import ticketsAdmin Router
-const adminTicketRouter = require('./routes/ticketsAdmin/list')
+const adminTicketRouter = require('./routes/ticketsAdmin/index')
 
 // import ticketsEmployee Router
-const employeeTicketRouter = require('./routes/ticketsEmployee/list')
+const employeeTicketRouter = require('./routes/ticketsEmployee/index')
 
 
 
@@ -32,7 +32,7 @@ const employeeTicketRouter = require('./routes/ticketsEmployee/list')
 
 
 app.use(cors({
-    origin: '*',
+    origin: 'http://localhost:3000',
     credentials: true
 }));
 

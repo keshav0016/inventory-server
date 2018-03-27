@@ -1,7 +1,6 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-const acceptAssetHandler = require('./acceptTicket')
-const rejectAssetHandler = require('./rejectTicket')
+
 
 function listTicketToAdminHandler(req, res, next){
     var page = req.body.page || 1
@@ -59,8 +58,6 @@ function listTicketToAdminHandler(req, res, next){
 
 
 
-router.use(acceptAssetHandler)
-router.use(rejectAssetHandler)
 router.get('/list', listTicketToAdminHandler)
 
 module.exports = exports = router

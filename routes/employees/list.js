@@ -1,15 +1,12 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-const createEmployeeHandler = require('./create')
-const updateEmployeeHandler = require('./update')
-const deleteEmployeeHandler = require('./delete')
 
 function listEmployee(req, res) {
     var page = req.query.page || 1
     var department = req.query.department || "%"
     var pagination = {}
 
-    models.user.count({where:{role:'Employee', department : {like : department}}})
+    models.users.count({where:{role:'Employee', department : {like : department}}})
     .then(numberOfRecords => {
         pagination.totalPage = Math.ceil(numberOfRecords / 10);
         pagination.currentPage = page;
@@ -26,9 +23,6 @@ function listEmployee(req, res) {
 }
 
 
-router.use(createEmployeeHandler)
-router.use(updateEmployeeHandler)
-router.use(deleteEmployeeHandler)
 router.get("/list", listEmployee)
 
 
