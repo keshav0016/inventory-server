@@ -4,15 +4,18 @@ const router = require('express').Router()
 
 function createEmployee(req, res) {
     models.users.create({
-        user_id:req.body.user_id,
-        name:req.body.name,
+        first_name:req.body.first_name,
+        last_name:req.body.last_name,
+        age:req.body.age,
+        gender:req.body.gender,
         password:req.body.password,
-        role:req.body.role,
-        department:req.body.department
+        role:'Employee',
+        department:req.body.department,
+        designation:req.body.designation
 
     })
-    .then(user=> {
-        res.json({user,message: 'employee created'});
+    .then(users=> {
+        res.json({users,message: 'employee created'});
     })
     .catch(error=>{
         res.json({

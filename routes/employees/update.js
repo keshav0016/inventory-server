@@ -5,16 +5,21 @@ const router = require('express').Router()
 function updateEmployee(req, res) {
     models.users.findOne({
         where: {
-            user_id: req.body.user_id
+            id: req.body.id
         }
     })
     .then(users=> {
         if (users) {
             users.updateAttributes({
-                name:req.body.name,
+                first_name:req.body.first_name,
+                last_name: req.body.last_name,
+                age: req.body.age,
+                gender: req.body.gender,
+                designation: req.body.designation,
                 department:req.body.department
             })
             .then(function (user) {
+                console.log(user)
                 res.json({user, message: 'employee has been updated'});
             });
         }

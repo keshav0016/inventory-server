@@ -8,10 +8,16 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
       },
-      user_id: {
+      first_name: {
+        type: Sequelize.STRING
+      },
+      last_name: {
+        type: Sequelize.STRING
+      },
+      age: {
         type: Sequelize.INTEGER
       },
-      name: {
+      gender: {
         type: Sequelize.STRING
       },
       password: {
@@ -24,6 +30,9 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.TEXT)
       },
       department: {
+        type: Sequelize.STRING
+      },
+      designation: {
         type: Sequelize.STRING
       },
       createdAt: {
