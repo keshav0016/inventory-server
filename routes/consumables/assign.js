@@ -3,7 +3,7 @@ const router = require('express').Router()
 
 
 function assignConsumableHandler(req, res, next){
-    models.consumables.findOne({ where : {name : req.body.name, quantity : {gt : 0}}})
+    models.consumables.findOne({ where : {name : req.body.name.charAt(0).toUppercase()+req.body.name.slice(1).toLowercase(), quantity : {gt : 0}}})
     .then(consumables => {
         var updated_quantity = consumables.quantity - req.body.quantity
         consumables.quantity = updated_quantity
