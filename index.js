@@ -32,7 +32,7 @@ const employeeTicketRouter = require('./routes/ticketsEmployee/list')
 
 
 app.use(cors({
-    origin: '*',
+    origin: 'http://localhost:3000',
     credentials: true
 }));
 
