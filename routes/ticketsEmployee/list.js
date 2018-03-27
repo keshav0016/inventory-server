@@ -1,7 +1,5 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-const createTicketHandler = require('./create')
-const availableAssetHandler = require('./listOfAvailables')
 
 //listing tickets
 
@@ -44,7 +42,5 @@ function listTicket(req,res){
 
 
 
-router.use(createTicketHandler)
-router.use(availableAssetHandler)
 router.get('/list',listTicket)
 module.exports = exports = router
