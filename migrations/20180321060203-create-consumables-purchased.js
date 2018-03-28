@@ -2,15 +2,14 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('consumables_purchaseds', {
-      // id: {
-      //   allowNull: false,
-      //   autoIncrement: true,
-      //   primaryKey: true,
-      //   type: Sequelize.INTEGER
-      // },
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       consumable_id: {
-        type: Sequelize.INTEGER,
-        primaryKey : true
+        type: Sequelize.INTEGER
       },
       vendor_name: {
         type: Sequelize.STRING

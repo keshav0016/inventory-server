@@ -2,15 +2,14 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('qrs', {
-      // id: {
-      //   allowNull: false,
-      //   autoIncrement: true,
-      //   primaryKey: true,
-      //   type: Sequelize.INTEGER
-      // },
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       asset_id: {
-        type: Sequelize.INTEGER,
-        primaryKey : true
+        type: Sequelize.INTEGER
       },
       qr_code_link: {
         type: Sequelize.STRING
