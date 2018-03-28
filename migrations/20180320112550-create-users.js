@@ -11,7 +11,7 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER
       },
-      name: {
+      gender: {
         type: Sequelize.STRING
       },
       password: {
@@ -24,6 +24,9 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.TEXT)
       },
       department: {
+        type: Sequelize.STRING
+      },
+      designation: {
         type: Sequelize.STRING
       },
       createdAt: {
