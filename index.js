@@ -55,7 +55,7 @@ app.use(passport.initialize());
 
 
 // login Router
-app.use('/',login)
+app.use('/user',login)
 
 
 
