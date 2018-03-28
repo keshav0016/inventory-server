@@ -3,7 +3,7 @@ const router = require('express').Router()
 
 
 function listAssetHandler(req, res, next){
-    var page = req.query.page || 1
+    var page = Number(req.query.page) || 1
     var searchFilter = []
     var filter = {
         "Available" : true,
@@ -28,7 +28,7 @@ function listAssetHandler(req, res, next){
     .then(numberOfRecords => {
         pagination.totalPage = Math.ceil(numberOfRecords / 10);
         pagination.currentPage = page;
-        return models.assets.findAll({ where : {current_status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10})
+        return models.assets.findAll({ where : {current_status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : ['asset_id']})
     })
     .then(assets => {
         res.json({

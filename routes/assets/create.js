@@ -23,8 +23,9 @@ function createAssetHandler(req, res, next){
         })
     })
     .catch(error => {
+        console.error(error)
         res.json({
-            error : 'Some error occurred'
+            error : error.errors[0].message || 'Some error occurred'
         })
     })
 }
