@@ -2,6 +2,10 @@
 const argon2 = require('argon2')
 module.exports = (sequelize, DataTypes) => {
   var users = sequelize.define('users', {
+<<<<<<< HEAD
+=======
+    user_id: {type:DataTypes.INTEGER, unique:true, min:5, required:true, primaryKey: true},
+>>>>>>> e53bcce008c306be24445d47a59a093fa47dbbbc
     password: {type:DataTypes.STRING, min:5, max:10, required:true},
     first_name:{type:DataTypes.STRING,  allowNull: false,},
     last_name: {type:DataTypes.STRING,  allowNull: false,},

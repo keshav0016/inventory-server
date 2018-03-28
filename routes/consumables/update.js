@@ -3,11 +3,10 @@ const router = require('express').Router();
 
 
 function updateConsumableHandler(req, res, next){
-    models.consumables.findOne({ where : {name : req.body.name}})
+    models.consumables.findOne({ where : {consumable_id : req.body.consumable_id}})
     .then(consumables => {
-        consumable_id = req.body.consumable_id,
-        name = req.body.name,
-        quantity = req.body.quantity
+        consumables.name = req.body.name,
+        consumables.quantity = req.body.quantity
 
         return consumables.save()
     })

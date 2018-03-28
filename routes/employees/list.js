@@ -1,8 +1,5 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-const createEmployeeHandler = require('./create')
-const updateEmployeeHandler = require('./update')
-const deleteEmployeeHandler = require('./delete')
 
 function listEmployee(req, res) {
     var page = req.query.page || 1
@@ -26,9 +23,6 @@ function listEmployee(req, res) {
 }
 
 
-router.use(createEmployeeHandler)
-router.use(updateEmployeeHandler)
-router.use(deleteEmployeeHandler)
 router.get("/list", listEmployee)
 
 

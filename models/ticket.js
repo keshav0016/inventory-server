@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   var ticket = sequelize.define('ticket', {
     user_id: DataTypes.INTEGER,
-    ticket_number: DataTypes.INTEGER,
+    ticket_number: {type : DataTypes.INTEGER, primaryKey : true},
     date: DataTypes.DATE,
     requested_asset_id: DataTypes.INTEGER,
     requested_consumable_id: DataTypes.INTEGER,

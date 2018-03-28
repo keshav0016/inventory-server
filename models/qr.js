@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var qr = sequelize.define('qr', {
-    asset_id: DataTypes.INTEGER,
+    asset_id: {type : DataTypes.INTEGER, primaryKey : true},
     qr_code_link: DataTypes.STRING
   }, {
     classMethods: {

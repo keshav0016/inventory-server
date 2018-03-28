@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var consumables_purchased = sequelize.define('consumables_purchased', {
-    consumable_id: DataTypes.INTEGER,
+    consumable_id: { type : DataTypes.INTEGER, primaryKey : true},
     vendor_name: DataTypes.STRING,
     purchase_date: DataTypes.DATE,
     quantity: DataTypes.INTEGER

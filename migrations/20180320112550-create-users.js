@@ -2,6 +2,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('users', {
+<<<<<<< HEAD
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,6 +16,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       age: {
+=======
+      // id: {
+      //   allowNull: false,
+      //   autoIncrement: true,
+      //   type: Sequelize.INTEGER,
+      //   primaryKey: true,
+      // },
+      user_id: {
+>>>>>>> e53bcce008c306be24445d47a59a093fa47dbbbc
         type: Sequelize.INTEGER
       },
       gender: {
