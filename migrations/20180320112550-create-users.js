@@ -8,12 +8,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
       },
-<<<<<<< HEAD
       user_id: {
         type: Sequelize.STRING,
       },
-=======
->>>>>>> 077637503c7978336ce67c3ef4a1639093ff0766
       first_name: {
         type: Sequelize.STRING
       },
