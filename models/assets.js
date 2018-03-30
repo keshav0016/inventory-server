@@ -1,10 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var assets = sequelize.define('assets', {
-    asset_id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
-    } ,
+    asset_id: DataTypes.INTEGER,
     serial_number: DataTypes.STRING,
     asset_name: DataTypes.STRING,
     purchase_date: DataTypes.DATE,

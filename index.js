@@ -26,6 +26,8 @@ const adminTicketRouter = require('./routes/ticketsAdmin/index')
 // import ticketsEmployee Router
 const employeeTicketRouter = require('./routes/ticketsEmployee/index')
 
+// import vendor router
+const vendorRouter = require('./routes/vendor/index')
 
 
 
@@ -72,9 +74,13 @@ app.use('/asset', assetRouter)
 // consumables routes
 app.use('/consumables', consumableRouter)
 
+// vendor routes
+app.use('/vendor', vendorRouter)
+
 
 // admin ticket routes
 app.use('/admin/ticket', adminTicketRouter)
+
 
 
 // employee auth middleware

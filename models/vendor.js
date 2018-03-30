@@ -1,15 +1,14 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var qr = sequelize.define('qr', {
-    asset_id: DataTypes.INTEGER,
-    qr_code_link: DataTypes.STRING
+  var vendor = sequelize.define('vendor', {
+    name: DataTypes.STRING,
+    address: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        qr.belongsTo(models.assets,{foreignKey: 'asset_id'})
       }
     }
   });
-  return qr;
+  return vendor;
 };

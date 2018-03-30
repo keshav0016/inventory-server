@@ -1,3 +1,5 @@
+const models = require('../../models/index')
+
 function acceptConsumableTicketHandler(req, res){
     var user;
     var reduce_quantity;
@@ -22,7 +24,7 @@ function acceptConsumableTicketHandler(req, res){
         return models.consumables.findOne({ where : {consumable_id : consumables.consumable_id}})
     })
     .then(consumables => {
-        var updated_quantity = consumables.quantity - reduce.quantity
+        var updated_quantity = consumables.quantity - Number(reduce_quantity)
         consumables.quantity = updated_quantity
         return consumables.save()
     })

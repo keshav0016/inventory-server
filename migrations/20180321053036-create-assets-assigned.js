@@ -2,15 +2,14 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('assets_assigneds', {
-      // id: {
-      //   allowNull: false,
-      //   autoIncrement: true,
-      //   primaryKey: true,
-      //   type: Sequelize.INTEGER
-      // },
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       asset_id: {
         type: Sequelize.INTEGER,
-        primaryKey : true
       },
       user_id: {
         type: Sequelize.INTEGER
