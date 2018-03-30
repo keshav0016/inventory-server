@@ -1,3 +1,5 @@
+const models = require('../../models/index')
+
 function acceptAssetTicketHandler(req, res){
     var user;
     models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})

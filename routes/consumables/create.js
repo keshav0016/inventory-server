@@ -1,6 +1,22 @@
 const models = require('../../models/index');
 const router = require('express').Router();
 
+var consumableid;
+
+function createConsumablePurchasedDetails(req,res,next,consumableid){
+    return models.consumables_purchased.build({
+        consumable_id : consumableid,
+        vendor_name : req.body.vendor_name,
+        purchase_date : req.body.purchase_date,
+        quantity : req.body.purchased_quantity,
+        item_price : req.body.item_price,
+        whole_price : req.body.whole_price,
+        discount : req.body.discount,
+        gst : req.body.gst,
+        total : req.body.total
+    })
+    .save()
+}
 
 function createConsumableHandler(req, res, next){
     models.consumables.findOne({ where : {name : req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase()}})
@@ -9,23 +25,24 @@ function createConsumableHandler(req, res, next){
                 var added_quantity = Number(req.body.purchased_quantity)
                 consumables.quantity = consumables.quantity + added_quantity
                 consumables.save()
+                .then(consumables => {
+                    consumableid = consumables.consumable_id;
+                    return createConsumablePurchasedDetails(req,res,next,consumableid)
+                })
         }
         else {
             models.consumables.build({
-                consumable_id : req.body.consumable_id,
                 name : req.body.name.charAt(0).toUpperCase()+req.body.name.slice(1).toLowerCase(),
                 quantity : req.body.purchased_quantity
             })
             .save()
+            .then(consumables => {
+                consumableid = consumables.consumable_id
+                return createConsumablePurchasedDetails(req,res,next,consumableid)
+            })
         }
 
-        models.consumables_purchased.build({
-            consumable_id : req.body.consumable_id,
-            vendor_name : req.body.vendor_name,
-            purchase_date : req.body.purchase_date,
-            quantity : req.body.purchased_quantity
-        })
-        .save()
+
     })
     .then(consumables => {
         res.json({

@@ -6,11 +6,11 @@ function listTicketToAdminHandler(req, res, next){
     var page = req.body.page || 1
     var pagination = {}
     var searchFilter = []
-    var filter = {
-        "Accepted" : true,
-        "Pending" : true,
-        "Rejected" : true
-    }
+    // var filter = {
+    //     "Accepted" : true,
+    //     "Pending" : true,
+    //     "Rejected" : true
+    // }
 
     for(var key in req.query){
         if(req.query[key] === "false"){
