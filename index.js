@@ -56,7 +56,7 @@ app.use(passport.initialize());
 
 
 // login Router
-app.use('/',login)
+app.use('/user',login)
 
 
 
@@ -73,12 +73,16 @@ app.use('/asset', assetRouter)
 // consumables routes
 app.use('/consumables', consumableRouter)
 
+// vendor routes
+app.use('/vendor', vendorRouter)
+
 
 // admin ticket routes
 app.use('/admin/ticket', adminTicketRouter)
 
 // vendor routes
 app.use('/vendor', vendorRouter)
+
 
 // employee auth middleware
 

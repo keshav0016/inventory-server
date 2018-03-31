@@ -20,6 +20,21 @@ module.exports = {
       quantity: {
         type: Sequelize.INTEGER
       },
+      item_price: {
+        type: Sequelize.FLOAT
+      },
+      whole_price: {
+        type: Sequelize.FLOAT
+      },
+      discount: {
+        type: Sequelize.FLOAT
+      },
+      gst: {
+        type: Sequelize.FLOAT
+      },
+      total: {
+        type: Sequelize.FLOAT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -31,6 +46,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('consumables_purchased');
+    return queryInterface.dropTable('consumables_purchaseds');
   }
 };
