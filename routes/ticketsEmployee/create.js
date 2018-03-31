@@ -1,10 +1,12 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 
+//req.currentuser.user_id
+
 //Creating a ticket
 function createTicket(req,res){
     var ticketObj = {
-        user_id: req.currentuser.user_id,
+        user_id: req.body.user_id,
         date: req.body.date,
         item_type: req.body.item_type,
         quantity: req.body.quantity,
@@ -32,7 +34,7 @@ function createTicket(req,res){
 
 
     if(req.body.item_type === 'consumables'){
-        models.consumables.findOne({where: {name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase(), current_status: "Available"}})
+        models.consumables.findOne({where: {name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase()},quantity:{gt:0}})
         .then(consumable => {
             ticketObj.requested_asset_id = null;
             ticketObj.requested_consumable_id = consumable.consumable_id

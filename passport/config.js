@@ -4,18 +4,21 @@ const models = require('../models/index')
 
 module.exports = exports = new LocalStrategy({usernameField : 'user_id', passwordField : 'password', passReqToCallback : true},
     function (req, username, password, done){
-        models.users.findOne({ where: { user_id : req.body.user_id }})
+        console.log('passport')
+        models.users.findOne({ where: { user_id : req.body.user_id}})
         .then(user=>{
             if(!user){
-                return done(null, false, {message : 'incorrect user_id'})
+                return done(null,false)
             }
             else{
                 models.users.verifyPassword(req.body.password, user)
-                .then(same=>{
-                    if(same){
+                .then(match=>{
+                    if(match){
                         return done(null, true)
                     }else{
+                        
                         return done(null, false, {message : 'incorrect password'})
+
                     }
                 })             
             }

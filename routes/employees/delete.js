@@ -8,7 +8,7 @@ function deleteEmployee(req, res) {
     })
     .catch(error=>{
         res.json({
-            error: 'employee can not be deleted'
+            error: error
         })
     })
 }
