@@ -18,9 +18,9 @@ function repairAssetHandler(req, res, next){
         asset.current_status = "Service"
         return asset.save()
     })
-    .then(repairAsset => {
+    .then(asset => {
         res.json({
-            message : `Repair information has been stored. Please collect the asset on ${repairAsset.expected_delivery}`
+            message : `Repair information has been stored.`
         })
     })
     .catch(error => {

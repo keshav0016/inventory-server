@@ -1,10 +1,14 @@
 const models = require('../../models/index')
 const router = require('express').Router()
+const Sequelize = require('sequelize')
 
 
 function listAssetHandler(req, res, next){
     var page = Number(req.query.page) || 1
+    var search = req.query.search || '%'
     var searchFilter = []
+    var pagination = {}
+
     var filter = {
         "Available" : true,
         "Assigned" : true,
@@ -22,13 +26,12 @@ function listAssetHandler(req, res, next){
         searchFilter[0] = ""
     }
 
-    var pagination = {}
 
-    models.assets.count({where : {current_status : {notIn : searchFilter}}})
+    models.assets.count({where : Sequelize.and({current_status : {notIn : searchFilter}}, Sequelize.or({serial_number : {like : search}}, {asset_name : {like : search}}, {description : {like : search}}, {invoice_number : {like : search}}, {vendor : {like : search}}))})
     .then(numberOfRecords => {
         pagination.totalPage = Math.ceil(numberOfRecords / 10);
         pagination.currentPage = page;
-        return models.assets.findAll({ where : {current_status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : ['asset_id']})
+        return models.assets.findAll({ where : Sequelize.and({current_status : {notIn : searchFilter}}, Sequelize.or({serial_number : {like : search}}, {asset_name : {like : search}}, {description : {like : search}}, {invoice_number : {like : search}}, {vendor : {like : search}})), order : ['asset_id'], limit: 10, offset: (page - 1) * 10})
     })
     .then(assets => {
         res.json({
