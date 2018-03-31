@@ -59,7 +59,14 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      condition: {
+        type: Sequelize.STRING
+      },
+      location: {
+        type: Sequelize.STRING
       }
+
     });
   },
   down: (queryInterface, Sequelize) => {

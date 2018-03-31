@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     gst: DataTypes.FLOAT,
     total: DataTypes.FLOAT,
     current_status: DataTypes.STRING,
-    category: DataTypes.STRING
+    category: DataTypes.STRING,
+    condition : DataTypes.STRING,
+    location: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
