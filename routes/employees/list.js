@@ -23,7 +23,6 @@ function listEmployee(req, res) {
     })
 }
 
-
 router.get("/list", listEmployee)
 
 

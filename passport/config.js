@@ -5,7 +5,7 @@ const models = require('../models/index')
 module.exports = exports = new LocalStrategy({usernameField : 'user_id', passwordField : 'password', passReqToCallback : true},
     function (req, username, password, done){
         console.log('passport')
-        models.users.findOne({ where: { user_id : req.body.user_id}})
+        models.users.findOne({ where: { user_id : req.body.user_id.charAt(0).toUpperCase() + req.body.user_id.slice(1).toLowerCase()}})
         .then(user=>{
             if(!user){
                 return done(null,false)
@@ -16,7 +16,7 @@ module.exports = exports = new LocalStrategy({usernameField : 'user_id', passwor
                     if(match){
                         return done(null, true)
                     }else{
-                        
+                        console.log('wrong')
                         return done(null, false, {message : 'incorrect password'})
 
                     }

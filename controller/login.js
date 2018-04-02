@@ -8,17 +8,10 @@ const argon2 = require('argon2')
 
 function login(req,res,next){
     var passwordSame = true
-    models.users.findOne({ where:{user_id: req.body.user_id}})
+    models.users.findOne({ where:{user_id: req.body.user_id.charAt(0).toUpperCase() + req.body.user_id.slice(1).toLowerCase()}})
     .then(user=>{
         if(user){
-            return  argon2.verify(user.password, user.user_id)
-               
-                // }else{
-                //     user.token=[jwt.sign({ user_id : user.user_id},'lovevolleyball')]
-                //    res.json({message:'no need to change'})
-                //    return user.save()       
-                // }
-               
+            return  argon2.verify(user.password, user.user_id)            
         }
         else{
             res.json({
@@ -31,9 +24,20 @@ function login(req,res,next){
             passwordSame = true
         }else{
             passwordSame = false
+                
         }
-        // res.cookie('token',user.token[user.token.length-1],{encode:String})
-        res.json({success: true,  passwordSame})
+        return models.users.findOne({ where : {user_id:req.body.user_id.charAt(0).toUpperCase() + req.body.user_id.slice(1).toLowerCase()}})
+       
+    })
+    .then((user) => {
+        user.token=[jwt.sign({ user_id : user.user_id},'lovevolleyball')]
+        res.cookie('token',user.token[user.token.length-1],{encode:String})     
+        
+        return user.save()  
+    })
+    .then((user) => {
+        res.json({success: true,  passwordSame, user})
+
     })
     .catch(error=>{
         next(error)

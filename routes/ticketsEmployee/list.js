@@ -31,11 +31,11 @@ function listTicket(req,res){
     .then(numberOfRecords => {
         pagination.totalPage = Math.ceil(numberOfRecords / 10);
         pagination.currentPage = page;
-        return models.ticket.findAll({where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : ['date', 'DESC'] })
+        return models.ticket.findAll({where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : [['date', 'DESC'] ]})
     })
     .then(ticketsListing=>{
         res.json({
-            ticketsListing
+            ticketsListing, pagination
         })        
     })
 }

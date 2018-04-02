@@ -13,21 +13,22 @@ module.exports = (sequelize, DataTypes) => {
     department: {type:DataTypes.STRING,  allowNull: false, },
     designation: {type:DataTypes.STRING,  allowNull: false,validate: {is: {alpha:[/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/], msg:'designation should be alphabets' }}},
   
-  },{
-    classMethods: {
-      associate: function(models) {
-        //users.hasMany(models.assets);
-        //users.hasMany(models.consumables);
-        // users.hasMany(models.ticket);
-        users.hasMany(models.consumables_purchased);
-        users.hasMany(models.consumables_assigned);
-        users.hasMany(models.qr);
-        // users.hasMany(models.assets_repair)
-        // users.hasMany(models.assets_assigned);
-        
-      }
-    }
   });
+  // ,{
+  //   classMethods: {
+  //     associate: function(models) {
+  //       //users.hasMany(models.assets);
+  //       //users.hasMany(models.consumables);
+  //       // users.hasMany(models.ticket);
+  //       users.hasMany(models.consumables_purchased);
+  //       users.hasMany(models.consumables_assigned);
+  //       users.hasMany(models.qr);
+  //       // users.hasMany(models.assets_repair)
+  //       // users.hasMany(models.assets_assigned);
+        
+  //     }
+  //   }
+  // });
   users.beforeCreate((user, opts) => {
    
     return argon2.hash(user.password, {

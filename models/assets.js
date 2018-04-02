@@ -13,12 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     total: DataTypes.FLOAT,
     current_status: DataTypes.STRING,
     category: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: function(models) {
-
-      }
-    }
   });
+  
   return assets;
 };

@@ -10,13 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     amount: DataTypes.FLOAT,
     gst: DataTypes.FLOAT,
     total: DataTypes.FLOAT
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-        assets_repair.belongsTo(models.assets,{foreignKey: 'asset_id'})
-      }
-    }
   });
+  // , {
+  //   classMethods: {
+  //     associate: function(models) {
+  //       // associations can be defined here
+  //       assets_repair.belongsTo(models.assets,{foreignKey: 'asset_id'})
+  //     }
+  //   }
+  // });
   return assets_repair;
 };

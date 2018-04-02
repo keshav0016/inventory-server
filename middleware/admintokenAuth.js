@@ -7,7 +7,7 @@ const jwt= require('jsonwebtoken')
 function tokenMiddleware(req,res,next){
     var token=req.cookies.token;
     var decodedtoken = jwt.verify(token,'lovevolleyball');
-    models.users.findOne({ where : {user_id:decodedtoken.user_id }})
+    models.users.findOne({ where : {user_id:decodedtoken.user_id , token : {$contains:[token]}})
     .then(user=>{
         if(user){
             req.currentUser=user,
