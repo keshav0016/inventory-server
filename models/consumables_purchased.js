@@ -10,13 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     discount: DataTypes.FLOAT,
     gst: DataTypes.FLOAT,
     total: DataTypes.FLOAT,
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-        consumables_purchased.belongsTo(models.consumables,{foreignKey: 'consumable_id'})
-      }
-    }
   });
   return consumables_purchased;
 };

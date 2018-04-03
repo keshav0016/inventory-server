@@ -6,6 +6,9 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         type: Sequelize.INTEGER,
+      },
+      user_id: {
+        type: Sequelize.STRING,
         primaryKey: true,
       },
       first_name: {

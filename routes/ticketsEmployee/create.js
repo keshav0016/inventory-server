@@ -6,7 +6,12 @@ const router = require('express').Router()
 //Creating a ticket
 function createTicket(req,res){
     var ticketObj = {
+        // user_id: req.currentUser.user_id,
+        // first_name: req.currentUser.first_name,
+        // last_name: req.currentUser.last_name,
         user_id: req.body.user_id,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
         date: req.body.date,
         item_type: req.body.item_type,
         quantity: req.body.quantity,
@@ -15,6 +20,7 @@ function createTicket(req,res){
     } 
 
     if(req.body.item_type === 'assets'){
+        ticketObj.requested_asset_item = req.body.item
         models.assets.findOne({where: {asset_name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase(), current_status: "Available"}})
         .then(asset => {
             ticketObj.requested_asset_id = asset.asset_id;
@@ -34,6 +40,7 @@ function createTicket(req,res){
 
 
     if(req.body.item_type === 'consumables'){
+        ticketObj.requested_consumable_item = req.body.item
         models.consumables.findOne({where: {name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase()},quantity:{gt:0}})
         .then(consumable => {
             ticketObj.requested_asset_id = null;
