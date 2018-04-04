@@ -28,7 +28,7 @@ function listAssetHandler(req, res, next){
     }
 
     if(searchCategoryFilter.length === 0){
-        searchCategoryFilter = ['Electronics', 'Non - Electronics', 'Other']
+        searchCategoryFilter = ['Electronics', 'Non-Electronics', 'Other']
     }
 
     models.assets.count({where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({serial_number : {like : search}}, {asset_name : {like : search}}, {description : {like : search}}, {invoice_number : {like : search}}, {vendor : {like : search}}))})
