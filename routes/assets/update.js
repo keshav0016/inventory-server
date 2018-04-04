@@ -27,7 +27,7 @@ function updateAssetHandler(req, res, next){
     })
     .catch(error => {
         res.json({
-            error : 'Some error occurred'
+            error : error.errors[0].message || 'Some error occurred'
         })
     })
 }

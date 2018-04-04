@@ -4,17 +4,31 @@ const router = require('express').Router()
 
 
 function assetHistoryHandler(req, res, next){
-    var history = []
-    models.assets_assigned.findAll({ where : {asset_id : req.body.asset_id}})
+    var historyAssigned = []
+    var historyRepair = []
+    var assetDetails = {}
+    var employeeDetails = {}
+    models.assets.findOne({where : {asset_id : req.query.asset_id}})
+    .then(asset => {
+        assetDetails = asset
+        return models.assets_assigned.findAll({ where : {asset_id : req.query.asset_id}})
+    })
     .then(assetAssign => {
-        history.push(...assetAssign)
-        return models.assets_repair.findAll({ where : {asset_id : req.body.asset_id}})
+        historyAssigned.push(...assetAssign)
+    //     return models.assets_assigned.findOne({where : {asset_id : req.query.asset_id, to : null}})
+    // })
+    // .then(assetAssigned => {
+    //     return models.users.findOne({where : {user_id : assetAssigned.user_id}})
+    // })
+    // .then(user => {
+    //     employeeDetails = user
+        return models.assets_repair.findAll({ where : {asset_id : req.query.asset_id}})
     })
     .then(assetRepair => {
-        history.push(...assetRepair)
-        history.sort(function(a, b){return b.updatedAt - a.updatedAt})
+        historyRepair.push(...assetRepair)
+        // historyRepair.sort(function(a, b){return b.updatedAt - a.updatedAt})
         res.json({
-            history : history
+            historyAssigned : historyAssigned, assetDetails : assetDetails, historyRepair : historyRepair, employeeDetails : employeeDetails
         })
     })
     .catch(error => {
@@ -28,7 +42,7 @@ function assetHistoryHandler(req, res, next){
 
 
 
-router.post('/history', assetHistoryHandler)
+router.get('/history', assetHistoryHandler)
 
 
 module.exports = exports = router
