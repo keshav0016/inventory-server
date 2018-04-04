@@ -10,8 +10,6 @@ function createTicket(req,res){
         // first_name: req.currentUser.first_name,
         // last_name: req.currentUser.last_name,
         user_id: req.body.user_id,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
         date: req.body.date,
         item_type: req.body.item_type,
         quantity: req.body.quantity,

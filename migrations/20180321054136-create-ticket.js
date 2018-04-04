@@ -8,13 +8,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       user_id: {
-        type: Sequelize.STRING
-      },
-      first_name: {
-        type: Sequelize.STRING
-      },
-      last_name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        foreignKey:true
       },
       ticket_number: {
         type: Sequelize.INTEGER,

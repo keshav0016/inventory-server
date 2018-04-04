@@ -1,9 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var ticket = sequelize.define('ticket', {
-    user_id: DataTypes.STRING,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
+    user_id: {type:DataTypes.STRING, foreignKey:true, underscored: true},
     ticket_number: DataTypes.INTEGER,
     date: DataTypes.DATE,
     requested_asset_id: DataTypes.INTEGER,
