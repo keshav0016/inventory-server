@@ -10,11 +10,11 @@ const router = require('express').Router()
 
 
 router.use(tokenAuth)
+router.use(passwordchangehandler)
 router.use(currentUserHandler)
 router.use(listEmployeeTicketHandler)
 router.use(createTicketHandler)
 router.use(availableAssetHandler)
-router.use(passwordchangehandler)
 
 
 module.exports = exports = router
