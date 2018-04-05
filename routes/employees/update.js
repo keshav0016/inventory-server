@@ -5,7 +5,7 @@ const router = require('express').Router()
 function updateEmployee(req, res) {
     models.users.findOne({
         where: {
-            id: req.body.id
+            user_id: req.body.user_id
         }
     })
     .then(users=> {
