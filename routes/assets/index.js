@@ -8,10 +8,14 @@ const repairAssetHandler = require('./repair')
 const recoverAssetRepairHandler = require('./recoverFromRepair')
 const historyAssetHandler = require('./history')
 const listAssetHandler = require('./list')
+const repairInfoHandler = require('./repairInfo')
+const recoverInfoHandler = require('./recoverInfo')
 
 const router = require('express').Router()
 
 
+router.use(repairInfoHandler)
+router.use(recoverInfoHandler)
 router.use(listAssetHandler)
 router.use(historyAssetHandler)
 router.use(recoverAssetRepairHandler)
