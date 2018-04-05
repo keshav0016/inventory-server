@@ -1,9 +1,18 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 
+function checkAssetName(req){
+    if(req.body.asset_name){
+        return models.assets.findOne({ where : {asset_name : req.body.asset_name, current_status : "Available"}})
+    }
+    else{
+        return models.assets.findOne({where : {asset_id : req.body.asset_id}})
+    }
+}
+
 
 function assignAssetHandler(req, res, next){
-    models.assets.findOne({ where : {asset_name : req.body.asset_name, current_status : "Available"}})
+    checkAssetName(req)
     .then(asset => {
         asset.current_status = "Assigned"
         return asset.save()
