@@ -2,7 +2,6 @@ const createTicketHandler = require('./create')
 const availableAssetHandler = require('./listOfAvailables')
 const listEmployeeTicketHandler = require('./list')
 const tokenAuth = require('../../middleware/tokenAuth')
-const listEmployees = require('./listOfEmployees')
 const passwordchangehandler = require('../employees/passwordchange')
 
 
@@ -13,7 +12,7 @@ router.use(tokenAuth)
 router.use(listEmployeeTicketHandler)
 router.use(createTicketHandler)
 router.use(availableAssetHandler)
-router.use(listEmployees)
 router.use(passwordchangehandler)
+
 
 module.exports = exports = router
