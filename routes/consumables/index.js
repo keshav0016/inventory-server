@@ -4,11 +4,11 @@ const updateConsumableHandler = require('./update')
 const assignConsumableHandler = require('./assign')
 const historyConsumableHandler = require('./history')
 const listConsumableHandler = require('./list')
-
+const admintokenAuth = require('../../middleware/admintokenAuth')
 
 const router = require('express').Router()
 
-
+router.use(admintokenAuth)
 router.use(listConsumableHandler)
 router.use(createConsumableHandler)
 router.use(deleteConsumableHandler)
