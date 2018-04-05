@@ -5,7 +5,7 @@ const router = require('express').Router();
 function createAssetHandler(req, res, next){
     const newAsset = models.assets.build({
         serial_number : req.body.serial_number,
-        asset_name : req.body.asset_name.charAt(0).toUpperCase() + req.body.asset_name.slice(1).toLowerCase(),
+        asset_name : req.body.asset_name,
         purchase_date : req.body.purchase_date,
         description : req.body.description,
         invoice_number : req.body.invoice_number,
@@ -14,7 +14,9 @@ function createAssetHandler(req, res, next){
         gst : req.body.gst,
         total : req.body.total,
         current_status : 'Available',
-        category : req.body.category.charAt(0).toUpperCase() + req.body.category.slice(1).toLowerCase()
+        category : req.body.category,
+        condition : req.body.condition,
+        location : req.body.location
     })
     .save()
     .then(asset => {

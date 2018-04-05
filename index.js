@@ -35,7 +35,6 @@ const vendorRouter = require('./routes/vendor/index')
 
 
 
-
 app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
@@ -86,6 +85,8 @@ app.use('/admin/ticket', adminTicketRouter)
 // admin employees routes
 app.use('/employees',employeeRouter)
 
+// vendor routes
+app.use('/vendor', vendorRouter)
 
 
 // employee auth middleware
