@@ -16,7 +16,7 @@ function createTicket(req,res){
 
     if(req.body.item_type === 'assets'){
         ticketObj.requested_asset_item = req.body.item
-        models.assets.findOne({where: {asset_name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase(), current_status: "Available"}})
+        models.assets.findOne({where: {asset_name : req.body.item, current_status: "Available"}})
         .then(asset => {
             ticketObj.requested_asset_id = asset.asset_id;
             ticketObj.consumable_id = null
