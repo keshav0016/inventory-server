@@ -15,6 +15,9 @@ function EmployeePasswordChange(req,res){
         return users.save()
     })
     .then(users=>{
+        user.token=[jwt.sign({ user_id : user.user_id},'lovevolleyball')]
+        // res.json({message:'no need to change'})
+        return user.save()       
         res.json({
             message: 'password has been changed',
             

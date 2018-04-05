@@ -4,6 +4,7 @@ const router = require('express').Router()
 
 function listAvailables(req,res){
     var items = [];
+     var quantity = [];
     var assetLimit = 0;
     models.assets.findAll({
         where:{current_status: 'Available'},
@@ -19,9 +20,10 @@ function listAvailables(req,res){
     .then(consumables=>{
         consumables.forEach(consumable => {
             items.push(consumable.name)
+            quantity.push(consumable.quantity)
         }) 
         res.json({
-            items,assetLimit
+            items,assetLimit,quantity
         })
     })
 }

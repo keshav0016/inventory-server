@@ -22,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
      }
    }
  });
- users.beforeCreate((user, opts) => {
- 
+ users.beforeCreate((user, opts) => { 
    return argon2.hash(user.password, {
      type: argon2.argon2d
    }).then(hash => {

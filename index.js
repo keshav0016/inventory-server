@@ -8,7 +8,10 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 const login = require('./controller/login')
+const logout = require('./controller/logout')
 const config = require('./passport/config')
+const tokenAuth = require('./middleware/tokenAuth')
+const admintokenAuth = require('./middleware/admintokenAuth')
 
 
 // import assets Router
@@ -57,13 +60,13 @@ app.use(passport.initialize());
 
 // login Router
 app.use('/user',login)
+app.use('/user',logout)
 
 
 
 // Admin auth middleware
+// app.use(admintokenAuth)
 
-// employees routes
-app.use('/employee',employeeRouter)
 
 
 
@@ -79,15 +82,18 @@ app.use('/vendor', vendorRouter)
 
 // admin ticket routes
 app.use('/admin/ticket', adminTicketRouter)
+// admin employees routes
+app.use('/employees',employeeRouter)
 
 // vendor routes
 app.use('/vendor', vendorRouter)
 
 
 // employee auth middleware
+// app.use(tokenAuth)
 
 // employee tickets routes
-app.use('/user/ticket', employeeTicketRouter)
+app.use('/employee/ticket', employeeTicketRouter)
 
 
 app.listen(3001,() => {

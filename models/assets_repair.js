@@ -11,5 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     gst: DataTypes.FLOAT,
     total: DataTypes.FLOAT
   });
+  // , {
+  //   classMethods: {
+  //     associate: function(models) {
+  //       // associations can be defined here
+  //       assets_repair.belongsTo(models.assets,{foreignKey: 'asset_id'})
+  //     }
+  //   }
+  // });
   return assets_repair;
 };

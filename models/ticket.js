@@ -13,5 +13,16 @@ module.exports = (sequelize, DataTypes) => {
     department: DataTypes.STRING,
     status: DataTypes.STRING
   });
+  // , {
+  //   classMethods: {
+  //     associate: function(models) {
+  //       // associations can be defined here
+  //       ticket.belongsTo(models.users,{foreignKey: 'user_id'})
+  //       ticket.belongsTo(models.assets,{foreignKey: 'requested_asset_id'})
+  //       ticket.belongsTo(models.consumables,{foreignKey: 'requested_consumable_id'})
+  //       ticket.hasMany(models.consumables_assigned)
+  //     }
+  //   }
+  // });
   return ticket;
 };
