@@ -15,6 +15,7 @@ function createTicket(req,res){
     } 
 
     if(req.body.item_type === 'assets'){
+        ticketObj.requested_asset_item = req.body.item
         models.assets.findOne({where: {asset_name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase(), current_status: "Available"}})
         .then(asset => {
             ticketObj.requested_asset_id = asset.asset_id;
@@ -34,6 +35,7 @@ function createTicket(req,res){
 
 
     if(req.body.item_type === 'consumables'){
+        ticketObj.requested_consumable_item = req.body.item
         models.consumables.findOne({where: {name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase()},quantity:{gt:0}})
         .then(consumable => {
             ticketObj.requested_asset_id = null;

@@ -20,7 +20,7 @@ function listConsumableHandler(req, res, next){
     }
 
     if (max === ''){
-        max = 999999999999999999999999999
+        max = 999999
     }
 
     var pagination = {}
