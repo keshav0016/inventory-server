@@ -4,17 +4,19 @@ const models = require('../models/index.js')
 const jwt= require('jsonwebtoken')
 
 
-function tokenMiddleware(req,res,next){
+function admintokenMiddleware(req,res,next){
+    console.log('admin token')
     var token=req.cookies.token;
     var decodedtoken = jwt.verify(token,'lovevolleyball');
-    models.users.findOne({ where : {user_id:decodedtoken.user_id , token : [token]}})
+    models.users.findOne({ where : {user_id:decodedtoken.user_id , role : 'Admin',token : [token]}})
     .then(user=>{
         if(user){
             req.currentUser=user,
-            console.log(req.currentUser)
+            console.log(req.currentUser.user_id)
             next()
             
         }else{
+
             res.send('user not found' )
         }
     })
@@ -22,4 +24,4 @@ function tokenMiddleware(req,res,next){
         next(error)
     })
 }
-module.exports=exports=tokenMiddleware
+module.exports=exports= admintokenMiddleware

@@ -66,9 +66,8 @@ app.use('/user',logout)
 
 
 // Admin auth middleware
-app.use(admintokenAuth)
-// employees routes
-app.use('/employee',employeeRouter)
+// app.use(admintokenAuth)
+
 
 
 
@@ -84,11 +83,13 @@ app.use('/vendor', vendorRouter)
 
 // admin ticket routes
 app.use('/admin/ticket', adminTicketRouter)
+// admin employees routes
+app.use('/employees',employeeRouter)
 
 
 
 // employee auth middleware
-app.use(tokenAuth)
+// app.use(tokenAuth)
 
 // employee tickets routes
 app.use('/employee/ticket', employeeTicketRouter)

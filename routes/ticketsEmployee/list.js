@@ -1,5 +1,6 @@
 const models = require('../../models/index')
 const router = require('express').Router()
+const tokenAuth = require('../../middleware/tokenAuth')
 
 //listing tickets
 
@@ -41,6 +42,7 @@ function listTicket(req,res){
 }
 
 
+// router.use(tokenAuth)
 
 router.get('/list',listTicket)
 module.exports = exports = router
