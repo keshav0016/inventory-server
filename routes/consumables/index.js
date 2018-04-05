@@ -14,6 +14,6 @@ router.use(createConsumableHandler)
 router.use(deleteConsumableHandler)
 router.use(updateConsumableHandler)
 router.use(assignConsumableHandler)
-router.use(historyConsumableHandler)
+router.post("/history", historyConsumableHandler)
 
 module.exports = exports = router

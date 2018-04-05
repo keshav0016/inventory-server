@@ -8,7 +8,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING,
+        foreignKey:true
       },
       ticket_number: {
         type: Sequelize.INTEGER,
@@ -21,8 +22,14 @@ module.exports = {
       requested_asset_id: {
         type: Sequelize.INTEGER
       },
+      requested_asset_item: {
+        type: Sequelize.STRING
+      },
       requested_consumable_id: {
         type: Sequelize.INTEGER
+      },
+      requested_consumable_item: {
+        type: Sequelize.STRING
       },
       item_type: {
         type: Sequelize.STRING
