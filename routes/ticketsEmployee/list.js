@@ -35,6 +35,7 @@ function listTicket(req,res){
         return models.ticket.findAll({where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : [['date', 'DESC'] ]})
     })
     .then(ticketsListing=>{
+        console.log(ticketsListing)
         res.json({
             ticketsListing, pagination
         })        

@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 const login = require('./controller/login')
-const logout = require('./controller/logout')
+const logout = require('./controller/index')
 const config = require('./passport/config')
 const tokenAuth = require('./middleware/tokenAuth')
 const admintokenAuth = require('./middleware/admintokenAuth')

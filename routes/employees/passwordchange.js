@@ -1,6 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 const argon2 = require('argon2')
+const jwt = require('jsonwebtoken')
 function EmployeePasswordChange(req,res){
     var hashedPassword
     return  argon2.hash(req.body.password)
@@ -14,15 +15,18 @@ function EmployeePasswordChange(req,res){
         users.password = hashedPassword;
         return users.save()
     })
-    .then(users=>{
+    .then(user=>{
         user.token=[jwt.sign({ user_id : user.user_id},'lovevolleyball')]
         // res.json({message:'no need to change'})
         return user.save()       
+        
+    })     
+    .then(user => {
         res.json({
             message: 'password has been changed',
             
         })
-    })      
+    }) 
     .catch(error=>{
         console.log(error)
     })
