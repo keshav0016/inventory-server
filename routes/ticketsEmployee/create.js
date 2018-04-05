@@ -6,7 +6,7 @@ const router = require('express').Router()
 //Creating a ticket
 function createTicket(req,res){
     var ticketObj = {
-        user_id: req.cureentUser.user_id,
+        user_id: req.currentUser.user_id,
         date: req.body.date,
         item_type: req.body.item_type,
         quantity: req.body.quantity,

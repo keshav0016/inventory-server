@@ -10,10 +10,11 @@ const historyAssetHandler = require('./history')
 const listAssetHandler = require('./list')
 const repairInfoHandler = require('./repairInfo')
 const recoverInfoHandler = require('./recoverInfo')
+const admintokenAuth = require('../../middleware/admintokenAuth')
 
 const router = require('express').Router()
 
-
+router.use(admintokenAuth)
 router.use(repairInfoHandler)
 router.use(recoverInfoHandler)
 router.use(listAssetHandler)
