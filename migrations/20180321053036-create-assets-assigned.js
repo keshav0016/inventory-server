@@ -9,10 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       asset_id: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       ticket_number: {
         type: Sequelize.INTEGER
