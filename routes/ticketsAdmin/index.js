@@ -3,11 +3,12 @@ const rejectAssetHandler = require('./rejectTicket')
 const listTicketHandler = require('./list')
 const dashBoardCount = require('./dashBoardCount')
 const listEmployees = require('../ticketsEmployee/listOfEmployees')
+const admintokenAuth = require('../../middleware/admintokenAuth')
 
 const router = require('express').Router()
 
 
-
+router.use(admintokenAuth)
 router.use(listTicketHandler)
 router.use(acceptAssetHandler)
 router.use(rejectAssetHandler)
