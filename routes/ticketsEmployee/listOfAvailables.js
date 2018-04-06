@@ -5,7 +5,7 @@ const router = require('express').Router()
 function listAvailables(req,res){
     var items = [];
      var quantity = [];
-    var assetLimit = 0;
+    var assetLimit = -1;
     models.assets.findAll({
         where:{current_status: 'Available'},
         group: 'asset_id'
