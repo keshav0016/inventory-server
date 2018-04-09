@@ -9,10 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       consumable_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        foreignKey: true
       },
       user_id: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        foreignKey: true
       },
       ticket_number: {
         type: Sequelize.INTEGER

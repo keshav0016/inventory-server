@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       consumable_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        foreignKey:true
       },
       vendor_name: {
         type: Sequelize.STRING
