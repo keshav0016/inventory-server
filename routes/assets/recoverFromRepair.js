@@ -3,7 +3,7 @@ const router = require('express').Router()
 
 
 function recoverAssetFromRepairHandler(req, res, next){
-    models.assets_repair.findOne({ where : {asset_id : req.body.asset_id}})
+    models.assets_repair.findOne({ where : {asset_id : req.body.asset_id, to : null}})
     .then(assetRepair => {
         assetRepair.to = req.body.to,
         assetRepair.repair_invoice = req.body.repair_invoice,
