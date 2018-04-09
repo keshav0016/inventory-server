@@ -1,21 +1,22 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var consumables_assigned = sequelize.define('consumables_assigned', {
-    consumable_id: DataTypes.INTEGER,
-    user_id: DataTypes.STRING,
+    consumable_id: {type:DataTypes.INTEGER, foreignKey:true, underscored:true},
+    user_id: {type:DataTypes.STRING, foreignKey:true, underscored:true},
     ticket_number: DataTypes.INTEGER,
     assigned_date: DataTypes.DATE,
     quantity: DataTypes.INTEGER
+  },
+   {
+    classMethods: {
+      associate: function(models) {
+        // associations can be defined here
+        models.users.hasMany(consumables_assigned,{foreignKey: 'user_id', sourceKey: 'user_id'})
+        consumables_assigned.belongsTo(models.users,{foreignKey: 'user_id', targetKey: 'user_id'})
+        models.consumables.hasMany(consumables_assigned,{foreignKey: 'consumable_id',sourceKey: 'consumable_id'})
+        consumables_assigned.belongsTo(models.consumables,{foreignKey: 'consumable_id',targetKey: 'consumable_id'})
+      }
+    }
   });
-  //  {
-  //   classMethods: {
-  //     associate: function(models) {
-  //       // associations can be defined here
-  //       consumables_assigned.belongsTo(models.users,{foreignKey: 'user_id'})
-  //       consumables_assigned.belongsTo(models.ticket,{foreignKey: 'ticket_number'})
-  //       consumables_assigned.belongsTo(models.consumables,{foreignKey: 'consumable_id'})
-  //     }
-  //   }
-  // });
   return consumables_assigned;
 };
