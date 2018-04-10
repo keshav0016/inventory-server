@@ -8,7 +8,8 @@ function listAvailables(req,res){
     var assetLimit = -1;
     models.assets.findAll({
         where:{current_status: 'Available'},
-        group: 'asset_name,asset_id'
+        attributes : ['asset_name'],
+        group: 'asset_name'
     })
     .then(assets=>{
         assets.forEach((asset, index) => {
