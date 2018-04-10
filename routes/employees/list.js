@@ -8,9 +8,9 @@ function listEmployee(req, res) {
 
     models.users.count({where:{role:'Employee', department : {like : department}}})
     .then(numberOfRecords => {
-        pagination.totalPage = Math.ceil(numberOfRecords / 2);
+        pagination.totalPage = Math.ceil(numberOfRecords / 10);
         pagination.currentPage = page;
-        return models.users.findAll({where:{role:'Employee', department : {like : department}}, limit: 2, offset: (page - 1) * 2})
+        return models.users.findAll({where:{role:'Employee', department : {like : department}}, limit: 10, offset: (page - 1) * 10})
     })
     .then(user=> {
         res.json({user, message:'employees list is found', pagination});
