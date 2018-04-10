@@ -17,6 +17,7 @@ function createVendorHandler(req, res, next){
     })
     .catch(error => {
         if(error){
+            console.log(error)
             if(error.errors[0]){
                 res.json({
                     error : error.errors[0].message

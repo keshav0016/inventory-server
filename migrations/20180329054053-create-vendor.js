@@ -14,6 +14,9 @@ module.exports = {
       address: {
         type: Sequelize.STRING
       },
+      contact:{
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
