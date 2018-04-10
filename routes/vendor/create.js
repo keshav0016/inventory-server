@@ -5,7 +5,9 @@ const router = require('express').Router()
 function createVendorHandler(req, res, next){
     var newVendor = models.vendor.build({
         name : req.body.name,
-        address : req.body.address
+        address : req.body.address,
+        contact : req.body.contact
+        
     })
     return newVendor.save()
     .then(vendor => {
@@ -15,6 +17,7 @@ function createVendorHandler(req, res, next){
     })
     .catch(error => {
         if(error){
+            console.log(error)
             if(error.errors[0]){
                 res.json({
                     error : error.errors[0].message
