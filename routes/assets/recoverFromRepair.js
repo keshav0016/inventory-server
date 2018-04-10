@@ -17,6 +17,7 @@ function recoverAssetFromRepairHandler(req, res, next){
     })
     .then(asset => {
         asset.current_status = "Available"
+        asset.condition = 'Repaired'
         return asset.save()
     })
     .then(asset => {
