@@ -8,6 +8,7 @@ function assetHistoryHandler(req, res, next){
     var historyRepair = []
     var assetDetails = {}
     var employeeDetails = {}
+    var repairDetails = {}
     models.assets.findOne({where : {asset_id : req.query.asset_id}})
     .then(asset => {
         assetDetails = asset
@@ -15,20 +16,24 @@ function assetHistoryHandler(req, res, next){
     })
     .then(assetAssign => {
         historyAssigned.push(...assetAssign)
-    //     return models.assets_assigned.findOne({where : {asset_id : req.query.asset_id, to : null}})
-    // })
-    // .then(assetAssigned => {
-    //     return models.users.findOne({where : {user_id : assetAssigned.user_id}})
-    // })
-    // .then(user => {
-    //     employeeDetails = user
+        return models.assets_assigned.findOne({where : {asset_id : req.query.asset_id, to : null}})
+    })
+    .then(assetAssigned => {
+        return models.users.findOne({where : {user_id : assetAssigned.user_id}, attributes : ['user_id', 'first_name','last_name', 'department']})
+    })
+    .then(user => {
+        employeeDetails = user
         return models.assets_repair.findAll({ where : {asset_id : req.query.asset_id}})
     })
     .then(assetRepair => {
         historyRepair.push(...assetRepair)
         // historyRepair.sort(function(a, b){return b.updatedAt - a.updatedAt})
+        return models.assets_repair.findOne({where : {asset_id : req.query.asset_id, to : null}})
+    })
+    .then(assetRepair => {
+        repairDetails = assetRepair
         res.json({
-            historyAssigned : historyAssigned, assetDetails : assetDetails, historyRepair : historyRepair, employeeDetails : employeeDetails
+            historyAssigned : historyAssigned, assetDetails : assetDetails, historyRepair : historyRepair, employeeDetails : employeeDetails, repairDetails : repairDetails
         })
     })
     .catch(error => {
