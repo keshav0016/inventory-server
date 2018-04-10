@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var consumables = sequelize.define('consumables', {
-    consumable_id:{ type: DataTypes.INTEGER, primaryKey: true},
+    consumable_id:{ type: DataTypes.INTEGER, primaryKey: true, autoIncrement : true},
     name: DataTypes.STRING,
     quantity: DataTypes.INTEGER
   });
