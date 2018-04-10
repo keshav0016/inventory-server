@@ -28,7 +28,7 @@ function listTicketToAdminHandler(req, res, next){
     
     var ticketsListingToAdmin = [];
     
-    models.ticket.findAll({include : [{ model : models.users}],where : {status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : [['date', 'DESC']] })
+    models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : [['date', 'DESC']] })
     .then(ticketsListing => {
         
         if(ticketsListing){
