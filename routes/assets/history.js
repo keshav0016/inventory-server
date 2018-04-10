@@ -19,7 +19,12 @@ function assetHistoryHandler(req, res, next){
         return models.assets_assigned.findOne({where : {asset_id : req.query.asset_id, to : null}})
     })
     .then(assetAssigned => {
-        return models.users.findOne({where : {user_id : assetAssigned.user_id}, attributes : ['user_id', 'first_name','last_name', 'department']})
+        if(assetAssigned){
+            return models.users.findOne({where : {user_id : assetAssigned.user_id}, attributes : ['user_id', 'first_name','last_name', 'department']})
+        }
+        else{
+            return Promise.resolve(assetAssigned)
+        }
     })
     .then(user => {
         employeeDetails = user
