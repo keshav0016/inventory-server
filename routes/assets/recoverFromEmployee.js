@@ -6,6 +6,7 @@ function recoverAssetHandler(req, res, next){
     models.assets.findOne({ where : {asset_id : req.body.asset_id}})
     .then(asset => {
         asset.current_status = "Available"
+        asset.condition = 'Used'
         return asset.save()
     })
     .then(asset => {
