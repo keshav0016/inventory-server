@@ -24,14 +24,14 @@ function createConsumableHandler(req, res, next){
         if(consumables){
                 var added_quantity = Number(req.body.purchased_quantity)
                 consumables.quantity = consumables.quantity + added_quantity
-                consumables.save()
+                return consumables.save()
                 .then(consumables => {
                     consumableid = consumables.consumable_id;
                     return createConsumablePurchasedDetails(req,res,next,consumableid)
                 })
         }
         else {
-            models.consumables.build({
+            return models.consumables.build({
                 name : req.body.name.charAt(0).toUpperCase()+req.body.name.slice(1).toLowerCase(),
                 quantity : req.body.purchased_quantity
             })
