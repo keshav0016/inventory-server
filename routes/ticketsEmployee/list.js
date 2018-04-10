@@ -5,7 +5,7 @@ const tokenAuth = require('../../middleware/tokenAuth')
 //listing tickets
 
 function listTicket(req,res){
-    var page = req.body.page || 1
+    var page = req.query.page || 1
     var searchFilter = []
     var filter = {
         "Accepted" : true,
