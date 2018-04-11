@@ -10,7 +10,7 @@ function recoverAssetHandler(req, res, next){
         return asset.save()
     })
     .then(asset => {
-        return models.assets_assigned.findOne({where : {asset_id : req.body.asset_id}})
+        return models.assets_assigned.findOne({where : {asset_id : req.body.asset_id, to : null}})
     })
     .then(assetAssigned => {
         assetAssigned.to = req.body.to

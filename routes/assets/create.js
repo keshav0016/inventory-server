@@ -5,7 +5,7 @@ const router = require('express').Router();
 function createAssetHandler(req, res, next){
     const newAsset = models.assets.build({
         serial_number : req.body.serial_number,
-        asset_name : req.body.asset_name,
+        asset_name : req.body.asset_name.charAt(0).toUpperCase() + req.body.asset_name.slice(1).toLowerCase(),
         purchase_date : req.body.purchase_date,
         description : req.body.description,
         invoice_number : req.body.invoice_number,
