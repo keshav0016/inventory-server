@@ -12,7 +12,7 @@ function historyConsumableHandler(req, res, next){
     })
     .then(consumableAssign => {
         history.push(...consumableAssign)
-        history.sort(function(a, b){return b.updatedAt - a.updatedAt})
+        history.sort(function(a, b){return b.createdAt - a.createdAt})
         res.json({
             history : history
         })
