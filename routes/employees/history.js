@@ -9,30 +9,24 @@ function employeeHistoryHandler(req, res, next){
         var historyAssets =[]
         var id = []
         var aid = []
+        var quantity = []
 
-        models.consumables_assigned.findAll({ where : {user_id : req.body.user_id}})
+        models.consumables_assigned.findAll({include:[{model:models.consumables}], where : {user_id : req.body.user_id}})
         .then(consumableAssign => {
             consumableAssign.forEach((consumable)=>{
-                id.push(consumable.consumable_id)
+                history.push(consumable)
+                
             })
-            return models.consumables.findAll({ where : {consumable_id : {$in: id}}})
+            return models.assets_assigned.findAll({ include:[{model:models.assets}], where : {user_id : req.body.user_id}})
             
-        })
-        .then(consumable => {
-            history.push(...consumable)
-            return models.assets_assigned.findAll({ where : {user_id : req.body.user_id}})
         })
         .then(assetAssign => {
             assetAssign.forEach((asset) => {
-                aid.push(asset.asset_id)
+                historyAssets.push(asset)
             })
-            return models.assets.findAll({ where : {asset_id : {$in: aid}}})
-        })
-        .then(asset => {
-            historyAssets.push(...asset)
             res.json({
                 history : history,
-                historyAssets : historyAssets
+                historyAssets : historyAssets,
             })
         })
         .catch(error => {
