@@ -32,11 +32,17 @@ function listConsumableHandler(req, res, next){
         if(sort === 'default'){
             return models.consumables.findAll({order:[['consumable_id','ASC']],limit: 10, offset: (page - 1) * 10,where: {quantity:{between:[min,max]},name:{like:'%'+smallKeyword+'%'}}})
         }
-        else if(sort === 'asc'){
+        else if(sort === 'quantityAsc'){
             return models.consumables.findAll({order:[['quantity','ASC']],limit: 10, offset: (page - 1) * 10,where: {quantity:{between:[min,max]},name:{like:'%'+smallKeyword+'%'}}})
         }
-        else if(sort === 'desc'){
+        else if(sort === 'quantityDesc'){
             return models.consumables.findAll({order:[['quantity','DESC']],limit: 10, offset: (page - 1) * 10,where: {quantity:{between:[min,max]},name:{like:'%'+smallKeyword+'%'}}})
+        }
+        else if(sort === 'purchasedAsc'){
+            return models.consumables.findAll({order:[['createdAt','DESC']],limit: 10, offset: (page - 1) * 10,where: {quantity:{between:[min,max]},name:{like:'%'+smallKeyword+'%'}}})
+        }
+        else if(sort === 'purchasedDesc'){
+            return models.consumables.findAll({order:[['createdAt','ASC']],limit: 10, offset: (page - 1) * 10,where: {quantity:{between:[min,max]},name:{like:'%'+smallKeyword+'%'}}})
         }
     })
     .then(consumables => {
