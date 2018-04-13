@@ -19,7 +19,6 @@ function updateEmployee(req, res) {
                 department:req.body.department.charAt(0).toUpperCase() + req.body.department.slice(1).toLowerCase(),
             })
             .then(function (user) {
-                console.log(user)
                 res.json({user, message: 'employee has been updated'});
             });
         }

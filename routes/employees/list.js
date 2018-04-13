@@ -16,7 +16,6 @@ function listEmployee(req, res) {
         res.json({user, message:'employees list is found', pagination});
     })
     .catch(error=>{
-        console.log(error)
         res.json({
             error: error
         })
