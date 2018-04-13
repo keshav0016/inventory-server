@@ -7,9 +7,7 @@ function employeeHistoryHandler(req, res, next){
         // var search_consumableid = req.query.consumableid
         var history = []
         var historyAssets =[]
-        var id = []
-        var aid = []
-        var quantity = []
+     
 
         models.consumables_assigned.findAll({include:[{model:models.consumables}], where : {user_id : req.body.user_id}})
         .then(consumableAssign => {
