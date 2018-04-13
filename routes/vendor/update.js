@@ -7,11 +7,12 @@ function updateVendorHandler(req, res, next){
     .then(vendor => {
         vendor.name = req.body.name,
         vendor.address = req.body.address
+        vendor.contact = req.body.contact
         return vendor.save()
     })
     .then(vendor => {
         res.json({
-            message: 'Vendor updated'
+            message: 'vendor has been updated'
         })
     })
     .catch(error => {
@@ -27,7 +28,7 @@ function updateVendorHandler(req, res, next){
         }
         else{
             res.json({
-                error : 'vendor could not be updated'
+                error : 'vendor can not be updated'
             })
         }
     })
