@@ -5,6 +5,7 @@ function rejectAssetHandler(req, res, next){
     models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
     .then(ticket => {
         ticket.status = 'Rejected'
+        ticket.reason = req.body.reason
         return ticket.save()
     })
     .then(ticket => {
@@ -13,7 +14,9 @@ function rejectAssetHandler(req, res, next){
         })
     })
     .catch(error => {
-        error : error.message || "Ticket could not be rejected"
+        res.json({
+            error : error.message || "Ticket could not be rejected"
+        })
     })
 }
 

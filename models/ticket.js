@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     item_type: DataTypes.STRING,
     quantity: DataTypes.INTEGER,
     department: DataTypes.STRING,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    reason: DataTypes.STRING
   });
   // , {
   //   classMethods: {
