@@ -16,7 +16,6 @@ function listAvailables(req,res){
             items.push(asset.asset_name)
             assetLimit = index
         })
-        console.log(assets)
         return models.consumables.findAll({where:{quantity: {gt: 0} }})
     })
     .then(consumables=>{

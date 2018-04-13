@@ -28,7 +28,9 @@ function EmployeePasswordChange(req,res){
         })
     }) 
     .catch(error=>{
-        console.log(error)
+        res.json({
+            error : error
+        })
     })
    
 }
