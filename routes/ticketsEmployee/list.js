@@ -5,7 +5,8 @@ const tokenAuth = require('../../middleware/tokenAuth')
 //listing tickets
 
 function listTicket(req,res){
-    var page = req.query.page || 1
+    var assetPage = req.query.assetPage || 1
+    var consumablePage = req.query.consumablePage || 1
     var searchFilter = []
     var filter = {
         "Accepted" : true,
@@ -25,20 +26,36 @@ function listTicket(req,res){
     }
 
 
-    var pagination = {}
+    var assetPagination = {}
+    var consumablePagination = {}
+    var ticketsConsumableListing = [];
+    var ticketsAssetsListing = [];
 
-
-    models.ticket.count({where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}}})
-    .then(numberOfRecords => {
-        pagination.totalPage = Math.ceil(numberOfRecords / 10);
-        pagination.currentPage = page;
-        return models.ticket.findAll({where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}}, limit: 10, offset: (page - 1) * 10, order : [['date', 'DESC'] ]})
+    models.ticket.findAll({where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}, item_type : 'consumables'}, limit: 10, offset: (consumablePage - 1) * 10, order : [['date', 'DESC'] ]})
+    .then(ticketConsumables=>{
+        if(ticketConsumables){
+            ticketsConsumableListing.push(...ticketConsumables)
+        }
+        return models.ticket.count({where : {status : {in : searchFilter}, item_type : 'consumables'}})
+              
     })
-    .then(ticketsListing=>{
-        console.log(ticketsListing)
+    .then(numberOfRecords => {
+        consumablePagination.totalPage = Math.ceil(numberOfRecords / 10);
+        consumablePagination.currentPage = consumablePage
+        return models.ticket.findAll({ where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}, item_type : 'assets'}, limit: 10, offset: (assetPage - 1) * 10, order : [['date', 'DESC'] ]})
+    })
+    .then(ticketsAssets => {
+        if(ticketsAssets){
+            ticketsAssetsListing.push(...ticketsAssets);
+        }
+        return models.ticket.count({where : {status : {in : searchFilter}, item_type : 'assets'}})
+    })
+    .then(numberOfRecords => {
+        assetPagination.totalPage = Math.ceil(numberOfRecords / 10);
+        assetPagination.currentPage = assetPage;
         res.json({
-            ticketsListing, pagination
-        })        
+            assetPagination : assetPagination, consumablePagination : consumablePagination, ticketsAssetsListing, ticketsConsumableListing
+        })
     })
 }
 
