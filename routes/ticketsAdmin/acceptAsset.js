@@ -5,6 +5,7 @@ function acceptAssetTicketHandler(req, res){
     models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
     .then(ticket => {
         ticket.status = 'Accepted'
+        ticket.reason = req.body.reason
         user = ticket.user_id
         return ticket.save()
     })
