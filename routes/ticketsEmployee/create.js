@@ -16,13 +16,10 @@ function createTicket(req,res){
 
     if(req.body.item_type === 'assets'){
         ticketObj.requested_asset_item = req.body.item
-        models.assets.findOne({where: {asset_name : req.body.item, current_status: "Available"}})
-        .then(asset => {
-            ticketObj.requested_asset_id = asset.asset_id;
-            ticketObj.consumable_id = null
-            var newTicket = models.ticket.build(ticketObj)
-            return newTicket.save()
-        })
+        ticketObj.requested_asset_id = null;
+        ticketObj.consumable_id = null
+        var newTicket = models.ticket.build(ticketObj)
+        return newTicket.save()
         .then(ticket => {
             res.json({ticket, message:'ticket created'})
         })
@@ -36,7 +33,7 @@ function createTicket(req,res){
 
     if(req.body.item_type === 'consumables'){
         ticketObj.requested_consumable_item = req.body.item
-        models.consumables.findOne({where: {name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase()},quantity:{gt:0}})
+        models.consumables.findOne({where: {name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase(), quantity:{gt:0}}})
         .then(consumable => {
             ticketObj.requested_asset_id = null;
             ticketObj.requested_consumable_id = consumable.consumable_id
