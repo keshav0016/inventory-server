@@ -13,6 +13,7 @@ function createNewAssetTypeHandler(req, res, next){
         })
     })
     .catch(error => {
+        // if(error.message === '')
         res.json({
             error : error
         })

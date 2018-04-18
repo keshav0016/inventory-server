@@ -1,7 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 
-function checkAssetName(req, res){
+function assignAssetHandler(req, res, next){
     let maxLimit;
     return models.assets.findOne({where : {asset_id : req.body.asset_id}, include : [{model : models.type}]})
     .then(asset => {
@@ -9,20 +9,21 @@ function checkAssetName(req, res){
         return models.assets_assigned.count({where : {user_id : req.body.user_id, to : null}, include : [{model : models.assets, where : {assetType : asset.assetType}}]})
     })
     .then(count => {
-        if(count >= maxLimit){
+        if(count >= maxLimit && !req.body.assignForce){
             res.json({
                 message : "This User already has this type of asset"
+                ,requireAssignForce : true
             })
         }
         else{
-            return models.assets.findOne({where : {asset_id : req.body.asset_id}})
+            checkAssetName(req, res, next)
         }
     })
 }
 
 
-function assignAssetHandler(req, res, next){
-    checkAssetName(req, res)
+function checkAssetName(req, res, next){
+    return models.assets.findOne({where : {asset_id : req.body.asset_id}})
     .then(asset => {
         asset.current_status = "Assigned"
         return asset.save()

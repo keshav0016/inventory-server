@@ -1,13 +1,14 @@
-const createAssetHandler = require('./create')
-const listAssetHandler = require('./list')
+const createAssetTypeHandler = require('./create')
+const listAssetTypeHandler = require('./list')
+const updateAssetTypeHandler = require('./update')
 const admintokenAuth = require('../../middleware/admintokenAuth')
 
 const router = require('express').Router()
 
 router.use(admintokenAuth)
-router.use(createAssetHandler)
-router.use(listAssetHandler)
-
+router.use(createAssetTypeHandler)
+router.use(listAssetTypeHandler)
+router.use(updateAssetTypeHandler)
 
 
 
