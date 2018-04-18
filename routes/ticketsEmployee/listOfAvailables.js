@@ -6,14 +6,12 @@ function listAvailables(req,res){
     var items = [];
      var quantity = [];
     var assetLimit = -1;
-    models.assets.findAll({
-        where:{current_status: 'Available'},
-        attributes : ['asset_name'],
-        group: 'asset_name'
+    models.type.findAll({
+        attributes : ['assetType'],
     })
     .then(assets=>{
         assets.forEach((asset, index) => {
-            items.push(asset.asset_name)
+            items.push(asset.assetType)
             assetLimit = index
         })
         return models.consumables.findAll({where:{quantity: {gt: 0} }})

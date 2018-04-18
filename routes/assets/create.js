@@ -17,6 +17,7 @@ function createAssetHandler(req, res, next){
         category : req.body.category,
         condition : req.body.condition,
         location : req.body.location
+        ,assetType : req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1).toLowerCase()
     })
     .save()
     .then(asset => {
