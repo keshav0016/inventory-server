@@ -1,18 +1,28 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 
-function checkAssetName(req){
-    if(req.body.asset_name){
-        return models.assets.findOne({ where : {asset_name : req.body.asset_name, current_status : "Available"}})
-    }
-    else{
-        return models.assets.findOne({where : {asset_id : req.body.asset_id}})
-    }
+function checkAssetName(req, res){
+    let maxLimit;
+    return models.assets.findOne({where : {asset_id : req.body.asset_id}, include : [{model : models.type}]})
+    .then(asset => {
+        maxLimit = asset.type.maxRequest
+        return models.assets_assigned.count({where : {user_id : req.body.user_id, to : null}, include : [{model : models.assets, where : {assetType : asset.assetType}}]})
+    })
+    .then(count => {
+        if(count >= maxLimit){
+            res.json({
+                message : "This User already has this type of asset"
+            })
+        }
+        else{
+            return models.assets.findOne({where : {asset_id : req.body.asset_id}})
+        }
+    })
 }
 
 
 function assignAssetHandler(req, res, next){
-    checkAssetName(req)
+    checkAssetName(req, res)
     .then(asset => {
         asset.current_status = "Assigned"
         return asset.save()
