@@ -17,7 +17,7 @@ function updateAssetHandler(req, res, next){
         asset.category = req.body.category
         asset.condition = req.body.condition
         asset.location = req.body.location
-        asset.assetType = req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1).toLowerCase()
+        // asset.assetType = req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1).toLowerCase()
         return asset.save()
     })
     .then(asset => {
