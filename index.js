@@ -35,6 +35,8 @@ const vendorRouter = require('./routes/vendor/index')
 // import Asset Type Router
 const assetTypeRouter = require('./routes/assetType/index')
 
+// import forgot password Router
+const forgotPasswordRouter = require('./controller/forgotPassword')
 
 
 
@@ -64,7 +66,7 @@ app.use(passport.initialize());
 // login Router
 app.use('/user',login)
 app.use('/user',logout)
-
+app.use('/user',forgotPasswordRouter)
 
 
 // Admin auth middleware
