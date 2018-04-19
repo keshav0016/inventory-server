@@ -1,6 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-
+const sgMail = require('@sendgrid/mail');
+const api = require('../../sendGridApiKey')
 //req.currentuser.user_id
 
 //Creating a ticket
@@ -14,6 +15,12 @@ function createTicket(req,res){
         status: "Pending"
     } 
 
+    sgMail.setApiKey(api)
+    const msg = {
+        to : 'keshav.b@westagilelabs.com'
+        ,from : 'keshav.b@westagilelabs.com'
+    }
+
     var maxLimit
     if(req.body.item_type === 'consumables'){
         ticketObj.requested_consumable_item = req.body.item
@@ -25,7 +32,13 @@ function createTicket(req,res){
             return newTicket.save()
         })
         .then(ticket => {
-            res.json({ticket, message:'ticket created'})
+            msg.subject = `Ticket Request from ${req.currentUser.first_name} ${req.currentUser.last_name}`
+            msg.html = `<h4>${req.currentUser.first_name} ${req.currentUser.last_name} (${req.currentUser.user_id}) has requested for ${req.body.item} with quantity : ${req.body.quantity}. <br />For more details, refer to ticket number ${ticket.ticket_number}<br />Sent From Inventory Management Tool</h4>`
+            res.json({message:'ticket created'})
+            return sgMail.send(msg)
+        })
+        .then(() => {
+            console.log('mail sent')
         })
         .catch(error=>{
             res.json({
@@ -65,7 +78,15 @@ function createTicket(req,res){
             }
         })
         .then(ticket => {
-            res.json({ticket, message:'ticket created'})
+            if(ticket){
+                msg.subject = `Ticket Request from ${req.currentUser.first_name} ${req.currentUser.last_name}`
+                msg.html = `<h4>${req.currentUser.first_name} ${req.currentUser.last_name} (${req.currentUser.user_id}) has requested for ${req.body.item}. <br />For more details, refer to ticket number ${ticket.ticket_number}<br />Sent From Inventory Management Tool</h4>`
+                res.json({message:'ticket created'})
+                return sgMail.send(msg)
+            }
+        })
+        .then(() => {
+            console.log('mail sent')
         })
         .catch(error=>{
             res.json({
@@ -73,12 +94,11 @@ function createTicket(req,res){
             })
         })
     }
-
-
-    
-    
-    
 }
 
 router.post('/create',createTicket)
 module.exports = exports = router
+
+
+
+// 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

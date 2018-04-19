@@ -28,12 +28,17 @@ function dashBoardCount(req, res, next){
     })
     .then(acceptedA => {
         assetAcceptedCount = acceptedA;
+        let limitDate = new Date(Number(new Date()) + (24*60*60*1000))
+        return models.assets_repair.findAll({where : {to : null, expected_delivery : { lt : limitDate}}, attributes : ['asset_id', 'expected_delivery', 'vendor'], include :[{model : models.assets, attributes : ['asset_name', 'assetType', 'serial_number']}]})
+    })
+    .then(repairDateNear => {
         res.json({
             pendingConsumable : consumablePendingCount,
             acceptedConsumable : consumableAcceptedCount,
             lowConsumable : lowConsumable,
             pendingAsset : assetPendingCount,
-            acceptedAsset : assetAcceptedCount
+            acceptedAsset : assetAcceptedCount,
+            repairDateNear : repairDateNear
         })
     })
     .catch(error => {

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
    token: DataTypes.ARRAY(DataTypes.TEXT),
    department: {type:DataTypes.STRING,  allowNull: false, },
    designation: {type:DataTypes.STRING,  allowNull: false,validate: {is: {alpha:[/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/], msg:'designation should be alphabets' }}},
- 
+   email : {type : DataTypes.STRING, validate : {isEmail : true}}
  }
  ,{
    classMethods: {
