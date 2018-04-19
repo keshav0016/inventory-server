@@ -8,7 +8,7 @@ function updateAssetTypeHandler(req, res, next){
         // type.assetType = req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1)
         // type.maxRequest = req.body.maxRequest
         // return type.save()
-        return type.update({assetType : req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1), maxRequest : req.body.maxRequest})
+        return type.update({maxRequest : req.body.maxRequest})
     })
     .then(type => {
         res.json({
