@@ -1,7 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 const sgMail = require('@sendgrid/mail');
-
+const api = require('../../sendGridApiKey')
 //req.currentuser.user_id
 
 //Creating a ticket
@@ -15,10 +15,10 @@ function createTicket(req,res){
         status: "Pending"
     } 
 
-    sgMail.setApiKey('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')
+    sgMail.setApiKey(api)
     const msg = {
-        to : 'keshav.b@westagilelabs.com'
-        ,from : 'keshav.b@westagilelabs.com'
+        to : 'keshav2016@gmail.com'
+        ,from : 'keshav2016@gmail.com'
     }
 
     var maxLimit
