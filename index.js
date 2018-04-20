@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
@@ -105,6 +105,6 @@ app.use('/assetType', assetTypeRouter)
 app.use('/employee/ticket', employeeTicketRouter)
 
 
-app.listen(3001,() => {
+app.listen(process.env.PORT,() => {
     console.log("started");
 });
