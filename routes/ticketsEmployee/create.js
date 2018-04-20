@@ -17,8 +17,8 @@ function createTicket(req,res){
 
     sgMail.setApiKey(api)
     const msg = {
-        to : 'keshav.b@westagilelabs.com'
-        ,from : 'keshav.b@westagilelabs.com'
+        to : process.env.NOTIFICATION_EMAIL_ADDRESS
+        , from : 'hr@westagilelabs.com'
     }
 
     var maxLimit
@@ -98,7 +98,3 @@ function createTicket(req,res){
 
 router.post('/create',createTicket)
 module.exports = exports = router
-
-
-
-// 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
