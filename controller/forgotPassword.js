@@ -13,7 +13,7 @@ function forgotPasswordHandler(req, res, next){
             sgMail.setApiKey(api)
             const msg = {
                 to : user.email,
-                from : 'keshav.b@westagilelabs.com'
+                from : 'hr@westagilelabs.com'
             }
             let randomPassword = Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6)
             return argon2.hash(randomPassword)
