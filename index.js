@@ -5,7 +5,8 @@ const app = express();
 const passport = require('passport')
 const bodyParser =  require('body-parser')
 const cookieParser = require('cookie-parser')
-const cors = require('cors')
+const cors = require('cors');
+const path = require('path');
 
 const login = require('./controller/login')
 const logout = require('./controller/index')
@@ -45,6 +46,9 @@ app.use(cors({
     credentials: true
 }));
 
+const publicPath = path.resolve(__dirname, './public');
+app.use(express.static(publicPath))
+
 
 // Body parser and cookie parser initialization
 app.use(bodyParser.json());
@@ -64,9 +68,9 @@ app.use(passport.initialize());
 
 
 // login Router
-app.use('/user',login)
-app.use('/user',logout)
-app.use('/user',forgotPasswordRouter)
+app.use('/api/user',login)
+app.use('/api/user',logout)
+app.use('/api/user',forgotPasswordRouter)
 
 
 // Admin auth middleware
@@ -76,33 +80,37 @@ app.use('/user',forgotPasswordRouter)
 
 
 // assets routes
-app.use('/asset', assetRouter)
+app.use('/api/asset', assetRouter)
 
 // consumables routes
-app.use('/consumables', consumableRouter)
+app.use('/api/consumables', consumableRouter)
 
 // vendor routes
-app.use('/vendor', vendorRouter)
+app.use('/api/vendor', vendorRouter)
 
 
 // admin ticket routes
-app.use('/admin/ticket', adminTicketRouter)
+app.use('/api/admin/ticket', adminTicketRouter)
 
 // admin employees routes
-app.use('/employees',employeeRouter)
+app.use('/api/employees',employeeRouter)
 
 // vendor routes
-app.use('/vendor', vendorRouter)
+app.use('/api/vendor', vendorRouter)
 
 // assetType routes
-app.use('/assetType', assetTypeRouter)
+app.use('/api/assetType', assetTypeRouter)
 
 
 // employee auth middleware
 // app.use(tokenAuth)
 
 // employee tickets routes
-app.use('/employee/ticket', employeeTicketRouter)
+app.use('/api/employee/ticket', employeeTicketRouter)
+
+app.get("*", (req,res,next)=>{
+    res.sendFile(path.resolve(__dirname, './public/index.html'))
+})
 
 
 app.listen(process.env.PORT,() => {
