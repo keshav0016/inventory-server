@@ -2,7 +2,7 @@ const models = require('../models/index')
 const router = require('express').Router()
 const argon2 = require('argon2')
 const sgMail = require('@sendgrid/mail');
-const api = require('../sendGridApiKey')
+const api = require('../config/sendGrid')
 
 
 
