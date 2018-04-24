@@ -8,7 +8,7 @@ function listAssetHandler(req, res, next){
     var search = req.query.search || '%'
     var searchFilter = []
     var pagination = {}
-
+    var searchAssetId = Number(req.query.searchAsset)
     var searchCategoryFilter = []
 
     for(var key in req.query){
@@ -33,9 +33,16 @@ function listAssetHandler(req, res, next){
 
     models.assets.count({where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({serial_number : {like : search}}, {condition : {like : search}}, {location : {like : search}}, {asset_name : {like : search}}, {invoice_number : {like : search}}, {vendor : {like : search}}))})
     .then(numberOfRecords => {
-        pagination.totalPage = Math.ceil(numberOfRecords / 10);
-        pagination.currentPage = page;
-        return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({serial_number : {like : search}}, {condition : {like : search}}, {location : {like : search}}, {asset_name : {like : search}}, {invoice_number : {like : search}}, {vendor : {like : search}})), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
+        if(!searchAssetId){
+            pagination.totalPage = Math.ceil(numberOfRecords / 10);
+            pagination.currentPage = page;
+            return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({serial_number : {like : search}}, {condition : {like : search}}, {location : {like : search}}, {asset_name : {like : search}}, {invoice_number : {like : search}}, {vendor : {like : search}})), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
+        }
+        else{
+            pagination.totalPage = 1
+            pagination.currentPage = 1;
+            return models.assets.findAll({ where : {asset_id : searchAssetId}})    
+        }
     })
     .then(assets => {
         res.json({
