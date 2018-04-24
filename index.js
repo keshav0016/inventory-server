@@ -47,7 +47,7 @@ app.use(cors({
 }));
 
 const publicPath = path.resolve(__dirname, './public');
-app.use(express.static(publicPath))
+app.use('/', express.static(publicPath))
 
 
 // Body parser and cookie parser initialization
