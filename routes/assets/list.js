@@ -31,12 +31,12 @@ function listAssetHandler(req, res, next){
         searchCategoryFilter = ['Electronics', 'Non-Electronics', 'Other']
     }
 
-    models.assets.count({where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({serial_number : {like : search}}, {condition : {like : search}}, {location : {like : search}}, {asset_name : {like : search}}, {invoice_number : {like : search}}, {vendor : {like : search}}))})
+    models.assets.count({where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({serial_number : {like : search}}, {condition : {like : search}}, {location : {like : search}}, {asset_name : {ilike : search}}, {invoice_number : {like : search}}, {vendor : {like : search}}))})
     .then(numberOfRecords => {
         if(!searchAssetId){
             pagination.totalPage = Math.ceil(numberOfRecords / 10);
             pagination.currentPage = page;
-            return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({serial_number : {like : search}}, {condition : {like : search}}, {location : {like : search}}, {asset_name : {like : search}}, {invoice_number : {like : search}}, {vendor : {like : search}})), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
+            return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({serial_number : {like : search}}, {condition : {like : search}}, {location : {like : search}}, {asset_name : {ilike : search}}, {invoice_number : {like : search}}, {vendor : {like : search}})), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
         }
         else{
             pagination.totalPage = 1
