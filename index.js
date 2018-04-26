@@ -39,12 +39,15 @@ const assetTypeRouter = require('./routes/assetType/index')
 // import forgot password Router
 const forgotPasswordRouter = require('./controller/forgotPassword')
 
-
+// import QRcode router
+const qrCodeRouter = require('./routes/assets/qrCode')
 
 app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
 }));
+
+app.get('/api/asset/qr', qrCodeRouter)
 
 const publicPath = path.resolve(__dirname, './public');
 app.use('/', express.static(publicPath))

@@ -10,6 +10,6 @@ function qrCodeHandler(req, res, next){
 
 
 
-router.get('/qr', qrCodeHandler)
+// router.get('/qr', qrCodeHandler)
 
-module.exports = exports = router
+module.exports = exports = qrCodeHandler
