@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     category: DataTypes.STRING,
     condition : DataTypes.STRING,
     location: DataTypes.STRING,
-    assetType: {type : DataTypes.STRING, foreignKey : true}
+    assetType: {type : DataTypes.STRING, foreignKey : true},
+    disabled : DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
