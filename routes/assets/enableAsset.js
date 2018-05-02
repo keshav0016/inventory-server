@@ -9,12 +9,12 @@ function enableAssetHandler(req, res, next){
     })
     .then(asset => {
         res.json({
-            message : 'Asset deleted successfully'
+            message : 'Asset ennabled successfully'
         })
     })
     .catch(error => {
         res.json({
-            error : 'Some error occurred deleting the asset'
+            error : 'Some error occurred enabling the asset'
         })
     })
 }
