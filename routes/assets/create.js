@@ -3,32 +3,47 @@ const router = require('express').Router();
 
 
 function createAssetHandler(req, res, next){
-    const newAsset = models.assets.build({
-        serial_number : req.body.serial_number,
-        asset_name : req.body.asset_name.charAt(0).toUpperCase() + req.body.asset_name.slice(1).toLowerCase(),
-        purchase_date : req.body.purchase_date,
-        description : req.body.description,
-        invoice_number : req.body.invoice_number,
-        vendor : req.body.vendor,
-        amount : req.body.amount,
-        gst : req.body.gst,
-        total : req.body.total,
-        current_status : 'Available',
-        category : req.body.category,
-        condition : req.body.condition,
-        location : req.body.location
-        ,assetType : req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1).toLowerCase()
-    })
-    .save()
+    models.assets.findOne({where :{asset_name : req.body.asset_name.charAt(0).toUpperCase() + req.body.asset_name.slice(1).toLowerCase(),
+    }})
     .then(asset => {
-        res.json({
-            message : 'Asset added successfully'
-        })
+        if(asset){
+            res.json({
+                message: 'asset is already there'
+            })
+        }else{
+            models.assets.create({
+                serial_number : req.body.serial_number,
+                asset_name : req.body.asset_name.charAt(0).toUpperCase() + req.body.asset_name.slice(1).toLowerCase(),
+                purchase_date : req.body.purchase_date,
+                description : req.body.description,
+                invoice_number : req.body.invoice_number,
+                vendor : req.body.vendor,
+                amount : req.body.amount,
+                gst : req.body.gst,
+                total : req.body.total,
+                current_status : 'Available',
+                category : req.body.category,
+                condition : req.body.condition,
+                location : req.body.location
+                ,assetType : req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1).toLowerCase()
+            })
+            .then(asset => {
+                res.json({
+                    message : 'Asset added successfully'
+                })
+            })
+            .catch(SequelizeValidationError=>{
+                console.log(SequelizeValidationError)
+                res.json({
+                    errors: SequelizeValidationError.errors
+                })
+            })
+        }
     })
     .catch(error => {
         console.error(error)
         res.json({
-            error : error.errors[0].message || 'Some error occurred'
+            error : error || 'Some error occurred'
         })
     })
 }

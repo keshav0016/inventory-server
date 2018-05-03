@@ -3,7 +3,6 @@ const router = require('express').Router()
 
 
 function createEmployee(req, res) {
-
     models.users.create({
         user_id: req.body.user_id,
         first_name:req.body.first_name.charAt(0).toUpperCase() + req.body.first_name.slice(1).toLowerCase(),
