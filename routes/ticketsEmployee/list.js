@@ -8,21 +8,21 @@ function listTicket(req,res){
     var assetPage = req.query.assetPage || 1
     var consumablePage = req.query.consumablePage || 1
     var searchFilter = []
-    var filter = {
-        "Accepted" : true,
-        "Pending" : true,
-        "Rejected" : true
-    }
+    // var filter = {
+    //     "Accepted" : true,
+    //     "Pending" : true,
+    //     "Rejected" : true
+    // }
 
     for(var key in req.query){
-        if(req.query[key] === "false"){
+        if(req.query[key] === "true" ){
             searchFilter.push(key)
         }
     }
 
 
     if(searchFilter.length === 0){
-        searchFilter[0] = ""
+        searchFilter = ['Pending', 'Accepted', 'Rejected']
     }
 
 
@@ -31,7 +31,7 @@ function listTicket(req,res){
     var ticketsConsumableListing = [];
     var ticketsAssetsListing = [];
 
-    models.ticket.findAll({where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}, item_type : 'consumables'}, limit: 10, offset: (consumablePage - 1) * 10, order : [['date', 'DESC'] ]})
+    models.ticket.findAll({where : {user_id : req.currentUser.user_id, status : {in : searchFilter}, item_type : 'consumables'}, limit: 10, offset: (consumablePage - 1) * 10, order : [['date', 'DESC'] ]})
     .then(ticketConsumables=>{
         if(ticketConsumables){
             ticketsConsumableListing.push(...ticketConsumables)
@@ -42,7 +42,7 @@ function listTicket(req,res){
     .then(numberOfRecords => {
         consumablePagination.totalPage = Math.ceil(numberOfRecords / 10);
         consumablePagination.currentPage = consumablePage
-        return models.ticket.findAll({ where : {user_id : req.currentUser.user_id, status : {notIn : searchFilter}, item_type : 'assets'}, limit: 10, offset: (assetPage - 1) * 10, order : [['date', 'DESC'] ]})
+        return models.ticket.findAll({ where : {user_id : req.currentUser.user_id, status : {in : searchFilter}, item_type : 'assets'}, limit: 10, offset: (assetPage - 1) * 10, order : [['date', 'DESC'] ]})
     })
     .then(ticketsAssets => {
         if(ticketsAssets){
@@ -54,7 +54,7 @@ function listTicket(req,res){
         assetPagination.totalPage = Math.ceil(numberOfRecords / 10);
         assetPagination.currentPage = assetPage;
         res.json({
-            assetPagination : assetPagination, consumablePagination : consumablePagination, ticketsAssetsListing, ticketsConsumableListing
+            assetPagination , consumablePagination, ticketsAssetsListing, ticketsConsumableListing
         })
     })
     .catch(error => {
