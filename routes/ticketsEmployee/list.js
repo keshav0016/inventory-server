@@ -57,6 +57,11 @@ function listTicket(req,res){
             assetPagination : assetPagination, consumablePagination : consumablePagination, ticketsAssetsListing, ticketsConsumableListing
         })
     })
+    .catch(error => {
+        res.json({
+            error : error.message || "Tickets could not be listed"
+        })
+    })
 }
 
 
