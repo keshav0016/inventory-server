@@ -2,7 +2,7 @@ const models = require('../../models/index')
 const router = require('express').Router()
 
 function listEmployee(req, res) {
-    var page = req.query.page || 1
+    var page = Number(req.query.page) || 1
     var department = req.query.department || "%"
     var pagination = {}
 
