@@ -36,12 +36,12 @@ function listAssetHandler(req, res, next){
        if(!searchAssetId){
            pagination.totalPage = Math.ceil(numberOfRecords / 10);
            pagination.currentPage = page;
-           return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_name : {ilike : "%"+Asearch+"%"}})), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
+           return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_name : {like : "%"+Asearch+"%"}})), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
        }
        else{
            pagination.totalPage = 1
            pagination.currentPage = 1;
-           return models.assets.findAll({ where :{asset_id : searchAssetId}})    
+           return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_id : searchAssetId})), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
         }
     })
    .then(assets => {
