@@ -12,7 +12,7 @@ function createEmployee(req, res) {
         gender:req.body.gender,
         role:'Employee',
         department:req.body.department,
-        designation:req.body.designation.charAt(0).toUpperCase() + req.body.designation.slice(1).toLowerCase(),
+        designation:req.body.designation,
 
     })
     .then(users=> {
