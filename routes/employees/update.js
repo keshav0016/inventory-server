@@ -16,7 +16,7 @@ function updateEmployee(req, res) {
                 age: req.body.age,
                 gender: req.body.gender,
                 designation: req.body.designation,
-                department:req.body.department.charAt(0).toUpperCase() + req.body.department.slice(1).toLowerCase(),
+                department:req.body.department,
             })
             .then(function (user) {
                 res.json({user, message: 'employee has been updated'});
