@@ -700,6 +700,10 @@ COPY public.assets (id, asset_id, serial_number, asset_name, purchase_date, desc
 5	5	845	monitors	2018-04-19 00:00:00+05:30	monitors	632	manisha	89653	2	91446.0599999999977	Assigned	Electronics	2018-04-10 15:14:49.103+05:30	2018-04-10 16:14:13.002+05:30	use	bang	\N	\N
 13	13	34	Laptop	2018-05-04 00:00:00+05:30	laptop	56	shivang	28000	5	29400	Available	Electronics	2018-05-04 10:12:57.585+05:30	2018-05-04 10:12:57.585+05:30	old	hyd	Electronics	\N
 12	12	90	Macbook	2018-05-04 00:00:00+05:30	macbook	78	keshav	45000	5	47250	Assigned	Electronics	2018-05-04 10:06:38.934+05:30	2018-05-09 10:55:30.645+05:30	new	hyd	Electronics	\N
+=======
+12	12	90	Macbook	2018-05-04 00:00:00+05:30	macbook	78	keshav	45000	5	47250	Assigned	Electronics	2018-05-04 10:06:38.934+05:30	2018-05-09 10:55:30.645+05:30	new	hyd	Electronics	\N
+3	3	852	desktop	2018-04-12 00:00:00+05:30	desktop	563	keshav	50200	5	52710	Service	Electronics	2018-04-10 15:12:43.07+05:30	2018-05-09 15:06:59.507+05:30	use	bang	\N	\N
+13	13	34	Laptop	2018-05-04 00:00:00+05:30	laptop	56	shivang	28000	5	29400	Service	Electronics	2018-05-04 10:12:57.585+05:30	2018-05-09 15:07:34.472+05:30	old	hyd	Electronics	\N
 \.
 
 
@@ -720,6 +724,8 @@ COPY public.assets_assigneds (id, asset_id, user_id, ticket_number, "from", "to"
 
 COPY public.assets_repairs (id, asset_id, vendor, "from", "to", expected_delivery, repair_invoice, amount, gst, total, "createdAt", "updatedAt") FROM stdin;
 1	4	ramya	2018-04-01 00:00:00+05:30	\N	2018-04-04 00:00:00+05:30	\N	\N	\N	\N	2018-04-10 15:26:05.266+05:30	2018-04-10 15:26:05.266+05:30
+2	3	ramya	2018-05-09 00:00:00+05:30	\N	2018-05-10 00:00:00+05:30	\N	\N	\N	\N	2018-05-09 15:06:59.49+05:30	2018-05-09 15:06:59.49+05:30
+3	13	shivang	2018-05-09 00:00:00+05:30	\N	2018-05-10 00:00:00+05:30	\N	\N	\N	\N	2018-05-09 15:07:34.461+05:30	2018-05-09 15:07:34.461+05:30
 \.
 
 
@@ -819,6 +825,12 @@ COPY public.users (id, user_id, first_name, last_name, age, gender, password, ro
 28	004	Manisha	Reddy	22	Female	$argon2d$v=19$m=4096,t=3,p=1$f+LN0SlPMh9B2Zgp84y0TQ$QB6Ebud1c8+fOpLAAiM7oIChHU9gCycc1gSwb+Ekg8U	Employee	\N	Finance/Accounting	Finance director	2018-05-04 17:52:05.248+05:30	2018-05-04 17:52:05.248+05:30	\N
 16	112	Shreya	M	30	Female	$argon2d$v=19$m=4096,t=3,p=1$Wut7Ojy62hURukikvfxSqQ$TCO64txUH3dCBNVJPFQkZc1vCMLElTgwoF02PObJTyw	Employee	\N	Delivery	Delivery Manager	2018-05-04 11:39:38.693+05:30	2018-05-07 09:23:31.555+05:30	\N
 31	007	Shivang	A	22	Male	$argon2d$v=19$m=4096,t=3,p=1$nVZMmMnM/Gbw85/aAZyVOg$bx59K6/Tod4Y8dK57clRLtIQaV7txZv2UP2kUDkkxEo	Employee	\N	Testing	QA Lead	2018-05-04 17:53:07.837+05:30	2018-05-07 09:24:24.059+05:30	\N
+=======
+13	001	Veena	Devi	20	Female	$argon2i$v=19$m=4096,t=3,p=1$EnqLzzZYMvaBqZPvd0apBw$65Vr0WQhm3By4s/u0d/cHWbSf/tTyrsSJLxEjdjcsZg	Employee	\N	Developer/Designer	Software Development Engineer	2018-05-07 13:09:55.236+05:30	2018-05-09 15:38:22.501+05:30	m.veena2k14@gmail.com
+28	004	Manisha	Reddy	22	Female	$argon2d$v=19$m=4096,t=3,p=1$f+LN0SlPMh9B2Zgp84y0TQ$QB6Ebud1c8+fOpLAAiM7oIChHU9gCycc1gSwb+Ekg8U	Employee	\N	Finance/Accounting	Finance director	2018-05-04 17:52:05.248+05:30	2018-05-04 17:52:05.248+05:30	\N
+16	112	Shreya	M	30	Female	$argon2d$v=19$m=4096,t=3,p=1$Wut7Ojy62hURukikvfxSqQ$TCO64txUH3dCBNVJPFQkZc1vCMLElTgwoF02PObJTyw	Employee	\N	Delivery	Delivery Manager	2018-05-04 11:39:38.693+05:30	2018-05-07 09:23:31.555+05:30	\N
+31	007	Shivang	A	22	Male	$argon2d$v=19$m=4096,t=3,p=1$nVZMmMnM/Gbw85/aAZyVOg$bx59K6/Tod4Y8dK57clRLtIQaV7txZv2UP2kUDkkxEo	Employee	\N	Testing	QA Lead	2018-05-04 17:53:07.837+05:30	2018-05-07 09:24:24.059+05:30	\N
+1	Admin	\N	\N	\N	\N	$argon2i$v=19$m=4096,t=3,p=1$wXfH2Oug0fT0m32MaAhU+g$pVya0dVufNgtAmlQt9DkxL6zcaKmagKUW6l12Bj4FEQ	Admin	{eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiQWRtaW4iLCJpYXQiOjE1MjU4NjA1MDd9.q7cIuVRJMPOgRa7sv9ryd9lf6S9PIXOK-NrQywI6VmE}	\N	\N	\N	2018-05-09 15:38:27.816+05:30	\N
 26	002	Ghthj	Rgfec	40	Male	$argon2d$v=19$m=4096,t=3,p=1$BzZk9nZBgXXm5Vl5jgU87A$5DDx3iupG6+AbqPUia1Su4w+Lu7gFGnp/5uZTrhfBFk	Employee	\N	Hr	Sr.HR Manager	2018-05-04 15:42:43.278+05:30	2018-05-07 09:25:03.445+05:30	\N
 30	006	Keshav	B	22	Male	$argon2d$v=19$m=4096,t=3,p=1$xAuHskYb/xxTdzXauTDKkA$stfPNWcuE5yWRkrqNBMBAbJMy10fxRyCit8iz6/i+9Y	Employee	\N	Delivery	Sr.Project Manager	2018-05-04 17:52:44.843+05:30	2018-05-07 09:25:14.953+05:30	\N
 32	008	Manu	Cb	22	Male	$argon2d$v=19$m=4096,t=3,p=1$CykvUGJYsOtZ3OWJLt85gg$wwEBEdHAxMF5XiiXzCOeBtMijqjJaDSonhwLENoWcAk	Employee	\N	HR	Sr.hr manager	2018-05-07 09:32:45.34+05:30	2018-05-07 09:32:45.34+05:30	\N
@@ -853,7 +865,7 @@ SELECT pg_catalog.setval('public.assets_asset_id_seq', 11, true);
 -- Name: assets_assigneds_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.assets_assigneds_id_seq', 3, true);
+SELECT pg_catalog.setval('public.assets_assigneds_id_seq', 2, true);
 
 
 --
@@ -864,6 +876,86 @@ SELECT pg_catalog.setval('public.assets_id_seq', 11, true);
 
 
 --
+-- Name: assets_repairs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.assets_repairs_id_seq', 1, true);
+
+
+--
+-- Name: consumables_assigneds_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.consumables_assigneds_id_seq', 4, true);
+
+
+--
+-- Name: consumables_consumable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.consumables_consumable_id_seq', 13, true);
+
+
+--
+-- Name: consumables_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.consumables_id_seq', 13, true);
+
+
+--
+-- Name: consumables_purchaseds_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.consumables_purchaseds_id_seq', 14, true);
+
+
+--
+-- Name: qrs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.qrs_id_seq', 1, false);
+
+
+--
+-- Name: tickets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+COPY public.vendors (id, name, address, contact, "createdAt", "updatedAt") FROM stdin;
+1	keshav	dxtuvyinl	7894561230	2018-04-10 15:08:05.685+05:30	2018-04-10 15:08:05.685+05:30
+2	shivang	shivangaland	8523697410	2018-04-10 15:09:32.946+05:30	2018-04-10 15:09:32.946+05:30
+3	ramya	kondapur	9632587410	2018-04-10 15:13:05.519+05:30	2018-04-10 15:13:05.519+05:30
+4	manisha	hyderabad	7965412380	2018-04-10 15:14:05.316+05:30	2018-04-10 15:14:05.316+05:30
+\.
+
+
+--
+-- Name: assets_asset_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.assets_asset_id_seq', 11, true);
+
+
+--
+-- Name: assets_assigneds_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.assets_assigneds_id_seq', 3, true);
+-- Name: types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.types_id_seq', 1, true);
+
+
+--
+-- Name: assets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.assets_id_seq', 11, true);
+
+
+--
+
 -- Name: assets_repairs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
