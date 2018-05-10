@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        models.users.hasMany(consumables_assigned,{foreignKey: 'user_id', sourceKey: 'user_id'})
-        consumables_assigned.belongsTo(models.users,{foreignKey: 'user_id', targetKey: 'user_id'})
-        models.consumables.hasMany(consumables_assigned,{foreignKey: 'consumable_id',sourceKey: 'consumable_id'})
-        consumables_assigned.belongsTo(models.consumables,{foreignKey: 'consumable_id',targetKey: 'consumable_id'})
+        models.users.hasMany(consumables_assigned,{foreignKey: 'user_id', sourceKey: 'user_id',onDelete: 'cascade',hooks: true})
+        consumables_assigned.belongsTo(models.users,{foreignKey: 'user_id', targetKey: 'user_id',onDelete: 'cascade',hooks: true})
+        models.consumables.hasMany(consumables_assigned,{foreignKey: 'consumable_id',sourceKey: 'consumable_id',onDelete: 'cascade',hooks: true})
+        consumables_assigned.belongsTo(models.consumables,{foreignKey: 'consumable_id',targetKey: 'consumable_id',onDelete: 'cascade',hooks: true})
       }
     }
   });
