@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
    email : {type : DataTypes.STRING, validate : {isEmail : true}}
  }
  ,{
+    scopes: {
+      withoutPassword: {
+        attributes: {exclude: ['password']}
+      }
+    },
    classMethods: {
      associate: function(models) {
        users.hasMany(models.ticket,{foreignKey:'user_id',sourceKey: 'user_id'});
