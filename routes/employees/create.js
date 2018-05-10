@@ -16,7 +16,7 @@ function createEmployee(req, res) {
 
     })
     .then(users=> {
-        res.json({users,message: 'employee created'});
+        res.json({message: 'employee created'});
     })
     .catch(SequelizeValidationError=>{
         res.json({
@@ -27,12 +27,7 @@ function createEmployee(req, res) {
         res.json({
             error: error
         })
-    })
-    
-        
-        
-    
-    
+    }) 
 }
 
 router.post("/create", createEmployee)
