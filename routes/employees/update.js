@@ -19,7 +19,7 @@ function updateEmployee(req, res) {
                 department:req.body.department,
             })
             .then(function (user) {
-                res.json({user, message: 'employee has been updated'});
+                res.json({message: 'employee has been updated'});
             });
         }
     })
