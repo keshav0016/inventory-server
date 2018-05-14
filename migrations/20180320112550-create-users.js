@@ -38,9 +38,6 @@ module.exports = {
       designation: {
         type: Sequelize.STRING
       },
-      email: {
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: true,
         type: Sequelize.DATE
