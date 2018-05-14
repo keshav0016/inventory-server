@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       associate: function(models) {
         // associations can be defined here
         models.assets.hasMany(assets_assigned, {foreignKey : 'asset_id', sourceKey : 'asset_id',onDelete: 'cascade',hooks: true})
-        assets_assigned.belongsTo(models.assets,{foreignKey: 'asset_id', targetKey : 'asset_id',onDelete: 'cascade',hooks: true})
+        assets_assigned.belongsTo(models.assets,{foreignKey: 'asset_id', targetKey : 'asset_id'})
         models.users.hasMany(assets_assigned, {foreignKey : 'user_id', sourceKey : 'user_id',onDelete: 'cascade',hooks: true})
-        assets_assigned.belongsTo(models.users,{foreignKey: 'user_id', targetKey : 'user_id',onDelete: 'cascade',hooks: true})
+        assets_assigned.belongsTo(models.users,{foreignKey: 'user_id', targetKey : 'user_id'})
       }
     }
   });

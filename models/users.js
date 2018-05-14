@@ -103,17 +103,6 @@ module.exports = (sequelize, DataTypes) => {
     })
 
   });
-  // users.beforeDestroy((user, opts) => {
-  //   sequelize.models.assets_assigned.findAll({where: {user_id: user.user_id}})
-  //   .then(asset => {
-  //     return sequelize.models.assets.findAll({where: {asset_id: asset.asset_id}})
-      
-  //   })
-  //   .then(mainAsset => {
-  //     mainAsset.current_status === 'Available'
-  //     next()
-  //   })
-  // })
   users.verifyPassword = function (userSubmittedPassword, user) {
     return argon2.verify(user.password, userSubmittedPassword)
   }
