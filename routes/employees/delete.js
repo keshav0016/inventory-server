@@ -13,6 +13,9 @@ function disableEmployeeHandler(req, res, next){
                 userDisable = 1;
             }
         });
+        if(user.assets_assigneds.length === 0){
+            userDisable = 1;
+        }
         return Promise.resolve(user)        
         // user.disable = 1;
         // return user.save()
