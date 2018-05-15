@@ -24,7 +24,7 @@ function listTicketToAdminHandler(req, res, next){
     var ticketsConsumableListingToAdmin = [];
     var ticketsAssetsListingToAdmin = [];
     
-    models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {status : {in : searchFilter}, item_type : 'assets'}, limit: 10, offset: (assetPage - 1) * 10, order : [['date', 'DESC']] })
+    models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name'], where : {disable : 0}}],where : {status : {in : searchFilter}, item_type : 'assets'}, limit: 10, offset: (assetPage - 1) * 10, order : [['date', 'DESC']] })
     .then(ticketsAssetsListing => {
         if(ticketsAssetsListing){
             ticketsAssetsListingToAdmin.push(...ticketsAssetsListing);
