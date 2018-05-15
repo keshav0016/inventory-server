@@ -7,6 +7,7 @@ const entireHistoryConsumableHandler = require('./entireHistory')
 const listConsumableHandler = require('./list')
 const updateConsumablePurchaseHandler = require('./editpurchase')
 const admintokenAuth = require('../../middleware/admintokenAuth')
+const listConsumableNameHandler = require('./nameList')
 
 const router = require('express').Router()
 
@@ -17,6 +18,7 @@ router.use(deleteConsumableHandler)
 router.use(updateConsumableHandler)
 router.use(updateConsumablePurchaseHandler)
 router.use(assignConsumableHandler)
+router.use(listConsumableNameHandler)
 router.get("/entirehistory", entireHistoryConsumableHandler)
 router.post("/history", historyConsumableHandler)
 
