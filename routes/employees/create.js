@@ -13,6 +13,7 @@ function createEmployee(req, res) {
         role:'Employee',
         department:req.body.department,
         designation:req.body.designation,
+        disable: 0
 
     })
     .then(users=> {
