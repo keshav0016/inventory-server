@@ -8,7 +8,7 @@ const argon2 = require('argon2')
 
 function login(req,res,next){
     var passwordSame = true
-    models.users.findOne({ where: { user_id : req.body.user_id.charAt(0).toUpperCase() + req.body.user_id.slice(1).toLowerCase()}})
+    models.users.findOne({ where: { disable: 0, user_id : req.body.user_id.charAt(0).toUpperCase() + req.body.user_id.slice(1).toLowerCase()}})
     .then(user=>{
         if(user){
             return  argon2.verify(user.password, user.user_id)            

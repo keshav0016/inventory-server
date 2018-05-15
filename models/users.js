@@ -63,6 +63,9 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: true
       }
+    },
+    disable: {
+      type: DataTypes.INTEGER
     }
   }, {
     scopes: {
