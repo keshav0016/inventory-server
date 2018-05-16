@@ -17,8 +17,6 @@ function disableEmployeeHandler(req, res, next){
             userDisable = 1;
         }
         return Promise.resolve(user)        
-        // user.disable = 1;
-        // return user.save()
     })
     .then(user =>{
         if(userDisable === 0){
@@ -32,9 +30,11 @@ function disableEmployeeHandler(req, res, next){
         }
     })
     .then(user => {
-        res.json({
-            message : 'Employee disabled successfully'
-        })
+        if(user){
+            res.json({
+                message : 'Employee disabled successfully'
+            })
+        }
     })
     .catch(error => {
         res.json({
