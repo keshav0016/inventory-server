@@ -6,7 +6,7 @@ const jwt= require('jsonwebtoken')
 
 function admintokenMiddleware(req,res,next){
     var receivedToken=req.cookies.token;
-    var decodedtoken = jwt.verify(token,'lovevolleyball');
+    var decodedtoken = jwt.verify(receivedToken,'lovevolleyball');
     models.users.findOne({ where : {user_id:decodedtoken.user_id , role : 'Admin',token : {$contains : [receivedToken]}}})
     .then(user=>{
         if(user){
