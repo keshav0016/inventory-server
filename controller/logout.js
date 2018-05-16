@@ -7,14 +7,21 @@ const cookie =require('cookie-parser')
 // const sequelize = require('sequelize')
 
 
-function logout(req,res,){
+function logout(req,res,next){
     console.log('logout')
+    var receivedToken=req.cookies.token;
     models.users.findOne({ where : {user_id : req.currentUser.user_id}})
     .then(user => {
         if(user){
+            user.token.forEach((singleToken, index) => {
+                if(singleToken === receivedToken){
+                    user.token.splice(index, 1);
+                }
+            });
             // sequelize.query(`UPDATE users SET token[${user.token.length} - 1] = null WHERE id = ${req.currentUser.user_id}`)
-            user.token = null
-            return user.save()   
+            return user.update({
+                token : user.token
+            })   
         }
     })
     .then(user => {
