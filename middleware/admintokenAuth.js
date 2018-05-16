@@ -23,7 +23,7 @@ function admintokenMiddleware(req,res,next){
         })
     }
     else{
-        res.status(401)
+        res.status(401).send('no token')
     }
 }
 module.exports=exports= admintokenMiddleware
