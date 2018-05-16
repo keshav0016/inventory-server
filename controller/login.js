@@ -30,10 +30,20 @@ function login(req,res,next){
        
     })
     .then((user) => {
-        user.token=[jwt.sign({ user_id : user.user_id},'lovevolleyball')]
-        res.cookie('token',user.token[user.token.length-1],{encode:String})     
-        
-        return user.save()  
+        // user.token=[jwt.sign({ user_id : user.user_id},'lovevolleyball')]
+        newToken = jwt.sign({ user_id : user.user_id},'lovevolleyball')
+        if(user.token){
+            user.token.push(newToken)
+        }
+        else{
+            user.token = [newToken]
+        }
+        // res.cookie('token',user.token[user.token.length-1],{encode:String})
+        res.cookie('token', newToken, {encode : String});     
+        return user.update({
+            token : user.token
+        })
+        // return user.save()  
     })
     .then((user) => {
         res.json({success: true,  passwordSame, user})
