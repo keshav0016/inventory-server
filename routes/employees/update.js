@@ -23,6 +23,11 @@ function updateEmployee(req, res) {
             });
         }
     })
+    .catch(SequelizeValidationError=>{
+        res.json({
+            error: SequelizeValidationError.errors
+        })
+    })
     .catch(error=>{
         res.json({
             error: error
