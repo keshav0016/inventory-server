@@ -10,42 +10,49 @@ function acceptConsumableTicketHandler(req, res){
         return models.consumables.findOne({ where : {consumable_id : ticket.requested_consumable_id}})
     })
     .then(consumable => {
-        if(ticketQuantity < consumable.quantity){
-            models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
-            .then(ticket => {
-                ticket.status = 'Accepted'
-                ticket.reason = req.body.reason
-                user = ticket.user_id
-                return ticket.save()
-            })
-            .then(ticket => {
-                var newConsumableAssign = models.consumables_assigned.build({
-                    consumable_id : ticket.requested_consumable_id,
-                    user_id : user,
-                    ticket_number : ticket.ticket_number,
-                    assigned_date : Date.now(),
-                    quantity : ticket.quantity
+        if(consumable.disable === 0){
+            if(ticketQuantity < consumable.quantity){
+                models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
+                .then(ticket => {
+                    ticket.status = 'Accepted'
+                    ticket.reason = req.body.reason
+                    user = ticket.user_id
+                    return ticket.save()
                 })
-                return newConsumableAssign.save()
-            })
-            .then(consumables => {
-                reduce_quantity = consumables.quantity
-                return models.consumables.findOne({ where : {consumable_id : consumables.consumable_id}})
-            })
-            .then(consumables => {
-                var updated_quantity = consumables.quantity - Number(reduce_quantity)
-                consumables.quantity = updated_quantity
-                return consumables.save()
-            })
-            .then(assetAssigned => {
+                .then(ticket => {
+                    var newConsumableAssign = models.consumables_assigned.build({
+                        consumable_id : ticket.requested_consumable_id,
+                        user_id : user,
+                        ticket_number : ticket.ticket_number,
+                        assigned_date : Date.now(),
+                        quantity : ticket.quantity
+                    })
+                    return newConsumableAssign.save()
+                })
+                .then(consumables => {
+                    reduce_quantity = consumables.quantity
+                    return models.consumables.findOne({ where : {consumable_id : consumables.consumable_id}})
+                })
+                .then(consumables => {
+                    var updated_quantity = consumables.quantity - Number(reduce_quantity)
+                    consumables.quantity = updated_quantity
+                    return consumables.save()
+                })
+                .then(assetAssigned => {
+                    res.json({
+                        message : "Ticket Accepted"
+                    })
+                })
+            }
+            else {
                 res.json({
-                    message : "Ticket Accepted"
+                    message : "Requested Quantity greater than available"
                 })
-            })
+            }
         }
-        else {
+        else{
             res.json({
-                message : "Requested Quantity greater than available"
+                message : "Requested item is disabled"
             })
         }
     })
