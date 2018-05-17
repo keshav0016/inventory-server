@@ -3,8 +3,7 @@ const router = require('express').Router();
 
 var consumableid;
 
-function createConsumablePurchasedDetails(req,res,next,consumableid){
-    return models.consumables_purchased.build({
+function createConsumablePurchasedDetails(req,res,next,consumableid){return models.consumables_purchased.build({
         consumable_id : consumableid,
         vendor_name : req.body.vendor_name,
         purchase_date : req.body.purchase_date,
@@ -13,7 +12,7 @@ function createConsumablePurchasedDetails(req,res,next,consumableid){
         whole_price : req.body.whole_price,
         discount : req.body.discount,
         gst : req.body.gst,
-        total : req.body.total
+        total : req.body.total,
     })
     .save()
 }
@@ -33,7 +32,8 @@ function createConsumableHandler(req, res, next){
         else {
             return models.consumables.build({
                 name : req.body.name.charAt(0).toUpperCase()+req.body.name.slice(1).toLowerCase(),
-                quantity : req.body.purchased_quantity
+                quantity : req.body.purchased_quantity,
+                disable: 0                
             })
             .save()
             .then(consumables => {

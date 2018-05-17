@@ -14,7 +14,7 @@ function listAvailables(req,res){
             items.push(asset.assetType)
             assetLimit = index
         })
-        return models.consumables.findAll({where:{quantity: {gt: 0} }})
+        return models.consumables.findAll({where:{quantity: {gt: 0},disable : 0 }})
     })
     .then(consumables=>{
         consumables.forEach(consumable => {
