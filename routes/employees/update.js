@@ -17,6 +17,7 @@ function updateEmployee(req, res) {
                 gender: req.body.gender,
                 designation: req.body.designation,
                 department:req.body.department,
+                email: req.body.email
             })
             .then(function (user) {
                 res.json({message: 'employee has been updated'});
