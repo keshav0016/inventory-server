@@ -26,6 +26,7 @@ function createAssetHandler(req, res, next){
                 condition : req.body.condition,
                 location : req.body.location
                 ,assetType : req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1).toLowerCase()
+                ,disabled : 0
             })
             .then(asset => {
                 res.json({
