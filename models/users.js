@@ -17,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        is: {
-          alpha: [/^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/],
+        isAlpha: {
           msg: 'first name should be alphabets'
         }
       }
