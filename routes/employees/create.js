@@ -1,7 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 const sgMail = require('@sendgrid/mail');
-const api = require('../config/sendGrid')
+const api = require('../../config/sendGrid')
 
 
 function createEmployee(req, res) {
