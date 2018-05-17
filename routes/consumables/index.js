@@ -8,10 +8,12 @@ const listConsumableHandler = require('./list')
 const updateConsumablePurchaseHandler = require('./editpurchase')
 const admintokenAuth = require('../../middleware/admintokenAuth')
 const listConsumableNameHandler = require('./nameList')
+const enableConsumableHandler = require('./enable')
 
 const router = require('express').Router()
 
 router.use(admintokenAuth)
+router.use(enableConsumableHandler)
 router.use(listConsumableHandler)
 router.use(createConsumableHandler)
 router.use(deleteConsumableHandler)
