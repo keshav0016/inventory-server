@@ -24,7 +24,7 @@ function createEmployee(req, res) {
             to : user.email,
             from : 'hr@westagilelabs.com'
             ,subject : 'Welcome to Wal Inventory management system'
-            ,text : `<p>Hello ${user.first_name},<br />Welcome to the west agile labs' Inventory management system.<br /><br />Your username and password for the WAL IMS is ${user.user_id}<br/>Please <a href='https://inventory-server-wal.herokuapp.com/login'>Click here</a> to login</p>`
+            ,html : `<p>Hello ${user.first_name},<br />Welcome to the west agile labs' Inventory management system.<br /><br />Your username and password for the WAL IMS is ${user.user_id}<br/>Please <a href='https://inventory-server-wal.herokuapp.com/login'>Click here</a> to login</p>`
         }  
         return sgMail.send(msg)              
     })
