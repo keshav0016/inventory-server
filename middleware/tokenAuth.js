@@ -8,7 +8,7 @@ function tokenMiddleware(req,res,next){
     var receivedToken=req.cookies.token;
     if(receivedToken){
         var decodedtoken = jwt.verify(receivedToken,'lovevolleyball');
-        models.users.findOne({ where : {user_id:decodedtoken.user_id,role:'Employee', token :{$contains : [receivedToken]}  }})
+        models.users.scope('withoutPassword').findOne({ where : {user_id:decodedtoken.user_id,role:'Employee', token :{$contains : [receivedToken]}  }})
         .then(user=>{
             if(user){
                 req.currentUser=user,

@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
     scopes: {
       withoutPassword: {
         attributes: {
-          exclude: ['password','token']
+          exclude: ['password']
         }
       }
     },
