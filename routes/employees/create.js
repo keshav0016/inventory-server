@@ -1,5 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
+const sgMail = require('@sendgrid/mail');
+const api = require('../config/sendGrid')
 
 
 function createEmployee(req, res) {
@@ -14,9 +16,19 @@ function createEmployee(req, res) {
         department:req.body.department,
         designation:req.body.designation,
         disable: 0
-
+        ,email : req.body.email
     })
-    .then(users=> {
+    .then(user => {
+        sgMail.setApiKey(api)
+        const msg = {
+            to : user.email,
+            from : 'hr@westagilelabs.com'
+            ,subject : 'Welcome to Wal Inventory management system'
+            ,text : `<p>Hello ${user.first_name},<br />Welcome to the west agile labs' Inventory management system.<br /><br />Your username and password for the WAL IMS is ${user.user_id}<br/>Please <a href='https://inventory-server-wal.herokuapp.com/login'>Click here</a> to login</p>`
+        }  
+        return sgMail.send(msg)              
+    })
+    .then(() => {
         res.json({message: 'employee created'});
     })
     .catch(SequelizeValidationError=>{
