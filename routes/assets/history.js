@@ -12,7 +12,7 @@ function assetHistoryHandler(req, res, next){
     models.assets.findOne({where : {asset_id : req.query.asset_id}})
     .then(asset => {
         assetDetails = asset
-        return models.assets_assigned.findAll({ where : {asset_id : req.query.asset_id}, include: [{model : models.users}]})
+        return models.assets_assigned.findAll({ where : {asset_id : req.query.asset_id}, include: [{model : models.users, attributes : ['user_id', 'first_name','last_name', 'department']}]})
     })
     .then(assetAssign => {
         historyAssigned.push(...assetAssign)
