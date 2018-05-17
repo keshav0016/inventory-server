@@ -26,7 +26,7 @@ function login(req,res,next){
             passwordSame = false
                 
         }
-        return models.users.findOne({ where : {user_id:req.body.user_id.charAt(0).toUpperCase() + req.body.user_id.slice(1).toLowerCase()}})
+        return models.users.scope('withoutPassword').findOne({ where : {user_id:req.body.user_id.charAt(0).toUpperCase() + req.body.user_id.slice(1).toLowerCase()}})
        
     })
     .then((user) => {
