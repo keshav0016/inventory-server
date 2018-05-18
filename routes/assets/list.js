@@ -10,6 +10,7 @@ function listAssetHandler(req, res, next){
    var pagination = {}
    var searchAssetId = Number(req.query.searchAsset)
    var searchCategoryFilter = []
+    let numberSearch = Number(req.query.search) || 999999
 
    for(var key in req.query){
        if(req.query[key] === "true" && ((key === 'Available') || (key === 'Assigned') || (key === 'Service'))){
@@ -31,18 +32,18 @@ function listAssetHandler(req, res, next){
        searchCategoryFilter = ['Electronics', 'Non-Electronics', 'Other']
    }
 
-   models.assets.count()
+   models.assets.count({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_name : {ilike : "%"+Asearch+"%"}}, {asset_id : {$gte : numberSearch * 10} }, {asset_id : numberSearch}))})
    .then(numberOfRecords => {
        if(!searchAssetId){
            pagination.totalPage = Math.ceil(numberOfRecords / 10);
            pagination.currentPage = page;
-           return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_name : {ilike : "%"+Asearch+"%"}})), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
+           return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_name : {ilike : "%"+Asearch+"%"}}, {asset_id : {$gte : numberSearch * 10}}, {asset_id : numberSearch} )), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
        }
-       else{
-           pagination.totalPage = 1
-           pagination.currentPage = 1;
-           return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_id : searchAssetId})), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
-        }
+    //    else{
+    //        pagination.totalPage = 1
+    //        pagination.currentPage = 1;
+    //        return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_id : searchAssetId})), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
+    //     }
     })
    .then(assets => {
        res.json({
