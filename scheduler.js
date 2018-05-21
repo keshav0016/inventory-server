@@ -17,8 +17,8 @@ var assetRejectedCount;
 var assetDetails1 = [];
 var consumableDetails1 = [];
 
-var sched = later.parse.recur().every(10).second(),
-// var sched = later.parse.recur().on(17).hour().onWeekday(),
+// var sched = later.parse.recur().every(10).second(),
+var sched = later.parse.recur().on(17).hour().onWeekday(),
 t = later.setInterval(itemStatusReportEmail,sched);
 var limitDate = new Date(Number(new Date()) - (24*60*60*1000))
 
