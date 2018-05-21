@@ -39,7 +39,7 @@ function login(req,res,next){
             user.token = [newToken]
         }
         // res.cookie('token',user.token[user.token.length-1],{encode:String})
-        res.cookie('token', newToken, {encode : String, maxAge : 604800});     
+        res.cookie('token', newToken, {encode : String, maxAge : 604800000});     
         return user.update({
             token : user.token
         })
