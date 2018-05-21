@@ -48,6 +48,8 @@ function createTicket(req,res){
     }
 
     if(req.body.item_type === 'assets'){
+        class StopPromise extends Error  { }
+        
         ticketObj.requested_asset_item = req.body.item
         models.type.findOne({where : {assetType: req.body.item}})
         .then(type => {
@@ -59,6 +61,7 @@ function createTicket(req,res){
                 res.json({
                     message : 'You already own this kind of Asset'
                 })
+                throw new StopPromise()
             }
             else{
                 return models.ticket.findOne({where : {user_id : req.currentUser.user_id, requested_asset_item : req.body.item, status : 'Pending'}})
@@ -69,6 +72,7 @@ function createTicket(req,res){
                 res.json({
                     message : 'You have already requested for this asset'
                 })
+                throw new StopPromise()
             }
             else{
                 ticketObj.requested_asset_id = null;
@@ -87,6 +91,9 @@ function createTicket(req,res){
         })
         .then(() => {
             console.log('mail sent')
+        })
+        .catch(StopPromise, () => {
+            console.log('stop')
         })
         .catch(error=>{
             res.json({
