@@ -18,45 +18,47 @@ var assetDetails1 = [];
 var consumableDetails1 = [];
 
 var sched = later.parse.recur().every(10).second(),
+// var sched = later.parse.recur().on(17).hour().onWeekday(),
 t = later.setInterval(itemStatusReportEmail,sched);
+var limitDate = new Date(Number(new Date()) - (24*60*60*1000))
 
 function itemStatusReportEmail(){
-    models.ticket.count({where: {item_type : 'consumables'}})
+    models.ticket.count({where: {item_type : 'consumables', createdAt : {gt : limitDate}}})
     .then(totalConsumable => {
         totalConsumableCount = totalConsumable;
-        return models.ticket.count({ where: {item_type : 'consumables', status : 'Pending'}})
+        return models.ticket.count({ where: {item_type : 'consumables', status : 'Pending', createdAt : {gt : limitDate}}})
     })
     .then(pending => {
         consumablePendingCount = pending;
-        return models.ticket.count({where: {item_type : 'consumables', status : 'Accepted'}})
+        return models.ticket.count({where: {item_type : 'consumables', status : 'Accepted', createdAt : {gt : limitDate}}})
     })
     .then(accepted => {
         consumableAcceptedCount = accepted;
-        return models.ticket.count({where: {item_type : 'consumables', status : 'Rejected'}})
+        return models.ticket.count({where: {item_type : 'consumables', status : 'Rejected', createdAt : {gt : limitDate}}})
     })
     .then(rejected =>{
         consumableRejectedCount = rejected;
-        return models.ticket.count({ where: {item_type : 'assets'}})
+        return models.ticket.count({ where: {item_type : 'assets', createdAt : {gt : limitDate}}})
     })
     .then(totalAsset => {
         totalAssetCount = totalAsset;
-        return models.ticket.count({where: {item_type : 'assets', status : 'Pending'}})
+        return models.ticket.count({where: {item_type : 'assets', status : 'Pending', createdAt : {gt : limitDate}}})
     })
     .then(pending => {
         assetPendingCount = pending;
-        return models.ticket.count({where: {item_type : 'assets', status : 'Accepted'}})
+        return models.ticket.count({where: {item_type : 'assets', status : 'Accepted', createdAt : {gt : limitDate}}})
     })
     .then(accepted => {
         assetAcceptedCount = accepted;
-        return models.ticket.count({where: {item_type : 'assets', status : 'Rejected'}})
+        return models.ticket.count({where: {item_type : 'assets', status : 'Rejected', createdAt : {gt : limitDate}}})
     })
     .then(rejected =>{
         assetRejectedCount = rejected;
-        return models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {item_type : 'assets'}, attributes: ['requested_asset_item','status']})
+        return models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {item_type : 'assets', createdAt : {gt : limitDate}}, attributes: ['requested_asset_item','status']})
     })
     .then(assetDetails => {
         assetDetails1.push(...assetDetails)
-        return models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {item_type : 'consumables'}, attributes: ['requested_consumable_item','status']})
+        return models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {item_type : 'consumables', createdAt : {gt : limitDate}}, attributes: ['requested_consumable_item','status']})
     })
     .then(consumableDetails => {
         consumableDetails1.push(...consumableDetails)
@@ -106,8 +108,8 @@ function itemStatusReportEmail(){
         let bitmap = fs.readFileSync(filename);
         imageBase64URL = new Buffer(bitmap).toString('base64');
         const msg = {
-        to: 'emmanuel.b@westagilelabs.com',
-        from: 'keshav.b@westagilelabs.com',
+            to: 'keshav.b@westagilelabs.com',
+            from: 'emmanuel.b@westagilelabs.com',
         subject: 'Testing',
         text: 'DAILY RESOURCE REPORT',
         attachments: [
@@ -120,7 +122,11 @@ function itemStatusReportEmail(){
             },
           ]
         };
-        sgMail.send(msg).then(()=>{fs.unlinkSync('./report.xlsx')});
+        return sgMail.send(msg)
+    })
+    .then(()=>{
+        fs.unlinkSync('./report.xlsx')
+        console.log('mail sent')
     })
     .catch(error => {
         console.log(error)
