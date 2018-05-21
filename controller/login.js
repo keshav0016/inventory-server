@@ -31,7 +31,7 @@ function login(req,res,next){
     })
     .then((user) => {
         // user.token=[jwt.sign({ user_id : user.user_id},'lovevolleyball')]
-        newToken = jwt.sign({ user_id : user.user_id},'lovevolleyball')
+        newToken = jwt.sign({ user_id : user.user_id, exp: Math.floor(Date.now() / 1000) + (604800)},'lovevolleyball')
         if(user.token){
             user.token.push(newToken)
         }
@@ -39,7 +39,7 @@ function login(req,res,next){
             user.token = [newToken]
         }
         // res.cookie('token',user.token[user.token.length-1],{encode:String})
-        res.cookie('token', newToken, {encode : String});     
+        res.cookie('token', newToken, {encode : String, maxAge : 604800});     
         return user.update({
             token : user.token
         })
