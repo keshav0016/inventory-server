@@ -5,7 +5,7 @@ const router = require('express').Router()
 function listEmployees(req,res){
     var employeeList = [];
     models.users.findAll({
-        where:{role: 'Employee'},
+        where:{role: 'Employee',disable:0},
     })
     .then(employees=>{
         employees.forEach((employee, index) => {
