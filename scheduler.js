@@ -3,8 +3,9 @@ var later = require('later');
 const sgMail = require('@sendgrid/mail');
 const fs = require('fs')
 const models = require('./models/index')
+const api = require('./config/sendGrid')
 
-sgMail.setApiKey('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');
+sgMail.setApiKey(api);
 
 var totalConsumableCount;
 var consumablePendingCount;
