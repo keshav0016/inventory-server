@@ -43,7 +43,7 @@ const forgotPasswordRouter = require('./controller/forgotPassword')
 const qrCodeRouter = require('./routes/assets/qrCode')
 
 app.use(cors({
-    origin: 'http://ims-tool.westagilelabs.com',
+    origin: 'https://ims-tool.westagilelabs.com',
     credentials: true
 }));
 
