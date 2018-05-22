@@ -31,15 +31,14 @@ function login(req,res,next){
     })
     .then((user) => {
         // user.token=[jwt.sign({ user_id : user.user_id},'lovevolleyball')]
-        newToken = jwt.sign({ user_id : user.user_id, exp: Math.floor(Date.now() / 1000) + (604800)},'lovevolleyball')
+        newToken = jwt.sign({ user_id : user.user_id, /* exp: Math.floor(Date.now() / 1000) + (5) */},'lovevolleyball')
         if(user.token){
             user.token.push(newToken)
-        }
-        else{
+        } else{
             user.token = [newToken]
         }
         // res.cookie('token',user.token[user.token.length-1],{encode:String})
-        res.cookie('token', newToken, {encode : String, maxAge : 604800000});     
+        res.cookie('token', newToken, {encode : String, maxAge : 1000 * 60 * 15});     
         return user.update({
             token : user.token
         })

@@ -11,7 +11,8 @@ function admintokenMiddleware(req,res,next){
         models.users.scope('withoutPassword').findOne({ where : {user_id:decodedtoken.user_id , role : 'Admin',token : {$contains : [receivedToken]}}})
         .then(user=>{
             if(user){
-                req.currentUser=user,
+                req.currentUser=user;
+                res.cookie('token', receivedToken, {encode : String, maxAge : 1000 * 60 * 15});                
                 next()
                 
             }else{
