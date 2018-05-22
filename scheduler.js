@@ -110,8 +110,8 @@ function itemStatusReportEmail(){
         const msg = {
             to: 'keshav.b@westagilelabs.com',
             from: 'emmanuel.b@westagilelabs.com',
-        subject: 'Testing',
-        text: 'DAILY RESOURCE REPORT',
+        subject: 'Daily resource request report.',
+        text: 'Daily resource request report.',
         attachments: [
             {
               content: imageBase64URL,
