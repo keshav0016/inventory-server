@@ -24,7 +24,7 @@ function tokenMiddleware(req,res,next){
         })
     }
     else{
-        res.status(401)
+        res.status(401).send('No token found')
     }
 }
 module.exports=exports=tokenMiddleware
