@@ -110,7 +110,7 @@ function itemStatusReportEmail(){
         imageBase64URL = new Buffer(bitmap).toString('base64');
         const msg = {
             to: 'hr@westagilelabs.com',
-            from: 'emmanuel.b@westagilelabs.com',
+            from: 'hr@westagilelabs.com',
         subject: 'Daily resource request report.',
         text: 'Daily resource request report.',
         attachments: [
