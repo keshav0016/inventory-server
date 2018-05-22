@@ -133,3 +133,28 @@ function itemStatusReportEmail(){
         console.log(error)
     })
 }
+
+
+var deleteTokenSchedule = later.parse.recur().on(5).hour(),
+f = later.setInterval(deleteTokenFunction, deleteTokenSchedule);
+
+function deleteTokenFunction(){
+    let saveAllUserPromise = []
+    models.users.findAll()
+    .then(users => {
+        users.forEach(user => {
+            user.token = []
+            saveAllUserPromise.push(user.save())
+        });
+        return Promise.resolve(users)
+    })
+    .then(users => {
+        return Promise.all(saveAllUserPromise)
+    })
+    .then(() => {
+        console.log('token removed')
+    })
+    .catch(error => {
+        console.log(error)
+    })
+}
