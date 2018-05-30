@@ -23,6 +23,9 @@ var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
 t = later.setInterval(itemStatusReportEmail,sched);
 var limitDate = new Date(Number(new Date()) - (24*60*60*1000))
 
+
+
+// Function to send the resource request email
 function itemStatusReportEmail(){
     models.ticket.count({where: {item_type : 'consumables', createdAt : {gt : limitDate}}})
     .then(totalConsumable => {
@@ -140,9 +143,11 @@ function itemStatusReportEmail(){
 }
 
 
-var deleteTokenSchedule = later.parse.recur().on(5).hour(),
+var deleteTokenSchedule = later.parse.recur().on('23:30:00').time(),
 f = later.setInterval(deleteTokenFunction, deleteTokenSchedule);
 
+
+// Function to clear the token array of database
 function deleteTokenFunction(){
     let saveAllUserPromise = []
     models.users.findAll()
