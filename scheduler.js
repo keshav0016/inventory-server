@@ -115,8 +115,8 @@ function itemStatusReportEmail(){
         let bitmap = fs.readFileSync(filename);
         imageBase64URL = new Buffer(bitmap).toString('base64');
         const msg = {
-            to: 'hr@westagilelabs.com',
-            from: 'hr@westagilelabs.com',
+            to: 'emmanuel.b@westagilelabs.com',
+            from: 'keshav.b@westagilelabs.com',
         subject: 'Daily resource request report.',
         text: 'Daily resource request report.',
         attachments: [
