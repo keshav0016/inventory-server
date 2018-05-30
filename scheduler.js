@@ -19,7 +19,7 @@ var assetDetails1 = [];
 var consumableDetails1 = [];
 
 // var sched = later.parse.recur().every(10).second(),
-var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
+var sched = later.parse.recur().on('11:05:00').time().onWeekday() ,
 t = later.setInterval(itemStatusReportEmail,sched);
 var limitDate = new Date(Number(new Date()) - (24*60*60*1000))
 
@@ -114,8 +114,8 @@ function itemStatusReportEmail(){
         let bitmap = fs.readFileSync(filename);
         imageBase64URL = new Buffer(bitmap).toString('base64');
         const msg = {
-            to: 'emmanuel.b@westagilelabs.com',
-            from: 'keshav.b@westagilelabs.com',
+            to: 'keshav.b@westagilelabs.com',
+            from: 'emmanuel.b@westagilelabs.com',
         subject: 'Daily resource request report.',
         text: 'Daily resource request report.',
         attachments: [
