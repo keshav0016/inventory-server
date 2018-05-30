@@ -20,7 +20,7 @@ var consumableDetails1 = [];
 
 // var sched = later.parse.recur().every(10).second(),
 later.date.localTime();
-var sched = later.parse.recur().on('17:00:00').time().onWeekday() ,
+var sched = later.parse.recur().on('15:30:00').time().onWeekday() ,
 t = later.setInterval(itemStatusReportEmail,sched);
 var limitDate = new Date(Number(new Date()) - (24*60*60*1000))
 
