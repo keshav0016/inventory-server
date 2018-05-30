@@ -19,7 +19,8 @@ var assetDetails1 = [];
 var consumableDetails1 = [];
 
 // var sched = later.parse.recur().every(10).second(),
-var sched = later.parse.recur().on(17).hour().onWeekday(),
+later.date.localTime();
+var sched = later.parse.recur().on('17:00:00').time().onWeekday() ,
 t = later.setInterval(itemStatusReportEmail,sched);
 var limitDate = new Date(Number(new Date()) - (24*60*60*1000))
 
@@ -77,6 +78,9 @@ function itemStatusReportEmail(){
         if(assetDetails1.length === 0){
             var Asset = [[
                 "Employee Name","Requested Item","Status"
+            ],
+            [
+                "Nil","Nil","Nil"
             ]]
         }
         else if(assetDetails1.length !== 0){
@@ -91,6 +95,8 @@ function itemStatusReportEmail(){
         if(consumableDetails1.length === 0){
             var Consumables = [[
                 "Employee Name","Requested Item","Status"
+            ],[
+                "Nil","Nil","Nil"
             ]]
         }
         else if(consumableDetails1 !== 0){
