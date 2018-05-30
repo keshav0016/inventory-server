@@ -10,7 +10,7 @@ function listEmployee(req, res) {
     .then(numberOfRecords => {
         pagination.totalPage = Math.ceil(numberOfRecords / 10);
         pagination.currentPage = page;
-        return models.users.scope('withoutPassword').findAll({where:{role:'Employee', department : {like : department}}, limit: 10, offset: (page - 1) * 10})
+        return models.users.scope('withoutPassword').findAll({where:{role:'Employee', department : {like : department}},order:[['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
     })
     .then(user=> {
         res.json({user, message:'employees list is found', pagination});
