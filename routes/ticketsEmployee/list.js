@@ -36,7 +36,7 @@ function listTicket(req,res){
         if(ticketConsumables){
             ticketsConsumableListing.push(...ticketConsumables)
         }
-        return models.ticket.count({where : {status : {in : searchFilter}, item_type : 'consumables'}})
+        return models.ticket.count({where : {user_id : req.currentUser.user_id, status : {in : searchFilter}, item_type : 'consumables'}})
               
     })
     .then(numberOfRecords => {
@@ -48,7 +48,7 @@ function listTicket(req,res){
         if(ticketsAssets){
             ticketsAssetsListing.push(...ticketsAssets);
         }
-        return models.ticket.count({where : {status : {in : searchFilter}, item_type : 'assets'}})
+        return models.ticket.count({where : {user_id : req.currentUser.user_id, status : {in : searchFilter}, item_type : 'assets'}})
     })
     .then(numberOfRecords => {
         assetPagination.totalPage = Math.ceil(numberOfRecords / 10);
