@@ -1,9 +1,15 @@
 const models = require('../../models/index')
+const sgMail = require('@sendgrid/mail');
+const api = require('../../config/sendGrid')
+
+sgMail.setApiKey(api);
 
 function acceptConsumableTicketHandler(req, res){
     var user;
     var ticketQuantity
     var reduce_quantity;
+    var consumableName;
+    var reason = req.body.reason;
     models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
     .then(ticket => {
         ticketQuantity = ticket.quantity
@@ -11,6 +17,7 @@ function acceptConsumableTicketHandler(req, res){
     })
     .then(consumable => {
         if(consumable.disable === 0){
+                consumableName = consumable.name;
             if(ticketQuantity < consumable.quantity){
                 models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
                 .then(ticket => {
@@ -38,7 +45,19 @@ function acceptConsumableTicketHandler(req, res){
                     consumables.quantity = updated_quantity
                     return consumables.save()
                 })
-                .then(assetAssigned => {
+                .then(consumables => {
+                    return models.users.findOne({ where : {user_id : user}})
+                })
+                .then(users => {
+                    const msg = {
+                        to : users.email,
+                        from : 'hr@westagilelabs.com'
+                        ,subject : `Consumable ${consumableName} ticket request accepted`
+                    ,html : `<p>Hello ${users.first_name},<br /><br />The ${consumableName} consumable request has been accepted<br /><br />Remarks : ${reason}</p>`
+                    }  
+                    return sgMail.send(msg)
+                })
+                .then(() => {
                     res.json({
                         message : "Ticket Accepted"
                     })

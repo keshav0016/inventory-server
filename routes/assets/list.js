@@ -5,7 +5,8 @@ const Sequelize = require('sequelize')
 
 function listAssetHandler(req, res, next){
    var page = Number(req.query.page) || 1
-   var Asearch = req.query.search 
+   var Asearch = req.query.search
+   var serialSearch = Number(req.query.search)
    var searchFilter = []
    var pagination = {}
    var searchAssetId = Number(req.query.searchAsset)
@@ -32,12 +33,12 @@ function listAssetHandler(req, res, next){
        searchCategoryFilter = ['Electronics', 'Non-Electronics', 'Other']
    }
 
-   models.assets.count({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_name : {ilike : "%"+Asearch+"%"}}, {asset_id : {$gte : numberSearch * 10} }, {asset_id : numberSearch}))})
+   models.assets.count({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_name : {ilike : "%"+Asearch+"%"}}, {asset_id : {$gte : numberSearch * 10} }, {asset_id : numberSearch}, {serial_number : {ilike : serialSearch+'%'}}))})
    .then(numberOfRecords => {
        if(!searchAssetId){
            pagination.totalPage = Math.ceil(numberOfRecords / 10);
            pagination.currentPage = page;
-           return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_name : {ilike : "%"+Asearch+"%"}}, {asset_id : {$gte : numberSearch * 10}}, {asset_id : numberSearch} )), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
+           return models.assets.findAll({ where : Sequelize.and({current_status : {in : searchFilter}}, {category : {in : searchCategoryFilter}}, Sequelize.or({asset_name : {ilike : "%"+Asearch+"%"}}, {asset_id : {$gte : numberSearch * 10}}, {asset_id : numberSearch}, {serial_number : {ilike : serialSearch+'%'}} )), order : [['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
        }
     //    else{
     //        pagination.totalPage = 1
