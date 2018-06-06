@@ -17,7 +17,7 @@ function createTicket(req,res){
 
     sgMail.setApiKey(api)
     const msg = {
-        to : process.env.NOTIFICATION_EMAIL_ADDRESS
+        to : req.currentUser.email
         , from : 'hr@westagilelabs.com'
     }
 
