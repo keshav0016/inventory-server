@@ -18,7 +18,7 @@ function createTicket(req,res){
     sgMail.setApiKey(api)
     const msg = {
         to : 'hr@westagilelabs.com'
-        , from : 'hr@westagilelabs.com'
+        , from : 'noreply@westagilelabs.com'
     }
 
     var maxLimit
