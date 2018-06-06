@@ -25,7 +25,7 @@ function listConsumableHandler(req, res, next){
 
     var pagination = {}
 
-    models.consumables.count()
+    models.consumables.count({where: {quantity:{between:[min,max]},name:{ilike:'%'+smallKeyword+'%'}}})
     .then(numberOfRecords => {
         pagination.totalPage = Math.ceil(numberOfRecords / 10);
         pagination.currentPage = page;
