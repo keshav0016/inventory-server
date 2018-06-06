@@ -29,7 +29,7 @@ function listTicketToAdminHandler(req, res, next){
         if(ticketsAssetsListing){
             ticketsAssetsListingToAdmin.push(...ticketsAssetsListing);
         }
-        return models.ticket.count({where : {status : {in : searchFilter}, item_type : 'assets'}})
+        return models.ticket.count({include : [{ model : models.users, attributes : ['first_name','last_name'], where : {disable : 0}}], where : {status : {in : searchFilter}, item_type : 'assets'}})
     })
     .then(numberOfRecords => {
         assetPagination.totalPage = Math.ceil(numberOfRecords / 10);
