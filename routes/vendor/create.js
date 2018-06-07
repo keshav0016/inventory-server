@@ -3,17 +3,27 @@ const router = require('express').Router()
 
 
 function createVendorHandler(req, res, next){
-    var newVendor = models.vendor.build({
-        name : req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase(),
-        address : req.body.address,
-        contact : req.body.contact
-        
-    })
-    return newVendor.save()
+    models.vendor.findOne({where : {name : req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase()}})
     .then(vendor => {
-        res.json({
-            message: 'Vendor created'
-        })
+        if(vendor){
+            res.json({
+                message : 'Vendor is already there.'
+            })
+        }
+        else{
+            var newVendor = models.vendor.build({
+                name : req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase(),
+                address : req.body.address,
+                contact : req.body.contact
+                
+            })
+            return newVendor.save()
+            .then(vendor => {
+                res.json({
+                    message: 'Vendor created'
+                })
+            })
+        }
     })
     .catch(error => {
         if(error){
@@ -33,6 +43,7 @@ function createVendorHandler(req, res, next){
             })
         }
     })
+    
 }
 
 
