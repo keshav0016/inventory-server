@@ -5,7 +5,7 @@ const router = require('express').Router()
 function updateVendorHandler(req, res, next){
     models.vendor.findOne({where : {id : req.body.id}})
     .then(vendor => {
-        vendor.name = req.body.name,
+        vendor.name = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase(),
         vendor.address = req.body.address
         vendor.contact = req.body.contact
         return vendor.save()
