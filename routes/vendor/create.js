@@ -4,7 +4,7 @@ const router = require('express').Router()
 
 function createVendorHandler(req, res, next){
     var newVendor = models.vendor.build({
-        name : req.body.name,
+        name : req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase(),
         address : req.body.address,
         contact : req.body.contact
         
