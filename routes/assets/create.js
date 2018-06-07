@@ -6,11 +6,11 @@ function createAssetHandler(req, res, next){
     models.assets.findOne({where :{asset_name : req.body.asset_name.charAt(0).toUpperCase() + req.body.asset_name.slice(1).toLowerCase(),
     }})
     .then(asset => {
-        if(asset){
-            res.json({
-                message: 'asset is already there'
-            })
-        }else{
+        // if(asset){
+        //     res.json({
+        //         message: 'asset is already there'
+        //     })
+        // }else{
             models.assets.create({
                 serial_number : req.body.serial_number,
                 asset_name : req.body.asset_name.charAt(0).toUpperCase() + req.body.asset_name.slice(1).toLowerCase(),
@@ -39,7 +39,7 @@ function createAssetHandler(req, res, next){
                     errors: SequelizeValidationError.errors
                 })
             })
-        }
+        // }
     })
     .catch(error => {
         console.error(error)
