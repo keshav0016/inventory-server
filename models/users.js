@@ -16,20 +16,10 @@ module.exports = (sequelize, DataTypes) => {
     first_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isAlpha: {
-          msg: 'first name should be alphabets'
-        }
-      }
     },
     last_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isAlpha: {
-          msg: 'last name should be alphabets'
-        }
-      }
     },
     age: {
       type: DataTypes.INTEGER,
