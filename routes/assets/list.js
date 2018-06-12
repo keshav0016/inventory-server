@@ -11,7 +11,7 @@ function listAssetHandler(req, res, next){
    var pagination = {}
    var searchAssetId = Number(req.query.searchAsset)
    var searchCategoryFilter = []
-    let numberSearch = Number(req.query.search) || 999999
+    let numberSearch = Number(req.query.search) || Number.MAX_VALUE
 
    for(var key in req.query){
        if(req.query[key] === "true" && ((key === 'Available') || (key === 'Assigned') || (key === 'Service'))){
