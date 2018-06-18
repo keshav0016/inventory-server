@@ -52,7 +52,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isEmail: true
-      }
+      },
+      unique:true
     },
     disable: {
       type: DataTypes.INTEGER
