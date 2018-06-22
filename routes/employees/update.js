@@ -21,13 +21,14 @@ function updateEmployee(req, res) {
             })
             .then(function (user) {
                 res.json({message: 'employee has been updated'});
-            });
+            })
+            .catch(SequelizeValidationError=>{
+                console.log(SequelizeValidationError)
+                res.json({
+                    error: SequelizeValidationError.errors
+                })
+            })
         }
-    })
-    .catch(SequelizeValidationError=>{
-        res.json({
-            error: SequelizeValidationError.errors
-        })
     })
     .catch(error=>{
         res.json({
