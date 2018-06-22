@@ -12,10 +12,14 @@ function login(req,res,next){
     .then(user=>{
         if(user && user.disable !== 1){
             return  argon2.verify(user.password, user.user_id)            
+        }if(user.disable === 0){
+            res.json({
+                message: "User is disabled"
+            })
         }
         else{
             res.json({
-                message: 'user not found'
+                message: 'user not found ',
             })
         }
     })
