@@ -16,7 +16,7 @@ module.exports = exports = new LocalStrategy({usernameField : 'user_id', passwor
                     if(match){
                         return done(null, true)
                     }else{
-                        console.log('wrong')
+
                         return done(null, false, {message : 'incorrect password'})
 
                     }

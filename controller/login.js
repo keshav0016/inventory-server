@@ -12,7 +12,7 @@ function login(req,res,next){
     .then(user=>{
         if(user && user.disable !== 1){
             return  argon2.verify(user.password, user.user_id)            
-        }if(user.disable === 0){
+        }if(user && user.disable === 1){
             res.json({
                 message: "User is disabled"
             })
