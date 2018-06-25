@@ -8,6 +8,7 @@ const argon2 = require('argon2')
 
 function login(req,res,next){
     var passwordSame = true
+    class userDisabled extends Error{}
     models.users.findOne({ where: { user_id : req.body.user_id.charAt(0).toUpperCase() + req.body.user_id.slice(1).toLowerCase()}})
     .then(user=>{
         if(user && user.disable !== 1){
@@ -16,6 +17,7 @@ function login(req,res,next){
             res.json({
                 message: "User is disabled"
             })
+            throw new userDisabled()
         }
         else{
             res.json({
@@ -51,6 +53,9 @@ function login(req,res,next){
     .then((user) => {
         res.json({success: true,  passwordSame, user})
 
+    })
+    .catch(userDisabled, () => {
+        console.error('user is disabled')
     })
     .catch(error=>{
         next(error)
