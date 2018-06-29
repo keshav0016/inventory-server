@@ -4,6 +4,10 @@ const sgMail = require('@sendgrid/mail');
 const api = require('../../config/sendGrid')
 //req.currentuser.user_id
 
+function calculateFifteenDays(date){
+}
+
+
 //Creating a ticket
 function createTicket(req,res){
     var ticketObj = {
@@ -23,13 +27,40 @@ function createTicket(req,res){
 
     var maxLimit
     if(req.body.item_type === 'consumables'){
+        class StopPromise extends Error  { }
         ticketObj.requested_consumable_item = req.body.item
+        var limitDate = new Date(Number(new Date()) - (15*24*60*60*1000))
+        let consumableId;
         models.consumables.findOne({where: {name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase(), quantity:{gt:0}}})
         .then(consumable => {
-            ticketObj.requested_asset_id = null;
-            ticketObj.requested_consumable_id = consumable.consumable_id
-            var newTicket = models.ticket.build(ticketObj)
-            return newTicket.save()
+            consumableId = consumable.consumable_id
+            return models.ticket.findOne({where : {user_id : req.currentUser.user_id, requested_consumable_id : consumable.consumable_id, status : 'Accepted', updatedAt : {gt : limitDate}}})
+        })
+        .then(ticket => {
+            if(ticket){
+                res.json({
+                    message : 'You own this item and it has not been 15 days yet'
+                })
+                throw new StopPromise()
+            }
+            else{
+                return models.ticket.findOne({where : {user_id : req.currentUser.user_id, requested_consumable_id : consumableId, status : 'Pending', updatedAt : {gt :  limitDate}}})
+            }
+            
+        })
+        .then(ticket => {
+            if(ticket){
+                res.json({
+                    message : 'You raised ticket for this item and it has not been 15 days yet'
+                })
+                throw new StopPromise()
+            }
+            else{
+                ticketObj.requested_consumable_id = consumableId
+                ticketObj.requested_asset_id = null;
+                var newTicket = models.ticket.build(ticketObj)
+                return newTicket.save()
+            }
         })
         .then(ticket => {
             msg.subject = `Ticket Request from ${req.currentUser.first_name} ${req.currentUser.last_name}`
@@ -39,6 +70,9 @@ function createTicket(req,res){
         })
         .then(() => {
             console.log('mail sent')
+        })
+        .catch(StopPromise, () => {
+            console.log('promise stopped in middle')
         })
         .catch(error=>{
             res.json({
