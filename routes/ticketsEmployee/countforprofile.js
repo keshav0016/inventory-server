@@ -18,7 +18,7 @@ function countHandler(req, res, next){
             history.push(consumables)
             
         })
-        return models.assets_assigned.findAll({ include:[{model:models.assets}], where : {user_id : req.currentUser.user_id}})
+        return models.assets_assigned.findAll({ include:[{model:models.assets}], where : {user_id : req.currentUser.user_id, to: null}})
         
     })
     .then(assetAssign => {
@@ -29,7 +29,7 @@ function countHandler(req, res, next){
         
     })
     .then(assets => {
-    assetsCount = assets;
+    assetsCount = historyAssets.length;
     return models.consumables_assigned.count({where : {user_id : req.currentUser.user_id}})
     })
     .then(consumables => {

@@ -6,9 +6,11 @@ var consumableAcceptedCount;
 var lowConsumable;
 var assetPendingCount;
 var assetAcceptedCount;
+var repairDateNear;
 
 
 function dashBoardCount(req, res, next){
+    var assetsPendingArray = [];
     models.ticket.count({ where: {item_type : 'consumables', status : 'Pending'}})
     .then(pending => {
         consumablePendingCount = pending;
@@ -31,12 +33,21 @@ function dashBoardCount(req, res, next){
         let limitDate = new Date(Number(new Date()) + (24*60*60*1000))
         return models.assets_repair.findAll({where : {to : null, expected_delivery : { lt : limitDate}}, attributes : ['asset_id', 'expected_delivery', 'vendor'], include :[{model : models.assets, attributes : ['asset_name', 'assetType', 'serial_number']}]})
     })
-    .then(repairDateNear => {
+    .then(repairAssets => {
+        repairDateNear = repairAssets
+        return models.ticket.findAll({where: {item_type : 'assets', status : 'Pending'}, include : [{model : models.users}]})
+    })
+    .then(assetsPending => {
+        assetsPending.forEach(element => {
+            if(element.user.disable === 0){
+                assetsPendingArray.push(element)
+            }
+        });
         res.json({
             pendingConsumable : consumablePendingCount,
             acceptedConsumable : consumableAcceptedCount,
             lowConsumable : lowConsumable,
-            pendingAsset : assetPendingCount,
+            pendingAsset : assetsPendingArray.length,
             acceptedAsset : assetAcceptedCount,
             repairDateNear : repairDateNear
         })
