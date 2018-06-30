@@ -3,7 +3,6 @@ const router = require('express').Router()
 const api = require('../../config/sendGrid')
 const sgMail = require('@sendgrid/mail');
 
-
 function enableEmployeeHandler(req, res, next){
     models.users.findOne({ where : {user_id : req.body.user_id}})
     .then(user => {

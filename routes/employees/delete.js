@@ -40,8 +40,7 @@ function disableEmployeeHandler(req, res, next){
                 ,subject : 'Regarding Termination'
                 ,html : `<p>Hello ${user.first_name},<br />This Email is to inform you that You will no longer be able to use the West Agile Labs's Inventory Management Tool. `
             }  
-            return sgMail.send(msg)     
-            
+            return sgMail.send(msg)       
         }
     })
     .then(() => {
