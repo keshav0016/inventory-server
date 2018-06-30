@@ -1,5 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
+const api = require('../../config/sendGrid')
+const sgMail = require('@sendgrid/mail');
 
 function disableEmployeeHandler(req, res, next){
     let userDisable = 0;
@@ -31,10 +33,21 @@ function disableEmployeeHandler(req, res, next){
     })
     .then(user => {
         if(user){
-            res.json({
-                message : 'Employee disabled successfully'
-            })
+            sgMail.setApiKey(api)
+            const msg = {
+                to : user.email,
+                from : 'hr@westagilelabs.com'
+                ,subject : 'Regarding Termination'
+                ,html : `<p>Hello ${user.first_name},<br />This Email is to inform you that You will no longer be able to use the West Agile Labs's Inventory Management Tool. `
+            }  
+            return sgMail.send(msg)     
+            
         }
+    })
+    .then(() => {
+        res.json({
+            message : 'Employee disabled successfully'
+        })
     })
     .catch(error => {
         res.json({
