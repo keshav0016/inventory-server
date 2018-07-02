@@ -14,10 +14,9 @@ function listEmployee(req, res) {
         pagination.totalPage = Math.ceil(numberOfRecords / 10);
         pagination.currentPage = page;
         // return models.users.scope('withoutPassword').findAll({where : {role:'Employee', department : {like : department},$or : []},order:[['createdAt','DESC']], limit: 10, offset: (page - 1) * 10})
-        return models.users.scope('withoutPassword').findAll({where : Sequelize.and({role:'Employee'}, {department : {like : department}},Sequelize.or({user_id : {like : '%'+idSearch+'%'}},Sequelize.where(Sequelize.fn('CONCAT',Sequelize.col('first_name'),' ',Sequelize.col('last_name')),{ilike : '%'+nameSearch+'%'}))),order:[['disable','ASC']], limit: 10, offset: (page - 1) * 10})
+        return models.users.scope('withoutPassword').findAll({where : Sequelize.and({role:'Employee'}, {department : {like : department}},Sequelize.or({user_id : {like : '%'+idSearch+'%'}},Sequelize.where(Sequelize.fn('CONCAT',Sequelize.col('first_name'),' ',Sequelize.col('last_name')),{ilike : '%'+nameSearch+'%'}))),order:[['createdAt','DESC'],['disable','ASC']], limit: 10, offset: (page - 1) * 10})
     })
     .then(user=> {
-        user.sort(function(a, b){return b.createdAt - a.createdAt})
         res.json({user, message:'employees list is found', pagination});
     })
     .catch(error=>{
