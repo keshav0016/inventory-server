@@ -9,7 +9,7 @@ const api = require('../config/sendGrid')
 function forgotPasswordHandler(req, res, next){
     models.users.findOne({where : {user_id : req.body.user_id, email : req.body.email}})
     .then(user => {
-        if(user){
+        if(user && user.disable === 0){
             sgMail.setApiKey(api)
             const msg = {
                 to : user.email,
@@ -32,6 +32,11 @@ function forgotPasswordHandler(req, res, next){
             })
             .catch(error => {
                 res.json({error : error})
+            })
+        }
+        if(user && user.disable === 1){
+            res.json({
+                message: 'User is Disabled'
             })
         }
         else{
