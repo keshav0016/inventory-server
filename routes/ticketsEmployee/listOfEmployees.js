@@ -6,7 +6,8 @@ function listEmployees(req,res){
     var employeeList = [];
     models.users.findAll({
         where:{role: 'Employee',disable:0},
-        attributes:['user_id','first_name','last_name']
+        attributes:['user_id','first_name','last_name'],
+        order:[['first_name','ASC']]
     })
     .then(employees=>{
         employees.forEach((employee, index) => {
