@@ -5,18 +5,18 @@ const sgMail = require('@sendgrid/mail');
 
 function disableEmployeeHandler(req, res, next){
     let userDisable = 0;
+    class StopPromise extends Error {}
     models.users.findOne({include: [{model : models.assets_assigned}], where : {user_id : req.body.user_id}})
     .then(user => {
-        user.assets_assigneds.forEach(assets_assigned => {
-            if(assets_assigned.to === null){
-                userDisable = 0;
-                return Promise.resolve(user)
-            }else{
-                userDisable = 1;
-            }
+        let checkAssetOccupied =  user.assets_assigneds.some(assets_assigned => {
+            return assets_assigned.to === null
         });
-        if(user.assets_assigneds.length === 0){
+
+        if(!checkAssetOccupied || user.assets_assigneds.length === 0){
             userDisable = 1;
+        }
+        else{
+            userDisable = 0;
         }
         return Promise.resolve(user)        
     })
@@ -25,6 +25,7 @@ function disableEmployeeHandler(req, res, next){
             res.json({
                 message : 'recover the assets first'
             })
+            throw new StopPromise()
         }
         else{
             user.disable = 1;
@@ -47,6 +48,9 @@ function disableEmployeeHandler(req, res, next){
         res.json({
             message : 'Employee disabled successfully'
         })
+    })
+    .catch(StopPromise, () => {
+        console.log('stopped promise')
     })
     .catch(error => {
         res.json({
