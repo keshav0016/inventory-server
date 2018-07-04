@@ -1,5 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
+const sgMail = require('@sendgrid/mail');
+const api = require('../../config/sendGrid')
 
 function assignAssetHandler(req, res, next){
     let maxLimit;
@@ -23,21 +25,37 @@ function assignAssetHandler(req, res, next){
 
 
 function checkAssetName(req, res, next){
+    var assetName
     return models.assets.findOne({where : {asset_id : req.body.asset_id}})
     .then(asset => {
         asset.current_status = "Assigned"
         return asset.save()
     })
     .then(asset => {
+        assetName = asset.asset_name;
         var newAssetAssign = models.assets_assigned.build({
             asset_id : asset.asset_id,
             user_id : req.body.user_id,
             from : req.body.from,
             expected_recovery : req.body.expected_recovery
-        })
+        })        
         return newAssetAssign.save()
     })
     .then(assetAssign => {
+        return models.users.findOne({where: {user_id: req.body.user_id}})
+    })
+    .then(user => {
+        sgMail.setApiKey(api)
+        const msg = {
+            to : user.email,
+            from : 'hr@westagilelabs.com'
+            ,subject : 'Welcome to Wal Inventory management system'
+        ,html : `<p>Hello ${user.first_name},<br />Welcome to the west agile labs' Inventory management system.<br /><br />You have been assigned the Asset, ${assetName} From ${req.body.from}  To ${req.body.expected_recovery}<br/></p>`
+        }  
+        return sgMail.send(msg)      
+       
+    })
+    .then(() => {
         res.json({
             message : "Asset Assigned"
         })
