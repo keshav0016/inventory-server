@@ -15,7 +15,7 @@ function listVendorHandler(req, res, next){
         limitVendors = 100
     }
 
-    models.vendor.findAll({ limit: limitVendors, offset: (page - 1) * 10, order : [['id', 'ASC']] })
+    models.vendor.findAll({ limit: limitVendors, offset: (page - 1) * 10, order : [['id', 'DESC']] })
     .then(vendorListing => {
         
         if(vendorListing){
