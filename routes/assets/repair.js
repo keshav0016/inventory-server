@@ -7,8 +7,8 @@ function repairAssetHandler(req, res, next){
     var newRepairAsset = models.assets_repair.build({
         asset_id: req.body.asset_id,
         vendor: req.body.vendor,
-        from: new Date(req.body.from).toUTCString(),
-        expected_delivery: new Date(req.body.expected_delivery).toUTCString()
+        from: req.body.from,
+        expected_delivery: req.body.expected_delivery
     })
     return newRepairAsset.save()
     .then(assetRepair => {
