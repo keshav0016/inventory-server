@@ -24,29 +24,52 @@ function listTicketToAdminHandler(req, res, next){
     var ticketsConsumableListingToAdmin = [];
     var ticketsAssetsListingToAdmin = [];
     
-    models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name'], where : {disable : 0}}],where : {status : {in : searchFilter}, item_type : 'assets'}, limit: 10, offset: (assetPage - 1) * 10, order : [['date', 'DESC']] })
+    models.ticket.findAll({
+        include : [{ model : models.users, attributes : ['first_name','last_name'],where : {disable : 0}}], 
+        where : {status : {in : searchFilter}, item_type : 'assets'}, 
+        limit: 10, 
+        offset: (assetPage - 1) * 10, 
+        order : [['date', 'DESC']] 
+    })
     .then(ticketsAssetsListing => {
         if(ticketsAssetsListing){
             ticketsAssetsListingToAdmin.push(...ticketsAssetsListing);
         }
-        return models.ticket.count({include : [{ model : models.users, attributes : ['first_name','last_name'], where : {disable : 0}}], where : {status : {in : searchFilter}, item_type : 'assets'}})
+        return models.ticket.count({
+            include : [{ model : models.users, attributes : ['first_name','last_name'], 
+            where : {disable : 0}}],
+            where : {status : {in : searchFilter}, 
+            item_type : 'assets'}
+        })
     })
     .then(numberOfRecords => {
         assetPagination.totalPage = Math.ceil(numberOfRecords / 10);
         assetPagination.currentPage = assetPage;
-        return models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {status : {in : searchFilter}, item_type : 'consumables'}, limit: 10, offset: (consumablePage - 1) * 10, order : [['date', 'DESC']] })
+        return models.ticket.findAll({
+            include : [{ model : models.users, attributes : ['first_name','last_name']}],
+            where : {status : {in : searchFilter}, 
+            item_type : 'consumables'}, 
+            limit: 10, 
+            offset: (consumablePage - 1) * 10,
+            order : [['date', 'DESC']]
+        })
     })
     .then(ticketConsumableListing => {
         if(ticketConsumableListing){
             ticketsConsumableListingToAdmin.push(...ticketConsumableListing)
         }
-        return models.ticket.count({where : {status : {in : searchFilter}, item_type : 'consumables'}})
+        return models.ticket.count({
+            where : {status : {in : searchFilter}, item_type : 'consumables'}
+        })
     })
     .then(numberOfRecords => {
         consumablePagination.totalPage = Math.ceil(numberOfRecords / 10);
         consumablePagination.currentPage = consumablePage;
         res.json({
-            assetPagination : assetPagination, consumablePagination : consumablePagination, assetsTicket : ticketsAssetsListingToAdmin, consumableTicket : ticketsConsumableListingToAdmin
+            assetPagination : assetPagination, 
+            consumablePagination : consumablePagination, 
+            assetsTicket : ticketsAssetsListingToAdmin, 
+            consumableTicket : ticketsConsumableListingToAdmin
         })
     })
     .catch(error => {
