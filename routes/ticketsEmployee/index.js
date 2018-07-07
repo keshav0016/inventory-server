@@ -5,7 +5,7 @@ const tokenAuth = require('../../middleware/tokenAuth')
 const passwordchangehandler = require('../employees/passwordchange')
 const currentUserHandler = require('./currentEmployee')
 const countHandler = require('./countforprofile')
-
+const listOfAssetsForAssetType = require('./listOfassetsForAssetType')
 const router = require('express').Router()
 
 
@@ -16,6 +16,7 @@ router.use(listEmployeeTicketHandler)
 router.use(createTicketHandler)
 router.use(availableAssetHandler)
 router.use(countHandler)
+router.use(listOfAssetsForAssetType)
 
 
 module.exports = exports = router
