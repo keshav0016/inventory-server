@@ -109,11 +109,16 @@ function createTicket(req,res){
                 throw new StopPromise()
             }
             else{
+                return models.assets.findOne({where : {asset_name : req.body.assetName, current_status: 'Available'}})
+                
+            }
+        })
+        .then(asset => {
+                ticketObj.asset_name = asset.asset_name
                 ticketObj.requested_asset_id = null;
                 ticketObj.consumable_id = null
                 var newTicket = models.ticket.build(ticketObj)
                 return newTicket.save()
-            }
         })
         .then(ticket => {
             if(ticket){

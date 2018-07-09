@@ -8,16 +8,22 @@ function acceptAssetTicketHandler(req, res){
     var user;
     var assetName;
     var reason = req.body.reason;
-    models.ticket.findOne({ where: {ticket_number : req.body.ticket_number, status : 'Pending'}})
+    let assetId;
+    models.assets.findOne({where: {asset_name: req.body.asset}})
+    .then(asset => {
+        assetId = asset.asset_id
+        return models.ticket.findOne({ where: {ticket_number : req.body.ticket_number, status : 'Pending'}})
+    
+    })
     .then(ticket => {
         ticket.status = 'Accepted'
         ticket.reason = req.body.reason
-        ticket.requested_asset_id = req.body.requested_asset_id
+        ticket.requested_asset_id = assetId
         user = ticket.user_id
         return ticket.save()
     })
     .then(ticket => {
-        return models.assets.findOne({ where : {asset_id : ticket.requested_asset_id}})
+        return models.assets.findOne({ where : {asset_name : ticket.asset_name}})
     })
     .then(asset => {
         assetName = asset.asset_name;
@@ -26,7 +32,7 @@ function acceptAssetTicketHandler(req, res){
     })
     .then(asset => {
         var newAssetAssigned = models.assets_assigned.build({
-            asset_id : asset.asset_id,
+            asset_id : assetId,
             user_id : user,
             ticket_number : req.body.ticket_number,
             from : Date.now(),
