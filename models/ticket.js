@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     quantity: DataTypes.INTEGER,
     department: DataTypes.STRING,
     status: DataTypes.STRING,
-    reason: DataTypes.STRING
+    reason: DataTypes.STRING,
+    asset_name: DataTypes.STRING
   });
   // , {
   //   classMethods: {
