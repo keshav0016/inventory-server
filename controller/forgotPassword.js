@@ -19,8 +19,8 @@ function forgotPasswordHandler(req, res, next){
             return argon2.hash(randomPassword)
             .then(hashed => {
                 user.password = hashed
-                msg.subject = "Temporary Password for inventory management system"
-                msg.html = `<h4>Your Temporary password is ${randomPassword}</h4>`
+                msg.subject = "Temporary Password for IMS"
+                msg.html = `<h4>Your Temporary password is ${randomPassword}<br /><br />Thanks,<br /><br />Team Admin</h4>`
                 return user.save()
             })
             .then(user => {
