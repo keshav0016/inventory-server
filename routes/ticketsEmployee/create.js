@@ -63,8 +63,8 @@ function createTicket(req,res){
             }
         })
         .then(ticket => {
-            msg.subject = `Ticket Request from ${req.currentUser.first_name} ${req.currentUser.last_name}`
-            msg.html = `<h4>${req.currentUser.first_name} ${req.currentUser.last_name} (${req.currentUser.user_id}) has requested for ${req.body.item} with quantity : ${req.body.quantity}. <br />For more details, refer to ticket number ${ticket.ticket_number}<br />Sent From Inventory Management Tool</h4>`
+            msg.subject = `New Ticket has been Requested from ${req.currentUser.first_name} ${req.currentUser.last_name}`
+            msg.html = `<h4>${req.currentUser.first_name} ${req.currentUser.last_name} (${req.currentUser.user_id}) has requested for ${req.body.item} with quantity : ${req.body.quantity}. <br />For more details, refer to ticket number ${ticket.ticket_number}<br /><br />Thanks</h4>`
             res.json({message:'Ticket created'})
             return sgMail.send(msg)
         })
