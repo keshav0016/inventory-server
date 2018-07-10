@@ -26,7 +26,7 @@ function createEmployee(req, res) {
             to : user.email,
             from : 'hr@westagilelabs.com'
             ,subject : 'Welcome to Wal Inventory management system'
-        ,html : `<p>Hello ${user.first_name},<br />Welcome to the west agile labs' Inventory management system.<br /><br />Your username and password for the WAL IMS is ${user.user_id} / ${randomPassword}<br/>Please <a href='https://ims-tool.westagilelabs.com/'>Click here</a> to login</p>`
+        ,html : `<p>Hello ${user.first_name},<br />Welcome to the west agile labs' Inventory management system.<br /><br />Your username and password for the WAL IMS are ${user.user_id} / ${randomPassword}<br/>Please <a href='https://ims-tool.westagilelabs.com/'>Click here</a> to login</p>`
         }  
         return sgMail.send(msg)              
     })

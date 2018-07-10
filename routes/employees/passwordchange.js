@@ -14,6 +14,7 @@ function EmployeePasswordChange(req,res){
     .then((users) => {
         users.password = hashedPassword;
         users.email = req.body.email;
+        users.first_login = 0
         return users.save()
     })
     .then(user=>{
