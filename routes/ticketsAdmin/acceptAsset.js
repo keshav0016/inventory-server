@@ -4,6 +4,7 @@ const api = require('../../config/sendGrid')
 
 sgMail.setApiKey(api);
 
+
 function acceptAssetTicketHandler(req, res){
     var user;
     var assetName;
