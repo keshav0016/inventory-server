@@ -57,6 +57,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     disable: {
       type: DataTypes.INTEGER
+    },
+    first_login: {
+      type: DataTypes.INTEGER
     }
   }, {
     scopes: {

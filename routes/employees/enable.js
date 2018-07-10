@@ -2,11 +2,20 @@ const models = require('../../models/index')
 const router = require('express').Router()
 const api = require('../../config/sendGrid')
 const sgMail = require('@sendgrid/mail');
+const argon2 = require('argon2')
 
 function enableEmployeeHandler(req, res, next){
-    models.users.findOne({ where : {user_id : req.body.user_id}})
+    let temporaryPassword
+    let randomPassword = Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6)
+    return argon2.hash(randomPassword)
+    .then(hashed => {
+        temporaryPassword = hashed
+        return models.users.findOne({ where : {user_id : req.body.user_id}})
+    })
     .then(user => {
         user.disable = 0;
+        user.password = temporaryPassword;
+        user.first_login = 1
         return user.save()
     })
     .then(user => {
@@ -14,8 +23,8 @@ function enableEmployeeHandler(req, res, next){
         const msg = {
             to : user.email,
             from : 'hr@westagilelabs.com'
-            ,subject : 'Welcome to Wal Inventory management system'
-            ,html : `<p>Hello ${user.first_name},<br />This Email is to inform you that You will now be able to use the West Agile Labs's Inventory Management Tool with your previous credentials. `
+            ,subject : 'Welcome Back to Westagilelabs'
+            ,html : `<p>Hello ${user.first_name},<br /><br /><br />This is to inform you that You have been given access to Inventory Management Tool.Please use the credentials below to access. <br /><br /><br />User Id: ${user.user_id}<br /><br />Temporary Password: ${randomPassword}<br /><br /><br />Please click on below link(copy paste in your browser) to access.<br /><br />Link: <a href='https://ims-tool.westagilelabs.com/'>https://ims-tool.westagilelabs.com/</a>  `
         }  
         return sgMail.send(msg)     
     })

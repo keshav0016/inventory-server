@@ -38,8 +38,8 @@ function disableEmployeeHandler(req, res, next){
             const msg = {
                 to : user.email,
                 from : 'hr@westagilelabs.com'
-                ,subject : 'Regarding Termination'
-                ,html : `<p>Hello ${user.first_name},<br />This Email is to inform you that You will no longer be able to use the West Agile Labs's Inventory Management Tool. `
+                ,subject : 'Account Deactivated'
+                ,html : `<p>Hello ${user.first_name},<br /><br /><br />This Email is to inform you that Your account(Inventory Management Tool) access has been removed. please contact Admin department for further qyeries.<br /><br /><br />Thanks,<br />Team Admin </p>`
             }  
             return sgMail.send(msg)       
         }
