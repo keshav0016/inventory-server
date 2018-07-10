@@ -39,7 +39,7 @@ function disableEmployeeHandler(req, res, next){
                 to : user.email,
                 from : 'hr@westagilelabs.com'
                 ,subject : 'Account Deactivated'
-                ,html : `<p>Hello ${user.first_name},<br /><br /><br />This Email is to inform you that Your account(Inventory Management Tool) access has been removed. Please contact Admin department for further queries.<br /><br /><br />Thanks,<br />Team Admin </p>`
+                ,html : `<p>Hello ${user.first_name},<br /><br /><br />This Email is to inform you that your account(Inventory Management Tool) access has been removed. Please contact Admin department for further queries.<br /><br /><br />Thanks,<br />Team Admin </p>`
             }  
             return sgMail.send(msg)       
         }
