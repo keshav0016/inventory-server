@@ -53,7 +53,7 @@ function acceptConsumableTicketHandler(req, res){
                         to : users.email,
                         from : 'hr@westagilelabs.com'
                         ,subject : `Consumable ${consumableName} ticket request accepted`
-                    ,html : `<p>Hello ${users.first_name},<br /><br />The ${consumableName} consumable request has been accepted<br /><br />Remarks : ${reason}<br /><br />Thanks,<br /><br />Team Admin</p>`
+                    ,html : `<p>Hello ${users.first_name},<br /><br />The ${consumableName} consumable request has been accepted<br /><br />Remarks : ${reason}<br /><br />Thanks,<br /><br />TeamAdmin</p>`
                     }  
                     return sgMail.send(msg)
                 })

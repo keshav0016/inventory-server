@@ -30,7 +30,7 @@ function rejectAssetHandler(req, res, next){
             to : users.email,
             from : 'hr@westagilelabs.com'
             ,subject : `${item} ticket request rejected`
-        ,html : `<p>Hello ${users.first_name},<br /><br />The ${item} request has been rejected<br /><br />Remarks : ${reason}</p>`
+        ,html : `<p>Hello ${users.first_name},<br /><br />The ${item} request has been rejected<br /><br />Remarks : ${reason}<br /><br/>Thanks,<br/><br />TeamAdmin</p>`
         }  
         return sgMail.send(msg)
     })

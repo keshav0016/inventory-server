@@ -24,7 +24,7 @@ function enableEmployeeHandler(req, res, next){
             to : user.email,
             from : 'hr@westagilelabs.com'
             ,subject : 'Welcome Back to Westagilelabs'
-            ,html : `<p>Hello ${user.first_name},<br /><br /><br />This is to inform you that you have been given access to Inventory Management Tool. Please use the credentials below to access. <br /><br /><br />User Id: ${user.user_id}<br />Password: ${randomPassword}<br /><br /><br />Please click on below link(copy paste in your browser) to access.<br /><br />Link: <a href='https://ims-tool.westagilelabs.com/'>https://ims-tool.westagilelabs.com/</a><br /><br />Thanks,<br /><br />Team Admin</p>  `
+            ,html : `<p>Hello ${user.first_name},<br /><br /><br />This is to inform you that you have been given access to Inventory Management Tool. Please use the credentials below to access. <br /><br /><br />User Id: ${user.user_id}<br />Password: ${randomPassword}<br /><br /><br />Please click on below link(copy paste in your browser) to access.<br /><br />Link: <a href='https://ims-tool.westagilelabs.com/'>https://ims-tool.westagilelabs.com/</a><br /><br />Thanks,<br /><br />TeamAdmin</p>  `
         }  
         return sgMail.send(msg)     
     })
