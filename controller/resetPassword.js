@@ -24,7 +24,8 @@ function resetPasswordHandler(req, res, next){
                 return models.users.findOne({where : {user_id : req.body.user_id}})
             })
             .then(user => {
-                user.password = hashedPassword
+                user.password = hashedPassword,
+                user.first_login = 0
                 return user.save()
             })
             .then(user => {
