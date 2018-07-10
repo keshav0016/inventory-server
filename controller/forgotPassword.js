@@ -5,7 +5,6 @@ const sgMail = require('@sendgrid/mail');
 const api = require('../config/sendGrid')
 
 
-
 function forgotPasswordHandler(req, res, next){
     models.users.findOne({where : {user_id : req.body.user_id, email : req.body.email}})
     .then(user => {
