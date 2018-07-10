@@ -26,7 +26,7 @@ function createEmployee(req, res) {
             to : user.email,
             from : 'hr@westagilelabs.com'
             ,subject : 'Welcome to Inventory Management System(IMS)'
-        ,html : `<p>Hello ${user.first_name},<br /><br />Welcome to Inventory management system.Please use the below credentials to access the IMS. <br /><br />Employee Id: ${user.user_id}<br /> Password: ${randomPassword}<br/><br /> <br />Please <a href='https://ims-tool.westagilelabs.com/'>Click here</a> to login<br /><br />Thanks,<br /><br />Team Admin</p>`
+        ,html : `<p>Hello ${user.first_name},<br /><br />Welcome to Inventory management system.Please use the below credentials to access the IMS. <br /><br />Employee Id: ${user.user_id}<br /> Password: ${randomPassword}<br/><br /> <br />Please <a href='https://ims-tool.westagilelabs.com/'>Click here</a> to login<br /><br />Thanks,<br /><br />TeamAdmin</p>`
         }  
         return sgMail.send(msg)              
     })
