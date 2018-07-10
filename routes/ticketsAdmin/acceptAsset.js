@@ -9,7 +9,7 @@ function acceptAssetTicketHandler(req, res){
     var assetName;
     var reason = req.body.reason;
     let assetId;
-    models.assets.findOne({where: {asset_name: req.body.asset}})
+    models.assets.findOne({where: {asset_name: decodeURIComponent(req.body.asset)}})
     .then(asset => {
         assetId = asset.asset_id
         return models.ticket.findOne({ where: {ticket_number : req.body.ticket_number, status : 'Pending'}})
