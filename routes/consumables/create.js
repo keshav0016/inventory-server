@@ -22,8 +22,10 @@ function createConsumableHandler(req, res, next){
     models.consumables.findOne({ where : {name : req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase()}})
     .then((consumables) => {
         if(consumables){
+                var prevDescription = consumables.description
                 var added_quantity = Number(req.body.purchased_quantity)
                 consumables.quantity = consumables.quantity + added_quantity
+                consumables.description = prevDescription + ',  ' + req.body.description
                 return consumables.save()
                 .then(consumables => {
                     consumableid = consumables.consumable_id;
