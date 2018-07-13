@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     quantity: DataTypes.INTEGER,
     disable: DataTypes.INTEGER,
-    description: DataTypes.STRING
+    description: DataTypes.TEXT
   });
   // , {
   //   classMethods: {

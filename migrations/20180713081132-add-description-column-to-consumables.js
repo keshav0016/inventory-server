@@ -4,7 +4,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn('consumables', 'description', {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: true
     });
   },

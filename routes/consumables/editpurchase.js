@@ -6,7 +6,7 @@ var changeInQuantity;
 var previousConsumableQuantity;
 
 function updateConsumablePurchaseHandler(req, res, next){
-    models.consumables_purchased.findOne({ where : {consumable_id : req.body.consumable_id, vendor_name : req.body.vendor_name, purchase_date: req.body.purchase_date}})
+    models.consumables_purchased.findOne({ where : {consumable_id : req.body.consumable_id, vendor_name : req.body.vendor_name}})
     .then(consumablesPurchased => {
 
         previousPurchasedQuantity = consumablesPurchased.quantity
