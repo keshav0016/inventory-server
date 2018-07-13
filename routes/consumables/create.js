@@ -13,6 +13,7 @@ function createConsumablePurchasedDetails(req,res,next,consumableid){return mode
         discount : req.body.discount,
         gst : req.body.gst,
         total : req.body.total,
+        // description : req.body.description
     })
     .save()
 }
@@ -33,7 +34,8 @@ function createConsumableHandler(req, res, next){
             return models.consumables.build({
                 name : req.body.name.charAt(0).toUpperCase()+req.body.name.slice(1).toLowerCase(),
                 quantity : req.body.purchased_quantity,
-                disable: 0                
+                disable: 0  ,
+                description: req.body.description              
             })
             .save()
             .then(consumables => {
