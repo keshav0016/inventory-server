@@ -19,7 +19,7 @@ function acceptAssetTicketHandler(req, res){
     .then(ticket => {
         ticket.status = 'Accepted'
         ticket.reason = req.body.reason
-        ticket.requested_asset_id = assetId
+        ticket.requested_asset_id = req.body.requested_asset_id
         user = ticket.user_id
         return ticket.save()
     })
@@ -33,7 +33,7 @@ function acceptAssetTicketHandler(req, res){
     })
     .then(asset => {
         var newAssetAssigned = models.assets_assigned.build({
-            asset_id : assetId,
+            asset_id : req.body.requested_asset_id,
             user_id : user,
             ticket_number : req.body.ticket_number,
             from : Date.now(),

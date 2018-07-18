@@ -4,7 +4,7 @@ const router = require('express').Router()
 
 function listOfAssetsForAssetType(req,res){
     var assetsArr = [];
-    models.assets.findAll({where: {assetType: req.query.assetType, disabled: 0, current_status: "Available"}})
+    models.assets.findAll({attributes: ['asset_name'], group: ['asset_name'],where: {assetType: req.query.assetType, disabled: 0, current_status: "Available"}})
     .then(assets => {
         assets.forEach((asset, index) => {
             assetsArr.push(asset.asset_name)
