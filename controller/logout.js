@@ -21,7 +21,26 @@ function logout(req,res,next){
             return user.update({
                 token : user.token
             })   
+        }else{
+            return models.Admin.findOne({ where : {email : req.currentUser.email}})
         }
+    })
+    .then(user => {
+        if(user.role === 'Employee'){
+            res.clearCookie('token')
+            res.json({success:true})
+        }else{
+            user.token.forEach((singleToken, index) => {
+                if(singleToken === receivedToken){
+                    user.token.splice(index, 1);
+                }
+            });
+            // sequelize.query(`UPDATE users SET token[${user.token.length} - 1] = null WHERE id = ${req.currentUser.user_id}`)
+            return user.update({
+                token : user.token
+            })   
+        }
+
     })
     .then(user => {
         res.clearCookie('token')

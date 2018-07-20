@@ -8,10 +8,10 @@ function admintokenMiddleware(req,res,next){
     var receivedToken=req.cookies.token;
     if(receivedToken){
         var decodedtoken = jwt.verify(receivedToken,'lovevolleyball');
-        models.users.scope('withoutPassword').findOne({ where : {user_id:decodedtoken.user_id , role : 'Admin',token : {$contains : [receivedToken]}}})
-        .then(user=>{
-            if(user){
-                req.currentUser=user;
+        models.Admin.scope('withoutPassword').findOne({ where : {email:decodedtoken.email ,token : {$contains : [receivedToken]}}})
+        .then(admin=>{
+            if(admin){
+                req.currentUser=admin;
                 res.cookie('token', receivedToken, {encode : String, maxAge : 1000 * 60 * 15});                
                 next()
                 
