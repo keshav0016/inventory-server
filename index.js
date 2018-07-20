@@ -14,7 +14,8 @@ const config = require('./passport/config')
 const tokenAuth = require('./middleware/tokenAuth')
 const admintokenAuth = require('./middleware/admintokenAuth')
 
-
+//import admin Router
+const adminRouter = require('./routes/admin/index')
 // import assets Router
 const assetRouter = require('./routes/assets/index')
 
@@ -90,6 +91,9 @@ app.use('/api/consumables', consumableRouter)
 
 // vendor routes
 app.use('/api/vendor', vendorRouter)
+
+//admin routes
+app.use('/api/admin', adminRouter)
 
 
 // admin ticket routes

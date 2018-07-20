@@ -55,7 +55,7 @@ function createEmployee(req, res) {
 
         })
         .then(() => {
-            res.json({message: 'employee created'});            
+            res.json({message: 'admin created'});            
         })
         .catch(SequelizeValidationError=>{
             res.json({
