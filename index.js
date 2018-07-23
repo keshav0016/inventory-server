@@ -10,6 +10,9 @@ const path = require('path');
 
 const login = require('./controller/login')
 const logout = require('./controller/index')
+const changePassword = require('./controller/index')
+const changePasswordAuto = require('./controller/changePasswordAuto')
+
 const config = require('./passport/config')
 const tokenAuth = require('./middleware/tokenAuth')
 const admintokenAuth = require('./middleware/admintokenAuth')
@@ -75,6 +78,7 @@ app.use(passport.initialize());
 app.use('/api/user',login)
 app.use('/api/user',logout)
 app.use('/api/user',forgotPasswordRouter)
+app.use('/api/user', changePasswordAuto )
 
 
 // Admin auth middleware

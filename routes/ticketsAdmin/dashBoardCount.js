@@ -1,6 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 
+
 var consumablePendingCount;
 var consumableAcceptedCount;
 var lowConsumable;
@@ -18,7 +19,7 @@ function dashBoardCount(req, res, next){
     })
     .then(accepted => {
         consumableAcceptedCount = accepted;
-        return models.consumables.count({where: {quantity:{lt:10}}})
+        return models.consumables.findAll({attributes : ["name", "quantity"], where: {quantity:{lt:10}, name : { $in : ['Pens' , 'Pencils', 'Id holder', 'Stick note']}}, })
     })
     .then(low =>{
         lowConsumable = low;
