@@ -49,7 +49,7 @@ function checkAssetName(req, res, next){
         const msg = {
             to : user.email,
             from : 'hr@westagilelabs.com'
-            ,subject : 'Welcome to Wal Inventory management system'
+            ,subject : 'Welcome to Wal IMS'
         ,html : `<p>Hello ${user.first_name},<br/><br/>An Asset called ${assetName} has been assigned to you.Asset would be recovered on ${req.body.expected_recovery}.For further queries feel free to reach admin department.<br /><br />Thanks,<br />Team Admin</p>`
         }  
         return sgMail.send(msg)      

@@ -46,6 +46,8 @@ function PasswordChange(req,res){
         
     })     
     .then(user => {
+        res.clearCookie('token')
+        res.cookie('passwordChange')
         res.json({
             message: 'password has been changed',
             
