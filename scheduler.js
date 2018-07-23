@@ -58,11 +58,11 @@ function itemStatusReportEmail(){
     })
     .then(rejected =>{
         assetRejectedCount = rejected;
-        return models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {item_type : 'assets', createdAt : {gt : limitDate}}, attributes: ['requested_asset_item','status']})
+        return models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {item_type : 'assets', createdAt : {gt : limitDate}}, attributes: ['requested_asset_item','status','adminName']})
     })
     .then(assetDetails => {
         assetDetails1.push(...assetDetails)
-        return models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {item_type : 'consumables', createdAt : {gt : limitDate}}, attributes: ['requested_consumable_item','status']})
+        return models.ticket.findAll({include : [{ model : models.users, attributes : ['first_name','last_name']}],where : {item_type : 'consumables', createdAt : {gt : limitDate}}, attributes: ['requested_consumable_item','status','adminName']})
     })
     .then(consumableDetails => {
         consumableDetails1.push(...consumableDetails)
@@ -79,34 +79,34 @@ function itemStatusReportEmail(){
 
         if(assetDetails1.length === 0){
             var Asset = [[
-                "Employee Name","Requested Item","Status"
+                "Employee Name","Requested Item","Status","Admin Name"
             ],
             [
-                "Nil","Nil","Nil"
+                "Nil","Nil","Nil","Nil"
             ]]
         }
         else if(assetDetails1.length !== 0){
             var Asset = [[
-                "Employee Name","Requested Item","Status"
+                "Employee Name","Requested Item","Status","Admin Name"
             ]]
             assetDetails1.map(element => {
-                return Asset.push([`${element.user.first_name} ${element.user.last_name}`,`${element.requested_asset_item}`,`${element.status}`])
+                return Asset.push([`${element.user.first_name} ${element.user.last_name}`,`${element.requested_asset_item}`,`${element.status}`,`${element.adminName}`])
             })
         }
 
         if(consumableDetails1.length === 0){
             var Consumables = [[
-                "Employee Name","Requested Item","Status"
+                "Employee Name","Requested Item","Status","Admin Name"
             ],[
-                "Nil","Nil","Nil"
+                "Nil","Nil","Nil","Nil"
             ]]
         }
         else if(consumableDetails1 !== 0){
             var Consumables = [[
-                "Employee Name","Requested Item","Status"
+                "Employee Name","Requested Item","Status","Admin Name"
             ]]
             consumableDetails1.map(element => {
-                return Consumables.push([`${element.user.first_name} ${element.user.last_name}`,`${element.requested_consumable_item}`,`${element.status}`])
+                return Consumables.push([`${element.user.first_name} ${element.user.last_name}`,`${element.requested_consumable_item}`,`${element.status}`,`${element.adminName}`])
             })
         }
 

@@ -6,14 +6,21 @@ const api = require('../../config/sendGrid')
 sgMail.setApiKey(api);
 
 function rejectAssetHandler(req, res, next){
+    let admin;
     var user;
     var item;
     var reason = req.body.reason;
-    models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
+    models.users.findOne({where : {email : req.currentUser.email}, attributes: ['first_name', 'last_name']})
+    .then(users => {
+        admin = users.first_name + " " +users.last_name
+        return models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
+
+    })
     .then(ticket => {
         user = ticket.user_id;
         ticket.status = 'Rejected'
         ticket.reason = req.body.reason
+        ticket.adminName = admin
         return ticket.save()
     })
     .then(ticket => {

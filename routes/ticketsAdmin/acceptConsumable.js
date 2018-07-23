@@ -5,12 +5,18 @@ const api = require('../../config/sendGrid')
 sgMail.setApiKey(api);
 
 function acceptConsumableTicketHandler(req, res){
+    let admin;
     var user;
     var ticketQuantity
     var reduce_quantity;
     var consumableName;
     var reason = req.body.reason;
-    models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
+    models.users.findOne({where : {email : req.currentUser.email}, attributes : ['first_name', 'last_name']})
+    .then(users => {
+        admin = users.first_name +" "+ users.last_name
+        return models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
+
+    })
     .then(ticket => {
         ticketQuantity = ticket.quantity
         return models.consumables.findOne({ where : {consumable_id : ticket.requested_consumable_id}})
@@ -23,6 +29,7 @@ function acceptConsumableTicketHandler(req, res){
                 .then(ticket => {
                     ticket.status = 'Accepted'
                     ticket.reason = req.body.reason
+                    ticket.adminName = admin
                     user = ticket.user_id
                     return ticket.save()
                 })

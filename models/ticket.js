@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     department: DataTypes.STRING,
     status: DataTypes.STRING,
     reason: DataTypes.STRING,
-    asset_name: DataTypes.STRING
+    asset_name: DataTypes.STRING,
+    adminName: DataTypes.STRING
   });
   // , {
   //   classMethods: {
