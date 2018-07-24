@@ -13,7 +13,11 @@ function acceptAssetTicketHandler(req, res){
     let assetId;
     models.users.findOne({where : {email: req.currentUser.email}, attributes: ['first_name','last_name']})
     .then(users => {
-        admin = users.first_name +" "+ users.last_name;
+        if(users.first_name && users.last_name){
+            admin = users.first_name + " " +users.last_name
+        }else{
+            admin = "Admin"
+        }
         return  models.assets.findOne({where: {asset_name: decodeURIComponent(req.body.asset)}})
 
     })
