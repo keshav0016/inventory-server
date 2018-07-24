@@ -12,8 +12,11 @@ function rejectAssetHandler(req, res, next){
     var reason = req.body.reason;
     models.users.findOne({where : {email : req.currentUser.email}, attributes: ['first_name', 'last_name']})
     .then(users => {
-        admin = users.first_name + " " +users.last_name
-        return models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
+        if(users.first_name && users.last_name){
+            admin = users.first_name + " " +users.last_name
+        }else{
+            admin = "Admin"
+        }        return models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
 
     })
     .then(ticket => {

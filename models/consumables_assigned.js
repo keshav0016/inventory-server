@@ -5,7 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     user_id: {type:DataTypes.STRING, foreignKey:true, underscored:true},
     ticket_number: DataTypes.INTEGER,
     assigned_date: DataTypes.DATE,
-    quantity: DataTypes.INTEGER
+    quantity: DataTypes.INTEGER,
+    adminName: DataTypes.STRING
+
   },
    {
     classMethods: {

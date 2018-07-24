@@ -6,7 +6,17 @@ const api = require('../../config/sendGrid')
 
 function assignConsumableHandler(req, res, next){
     var consumableName;
-    models.consumables.findOne({ where : {consumable_id : req.body.consumable_id, quantity : {gt : 0}}})
+    var admin;
+    models.users.findOne({where : {email : req.currentUser.email}, attributes: ['first_name', 'last_name']})
+    .then(users => {
+        if(users.first_name && users.last_name){
+            admin = users.first_name + " " +users.last_name
+        }else{
+            admin = "Admin"
+        }
+        return models.consumables.findOne({ where : {consumable_id : req.body.consumable_id, quantity : {gt : 0}}})
+
+    })
     .then(consumables => {
         consumableName = consumables.name
         var updated_quantity = consumables.quantity - req.body.quantity
@@ -18,7 +28,8 @@ function assignConsumableHandler(req, res, next){
             consumable_id : consumables.consumable_id,
             user_id : req.body.user_id,
             assigned_date : req.body.assigned_date,
-            quantity : req.body.quantity
+            quantity : req.body.quantity,
+            adminName : admin
         })
         return newConsumableAssign.save()
     })

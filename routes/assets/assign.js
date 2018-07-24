@@ -26,7 +26,16 @@ function assignAssetHandler(req, res, next){
 
 function checkAssetName(req, res, next){
     var assetName
-    return models.assets.findOne({where : {asset_id : req.body.asset_id}})
+    var admin
+    return models.users.findOne({where : {email : req.currentUser.email}, attributes: ['first_name', 'last_name']})
+    .then(users => {
+        if(users.first_name && users.last_name){
+            admin = users.first_name + " " +users.last_name
+        }else{
+            admin = "Admin"
+        }
+        return models.assets.findOne({where : {asset_id : req.body.asset_id}})
+    })
     .then(asset => {
         asset.current_status = "Assigned"
         return asset.save()
@@ -37,7 +46,8 @@ function checkAssetName(req, res, next){
             asset_id : asset.asset_id,
             user_id : req.body.user_id,
             from : req.body.from,
-            expected_recovery : req.body.expected_recovery
+            // expected_recovery : req.body.expected_recovery,
+            adminName : admin
         })        
         return newAssetAssign.save()
     })
