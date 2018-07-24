@@ -19,11 +19,11 @@ function createTicket(req,res){
         status: "Pending"
     } 
 
-    sgMail.setApiKey(api)
-    const msg = {
-        to : ['kasiah@westagilelabs.com', 'siva@westagilelabs.com']
-        , from : 'noreply@westagilelabs.com'
-    }
+    // sgMail.setApiKey(api)
+    // const msg = {
+    //     to : ['kasiah@westagilelabs.com', 'siva@westagilelabs.com']
+    //     , from : 'noreply@westagilelabs.com'
+    // }
 
     var maxLimit
     if(req.body.item_type === 'consumables'){

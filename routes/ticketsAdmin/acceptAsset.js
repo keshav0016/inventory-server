@@ -6,11 +6,17 @@ sgMail.setApiKey(api);
 
 
 function acceptAssetTicketHandler(req, res){
+    let admin;
     var user;
     var assetName;
     var reason = req.body.reason;
     let assetId;
-    models.assets.findOne({where: {asset_name: decodeURIComponent(req.body.asset)}})
+    models.users.findOne({where : {email: req.currentUser.email}, attributes: ['first_name','last_name']})
+    .then(users => {
+        admin = users.first_name +" "+ users.last_name;
+        return  models.assets.findOne({where: {asset_name: decodeURIComponent(req.body.asset)}})
+
+    })
     .then(asset => {
         assetId = asset.asset_id
         return models.ticket.findOne({ where: {ticket_number : req.body.ticket_number, status : 'Pending'}})
@@ -20,7 +26,9 @@ function acceptAssetTicketHandler(req, res){
         ticket.status = 'Accepted'
         ticket.reason = req.body.reason
         ticket.requested_asset_id = req.body.requested_asset_id
+        ticket.adminName = admin
         user = ticket.user_id
+    
         return ticket.save()
     })
     .then(ticket => {

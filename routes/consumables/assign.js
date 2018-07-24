@@ -1,10 +1,14 @@
 const models = require('../../models/index')
 const router = require('express').Router()
+const sgMail = require('@sendgrid/mail');
+const api = require('../../config/sendGrid')
 
 
 function assignConsumableHandler(req, res, next){
+    var consumableName;
     models.consumables.findOne({ where : {consumable_id : req.body.consumable_id, quantity : {gt : 0}}})
     .then(consumables => {
+        consumableName = consumables.name
         var updated_quantity = consumables.quantity - req.body.quantity
         consumables.quantity = updated_quantity
         return consumables.save()
@@ -19,6 +23,21 @@ function assignConsumableHandler(req, res, next){
         return newConsumableAssign.save()
     })
     .then(consumableAssign => {
+        return models.users.findOne({ where : {user_id : req.body.user_id}})
+        
+    })
+    .then(user => {
+        sgMail.setApiKey(api)
+        const msg = {
+            to : user.email,
+            from : 'hr@westagilelabs.com'
+            ,subject : 'Welcome to Wal IMS'
+        ,html : `<p>Hello ${user.first_name},<br/><br/>A Consumable called ${consumableName} has been assigned to you.<br /><br />Thanks,<br />Team Admin</p>`
+        }  
+        return sgMail.send(msg)      
+       
+    })
+    .then(() => {
         res.json({
             message : "Consumable Assigned"
         })
