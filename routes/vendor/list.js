@@ -7,6 +7,8 @@ function listVendorHandler(req, res, next){
     var pagination = {}  
     var vendorList = []
     var limitVendors = 0
+    var nameSearch = req.query.search
+
 
     if(req.query.page){
         limitVendors = 10
@@ -15,7 +17,7 @@ function listVendorHandler(req, res, next){
         limitVendors = 100
     }
 
-    models.vendor.findAll({ limit: limitVendors, offset: (page - 1) * 10, order : [['id', 'DESC']] })
+    models.vendor.findAll({where:{name:{ilike:'%'+nameSearch+'%'}}, limit: limitVendors, offset: (page - 1) * 10, order : [['id', 'DESC']] })
     .then(vendorListing => {
         
         if(vendorListing){

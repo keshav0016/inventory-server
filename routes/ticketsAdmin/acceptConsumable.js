@@ -42,7 +42,8 @@ function acceptConsumableTicketHandler(req, res){
                         user_id : user,
                         ticket_number : ticket.ticket_number,
                         assigned_date : Date.now(),
-                        quantity : ticket.quantity
+                        quantity : ticket.quantity,
+                        adminName : admin
                     })
                     return newConsumableAssign.save()
                 })

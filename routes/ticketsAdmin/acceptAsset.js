@@ -49,7 +49,8 @@ function acceptAssetTicketHandler(req, res){
             user_id : user,
             ticket_number : req.body.ticket_number,
             from : Date.now(),
-            expected_recovery : req.body.expected_recovery
+            expected_recovery : req.body.expected_recovery,
+            adminName : admin
         })
         return newAssetAssigned.save()
     })
