@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 function PasswordChange(req,res){
     var hashedPassword
     var currentUser = req.currentUser
+    var passwordChange = true
     return  argon2.hash(req.body.password)
     .then((hash) => {
         hashedPassword =hash
@@ -47,7 +48,7 @@ function PasswordChange(req,res){
     })     
     .then(user => {
         res.clearCookie('token')
-        res.cookie('passwordChange')
+        res.cookie('passwordChange',passwordChange)
         res.json({
             message: 'password has been changed',
             
