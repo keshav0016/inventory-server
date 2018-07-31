@@ -14,6 +14,7 @@ function admintokenMiddleware(req,res,next){
             .then(admin=>{
                 if(admin){
                     req.currentUser=admin;
+                    res.clearCookie('passwordChange')
                     res.cookie('token', receivedToken, {encode : String, maxAge : 1000 * 60 * 15});                
                     next()
                     
@@ -29,7 +30,8 @@ function admintokenMiddleware(req,res,next){
             .then(user => {
                 if(user){
                     req.currentUser = user;
-                    res.cookie('token', receivedToken, {encode : String, maxAge : 1000 * 60 * 15});                
+                    res.clearCookie('passwordChange')
+                    res.cookie('token', receivedToken, {encode : String, maxAge : 1000 * 60 * 0.5});                
                     next()
                 }else{
                     res.status(403).send('Admin not found' )
@@ -42,6 +44,7 @@ function admintokenMiddleware(req,res,next){
         
     }
     else{
+        res.clearCookie('passwordChange')                
         res.status(401).send('No token found')
     }
 }
