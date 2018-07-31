@@ -42,6 +42,7 @@ module.exports = {
 	}
     },
     dev : {
+      key: 'keys/asset_managment.pem',
       user : 'ubuntu',
       host : 'qa-ims-tool.westagilelabs.com',
       ref  : 'origin/master',
