@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     ticket_number: DataTypes.INTEGER,
     from: DataTypes.DATE,
     to: DataTypes.DATE,
-    expected_recovery: DataTypes.DATE
+    expected_recovery: DataTypes.DATE,
+    adminName: DataTypes.STRING
   },
   {
     classMethods: {

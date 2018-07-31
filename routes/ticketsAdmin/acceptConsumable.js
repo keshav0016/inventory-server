@@ -5,12 +5,21 @@ const api = require('../../config/sendGrid')
 sgMail.setApiKey(api);
 
 function acceptConsumableTicketHandler(req, res){
+    let admin;
     var user;
     var ticketQuantity
     var reduce_quantity;
     var consumableName;
     var reason = req.body.reason;
-    models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
+    models.users.findOne({where : {email : req.currentUser.email}, attributes : ['first_name', 'last_name']})
+    .then(users => {
+        if(users.first_name && users.last_name){
+            admin = users.first_name + " " +users.last_name
+        }else{
+            admin = "Admin"
+        }        return models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
+
+    })
     .then(ticket => {
         ticketQuantity = ticket.quantity
         return models.consumables.findOne({ where : {consumable_id : ticket.requested_consumable_id}})
@@ -23,6 +32,7 @@ function acceptConsumableTicketHandler(req, res){
                 .then(ticket => {
                     ticket.status = 'Accepted'
                     ticket.reason = req.body.reason
+                    ticket.adminName = admin
                     user = ticket.user_id
                     return ticket.save()
                 })
@@ -32,7 +42,8 @@ function acceptConsumableTicketHandler(req, res){
                         user_id : user,
                         ticket_number : ticket.ticket_number,
                         assigned_date : Date.now(),
-                        quantity : ticket.quantity
+                        quantity : ticket.quantity,
+                        adminName : admin
                     })
                     return newConsumableAssign.save()
                 })
@@ -53,7 +64,7 @@ function acceptConsumableTicketHandler(req, res){
                         to : users.email,
                         from : 'hr@westagilelabs.com'
                         ,subject : `Consumable ${consumableName} ticket request accepted`
-                    ,html : `<p>Hello ${users.first_name},<br /><br />The ${consumableName} consumable request has been accepted<br /><br />Remarks : ${reason}</p>`
+                    ,html : `<p>Hello ${users.first_name},<br /><br />The ${consumableName} consumable request has been accepted<br /><br />Remarks : ${reason}<br /><br />Thanks,<br />Team Admin</p>`
                     }  
                     return sgMail.send(msg)
                 })

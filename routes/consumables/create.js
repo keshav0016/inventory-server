@@ -13,6 +13,7 @@ function createConsumablePurchasedDetails(req,res,next,consumableid){return mode
         discount : req.body.discount,
         gst : req.body.gst,
         total : req.body.total,
+        // description : req.body.description
     })
     .save()
 }
@@ -21,8 +22,10 @@ function createConsumableHandler(req, res, next){
     models.consumables.findOne({ where : {name : req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase()}})
     .then((consumables) => {
         if(consumables){
+                var prevDescription = consumables.description
                 var added_quantity = Number(req.body.purchased_quantity)
                 consumables.quantity = consumables.quantity + added_quantity
+                consumables.description = prevDescription + ',  ' + req.body.description
                 return consumables.save()
                 .then(consumables => {
                     consumableid = consumables.consumable_id;
@@ -33,7 +36,8 @@ function createConsumableHandler(req, res, next){
             return models.consumables.build({
                 name : req.body.name.charAt(0).toUpperCase()+req.body.name.slice(1).toLowerCase(),
                 quantity : req.body.purchased_quantity,
-                disable: 0                
+                disable: 0  ,
+                description: req.body.description              
             })
             .save()
             .then(consumables => {

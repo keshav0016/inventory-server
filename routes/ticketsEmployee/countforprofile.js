@@ -1,5 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
+const db = require('../../models/index')
+const sequelize = require('sequelize')
 
 var assetsCount;
 var consumablesCount;
@@ -8,38 +10,35 @@ var historyAssets =[]
 
 
 function countHandler(req, res, next){
+    var userId = req.currentUser.user_id
     var history = []
     var historyAssets =[]
     
     
-    models.consumables_assigned.findAll({include:[{model: models.consumables}], where : {user_id : req.currentUser.user_id}})
-    .then(consumableAssign => {
-        consumableAssign.forEach((consumables)=>{
-            history.push(consumables)
-            
-        })
-        return models.assets_assigned.findAll({ include:[{model:models.assets}], where : {user_id : req.currentUser.user_id, to: null}})
-        
+    db.sequelize.query(`SELECT consumables_assigneds.consumable_id,consumables.name,sum(consumables_assigneds.quantity) from consumables_assigneds  INNER JOIN consumables ON consumables_assigneds.consumable_id=consumables.consumable_id where user_id=:user_id group by consumables_assigneds.consumable_id,consumables.name`, 
+    { replacements: { user_id: userId }, type: sequelize.QueryTypes.SELECT })
+    .then((consumables) => {
+        history.push(...consumables)
+        return models.assets_assigned.findAll({ include:[{model:models.assets}], where : {user_id : req.currentUser.user_id}})
     })
-    .then(assetAssign => {
-        assetAssign.forEach((asset) => {
+    .then(assetsAssigned => {
+        assetsAssigned.forEach(asset => {
             historyAssets.push(asset)
         })
-        return models.assets_assigned.count({where: {user_id : req.currentUser.user_id}})
+        return models.assets_assigned.count({include:[{model:models.assets}], where : {user_id : req.currentUser.user_id}})
         
     })
     .then(assets => {
-    assetsCount = historyAssets.length;
-    return models.consumables_assigned.count({where : {user_id : req.currentUser.user_id}})
+        assetsCount = assets
+        return models.consumables_assigned.count({include:[{model:models.consumables}], where : {user_id : req.currentUser.user_id}})
     })
     .then(consumables => {
         consumablesCount = consumables
         res.json({
-            assetsCount : assetsCount,
-            consumablesCount : consumablesCount,
             history : history,
             historyAssets : historyAssets,
-
+            assetsCount ,
+            consumablesCount : history.length
         })
     })
     .catch(error => {

@@ -2,11 +2,14 @@ const models = require('../../models/index')
 const router = require('express').Router()
 
 
+
 function listVendorHandler(req, res, next){
     var page = req.query.page || 1
     var pagination = {}  
     var vendorList = []
     var limitVendors = 0
+    var nameSearch = req.query.search
+
 
     if(req.query.page){
         limitVendors = 10
@@ -15,7 +18,7 @@ function listVendorHandler(req, res, next){
         limitVendors = 100
     }
 
-    models.vendor.findAll({ limit: limitVendors, offset: (page - 1) * 10, order : [['id', 'ASC']] })
+    models.vendor.findAll({ limit: limitVendors, offset: (page - 1) * 10, order : [['id', 'DESC']] })
     .then(vendorListing => {
         
         if(vendorListing){
@@ -43,6 +46,7 @@ function listVendorHandler(req, res, next){
         })
     })
 }
+
 
 
 

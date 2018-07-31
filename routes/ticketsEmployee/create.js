@@ -21,7 +21,7 @@ function createTicket(req,res){
 
     sgMail.setApiKey(api)
     const msg = {
-        to : 'hr@westagilelabs.com'
+        to : ['kasiah@westagilelabs.com', 'siva@westagilelabs.com']
         , from : 'noreply@westagilelabs.com'
     }
 
@@ -63,8 +63,8 @@ function createTicket(req,res){
             }
         })
         .then(ticket => {
-            msg.subject = `Ticket Request from ${req.currentUser.first_name} ${req.currentUser.last_name}`
-            msg.html = `<h4>${req.currentUser.first_name} ${req.currentUser.last_name} (${req.currentUser.user_id}) has requested for ${req.body.item} with quantity : ${req.body.quantity}. <br />For more details, refer to ticket number ${ticket.ticket_number}<br />Sent From Inventory Management Tool</h4>`
+            msg.subject = `New Ticket has been Requested from ${req.currentUser.first_name} ${req.currentUser.last_name}`
+            msg.html = `<h4>${req.currentUser.first_name} ${req.currentUser.last_name} (${req.currentUser.user_id}) has requested for ${req.body.item} with quantity : ${req.body.quantity}. <br />For more details, refer to ticket number ${ticket.ticket_number}<br /><br />Thanks</h4>`
             res.json({message:'Ticket created'})
             return sgMail.send(msg)
         })
@@ -109,11 +109,16 @@ function createTicket(req,res){
                 throw new StopPromise()
             }
             else{
+                return models.assets.findOne({where : {asset_name : req.body.assetName, current_status: 'Available'}})
+                
+            }
+        })
+        .then(asset => {
+                ticketObj.asset_name = asset.asset_name
                 ticketObj.requested_asset_id = null;
                 ticketObj.consumable_id = null
                 var newTicket = models.ticket.build(ticketObj)
                 return newTicket.save()
-            }
         })
         .then(ticket => {
             if(ticket){

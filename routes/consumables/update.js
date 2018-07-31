@@ -8,7 +8,7 @@ function updateConsumableHandler(req, res, next){
         consumables.consumable_id = req.body.consumable_id,
         consumables.name = req.body.name,
         consumables.quantity = req.body.quantity
-
+        consumables.description = req.body.description
         return consumables.save()
     })
     .then(consumables => {

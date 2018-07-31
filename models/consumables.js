@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     consumable_id:{ type: DataTypes.INTEGER, primaryKey: true, autoIncrement : true},
     name: DataTypes.STRING,
     quantity: DataTypes.INTEGER,
-    disable: DataTypes.INTEGER
+    disable: DataTypes.INTEGER,
+    description: DataTypes.TEXT
   });
   // , {
   //   classMethods: {

@@ -14,7 +14,8 @@ function createVendorHandler(req, res, next){
             var newVendor = models.vendor.build({
                 name : req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase(),
                 address : req.body.address,
-                contact : req.body.contact
+                contact : req.body.contact,
+                landline : req.body.landline,
                 
             })
             return newVendor.save()
