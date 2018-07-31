@@ -31,7 +31,7 @@ function admintokenMiddleware(req,res,next){
                 if(user){
                     req.currentUser = user;
                     res.clearCookie('passwordChange')
-                    res.cookie('token', receivedToken, {encode : String, maxAge : 1000 * 60 * 0.5});                
+                    res.cookie('token', receivedToken, {encode : String, maxAge : 1000 * 60 * 15});                
                     next()
                 }else{
                     res.status(403).send('Admin not found' )
