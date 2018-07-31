@@ -50,7 +50,8 @@ module.exports = {
       path : '/home/ubuntu/apps/production',
       'post-deploy' : 'source /home/ubuntu/.bashrc && npm install && pm2 reload ecosystem.config.js --env development',
       env  : {
-        NODE_ENV: 'development'
+        NODE_ENV: 'development',
+        CORS_ORIGIN:'https://qa-ims-tool.westagilelabs.com'
       }
     }
   }
