@@ -42,11 +42,11 @@ module.exports = {
 	}
     },
     dev : {
-      user : 'node',
-      host : '212.83.163.1',
+      user : 'ubuntu',
+      host : 'qa-ims-tool.westagilelabs.com',
       ref  : 'origin/master',
-      repo : 'git@github.com:repo.git',
-      path : '/var/www/development',
+      repo : 'git@github.com:keshav0016/inventory-server.git',
+      path : '/home/ubuntu/apps/production',
       'post-deploy' : 'source /home/ubuntu/.bashrc && npm install && pm2 reload ecosystem.config.js --env dev',
       env  : {
         NODE_ENV: 'dev'
