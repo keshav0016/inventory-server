@@ -48,9 +48,9 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@github.com:keshav0016/inventory-server.git',
       path : '/home/ubuntu/apps/production',
-      'post-deploy' : 'source /home/ubuntu/.bashrc && npm install && pm2 reload ecosystem.config.js --env dev',
+      'post-deploy' : 'source /home/ubuntu/.bashrc && npm install && pm2 reload ecosystem.config.js --env development',
       env  : {
-        NODE_ENV: 'dev'
+        NODE_ENV: 'development'
       }
     }
   }
