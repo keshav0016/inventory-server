@@ -38,8 +38,8 @@ function updateEmployee(req, res) {
                     sgMail.setApiKey(api)
                     const msg = {
                         to : admin.email,
-                        from : 'veena.m@westagilelabs.com'
-                        ,subject : 'Welcome to Inventory Management System(IMS)'
+                        from : 'hr@westagilelabs.com'
+                        ,subject : 'Admin access'
                     ,html : `<p>Hello ${admin.firstName},<br /><br />Welcome to Inventory management system.Please use the below credentials to access the IMS as admin. <br /><br />Employee Id: ${admin.email}<br /> Password: ${randomPasswordAdmin}<br/><br /> <br />Please <a href='https://ims-tool.westagilelabs.com/'>Click here</a> to login.<br /><br />Thanks,<br />Team Admin</p>`
                     }  
                     return sgMail.send(msg)       
@@ -62,7 +62,7 @@ function updateEmployee(req, res) {
                     sgMail.setApiKey(api)
                     const msg = {
                         to : req.body.email,
-                        from : 'veena.m@westagilelabs.com'
+                        from : 'hr@westagilelabs.com'
                         ,subject : 'Admin account deactivated'
                     ,html : `<p>Hello ${req.body.first_name},<br /><br />This Email is to inform you that you are no longer a Admin for IMS tool. Please contact Admin department for further queries.<br /><br />Thanks,<br />Team Admin</p>`
                     }  
