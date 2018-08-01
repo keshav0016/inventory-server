@@ -19,7 +19,7 @@ function dashBoardCount(req, res, next){
     })
     .then(accepted => {
         consumableAcceptedCount = accepted;
-        return models.consumables.findAll({attributes : ["name", "quantity"], where: {quantity:{lt:10}, name : { $in : ['Pens' , 'Pencils', 'Id holder', 'Stick note', 'Note book']}}, })
+        return models.consumables.findAll({attributes : ["name", "quantity"], where: {quantity:{lt:10}, name : { $in : ['Pens' , 'Apsara pencils', 'Id holder', 'Stick notes', 'Note books']}}, })
     })
     .then(low =>{
         lowConsumable = low;
