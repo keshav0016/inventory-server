@@ -40,7 +40,7 @@ function updateEmployee(req, res) {
                         to : admin.email,
                         from : 'hr@westagilelabs.com'
                         ,subject : 'Admin access'
-                    ,html : `<p>Hello ${admin.firstName},<br /><br />Welcome to Inventory management system.Please use the below credentials to access the IMS as admin. <br /><br />Employee Id: ${admin.email}<br /> Password: ${randomPasswordAdmin}<br/><br /> <br />Please <a href='https://ims-tool.westagilelabs.com/'>Click here</a> to login.<br /><br />Thanks,<br />Team Admin</p>`
+                    ,html : `<p>Hello ${admin.firstName},<br /><br />Welcome to Inventory management system.Please use the below credentials to access the IMS as an admin. <br /><br />Employee Id: ${admin.email}<br /> Password: ${randomPasswordAdmin}<br/><br /> <br />Please <a href='https://ims-tool.westagilelabs.com/'>Click here</a> to login.<br /><br />Thanks,<br />Team Admin</p>`
                     }  
                     return sgMail.send(msg)       
                 })
