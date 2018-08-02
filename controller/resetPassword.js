@@ -71,6 +71,10 @@ function resetPasswordHandler(req, res, next){
                     message : 'password has been changed'
                 })
             })
+        }else{
+            res.json({
+                message : 'enter correct secret key'
+            })
         }
     })
     .catch(error => {
