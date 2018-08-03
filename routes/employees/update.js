@@ -64,7 +64,7 @@ function updateEmployee(req, res) {
                         to : req.body.email,
                         from : 'hr@westagilelabs.com'
                         ,subject : 'Admin account deactivated'
-                    ,html : `<p>Hello ${req.body.first_name},<br /><br />This Email is to inform you that you are no longer a Admin for IMS tool. Please contact Admin department for further queries.<br /><br />Thanks,<br />Team Admin</p>`
+                    ,html : `<p>Hello ${req.body.first_name},<br /><br />This Email is to inform you that you are no longer an Admin for IMS tool. Please contact Admin department for further queries.<br /><br />Thanks,<br />Team Admin</p>`
                     }  
                     return sgMail.send(msg)       
                 })
