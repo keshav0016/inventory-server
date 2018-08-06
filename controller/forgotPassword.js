@@ -12,7 +12,7 @@ function forgotPasswordHandler(req, res, next){
             .then(user => {
                 sgMail.setApiKey(api)
                 const msg = {
-                    to : "veena.m@westagilelabs.com",
+                    to : "hr@westagilelabs.com",
                     from : 'hr@westagilelabs.com'
                 }
                 let randomAdminPassword = Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6)
