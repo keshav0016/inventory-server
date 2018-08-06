@@ -39,7 +39,7 @@ function login(req,res,next){
             })
         })
         .then((admin) => {
-            res.json({success: true,  passwordSame, admin})
+            res.json({success: true,  passwordSame, admin, isEmployee : false})
         })
         .catch(userDisabled, () => {
             console.error('user is disabled')
@@ -91,7 +91,13 @@ function login(req,res,next){
             // return user.save()  
         })
         .then((user) => {
-            res.json({success: true,  passwordSame, user})
+            if(user.user_id === "Admin"){
+
+                res.json({success: true,  passwordSame, user, isEmployee : false})
+            }else{
+                res.json({success: true,  passwordSame, user, isEmployee : true})
+
+            }
         })
         .catch(userDisabled, () => {
             console.error('user is disabled')
