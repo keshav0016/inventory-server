@@ -7,34 +7,64 @@ const api = require('../config/sendGrid')
 
 function forgotPasswordHandler(req, res, next){
     if(req.body.user_id === 'Admin' || req.body.user_id === 'admin'){
-        models.Admin.findOne({where : { email : req.body.email}})
-        .then(admin => {
-            sgMail.setApiKey(api)
+        if(req.body.email==="hr@westagilelabs.com"){
+            models.users.find({where: {user_id : "Admin"}})
+            .then(user => {
+                sgMail.setApiKey(api)
                 const msg = {
-                    to : req.body.email,
+                    to : "veena.m@westagilelabs.com",
                     from : 'hr@westagilelabs.com'
                 }
-            let randomAdminPassword = Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6)
-            return argon2.hash(randomAdminPassword)
-            .then(hashed => {
-                admin.password = hashed
-                msg.subject = "Temporary Password for IMS"
-                msg.html = `<h4>Your Temporary password is ${randomAdminPassword}<br /><br />Thanks,<br />Team Admin</h4>`
-                return admin.save()
-
+                let randomAdminPassword = Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6)
+                return argon2.hash(randomAdminPassword)
+                .then(hashed => {
+                    user.password = hashed
+                    msg.subject = "Temporary Password for IMS"
+                    msg.html = `<h4>Your Temporary password is ${randomAdminPassword}<br /><br />Thanks,<br />Team Admin</h4>`
+                    return user.save()
+                })
+                .then(user => {
+                    res.json({message : 'Check Your Email'})
+                    return sgMail.send(msg)
+                })
+                .then(() => {
+                    console.log('mail sent')
+                })
+                .catch(error => {
+                    res.json({error : error})
+                })
             })
+        }else{
+
+            models.Admin.findOne({where : { email : req.body.email}})
             .then(admin => {
-                res.json({message : 'Check Your Email'})
-                return sgMail.send(msg)
-            })
-            .then(() => {
-                console.log('mail sent')
-            })
-            .catch(error => {
-                res.json({error : error})
-            })
+                sgMail.setApiKey(api)
+                    const msg = {
+                        to : req.body.email,
+                        from : 'hr@westagilelabs.com'
+                    }
+                let randomAdminsPassword = Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6)
+                return argon2.hash(randomAdminsPassword)
+                .then(hashed => {
+                    admin.password = hashed
+                    msg.subject = "Temporary Password for IMS"
+                    msg.html = `<h4>Your Temporary password is ${randomAdminsPassword}<br /><br />Thanks,<br />Team Admin</h4>`
+                    return admin.save()
 
-        })
+                })
+                .then(admin => {
+                    res.json({message : 'Check Your Email'})
+                    return sgMail.send(msg)
+                })
+                .then(() => {
+                    console.log('mail sent')
+                })
+                .catch(error => {
+                    res.json({error : error})
+                })
+
+            })
+        }
     }else{
 
         models.users.findOne({where : {user_id : req.body.user_id, email : req.body.email}})
