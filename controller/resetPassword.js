@@ -74,7 +74,7 @@ function resetPasswordHandler(req, res, next){
             })
         }
     }else {
-        models.users.findOne({where : {user_id : req.body.user_id}})
+    models.users.findOne({where : {user_id : req.body.user_id}})
     .then(user => {
         if(user){
             return argon2.verify(user.password, req.body.emailPassword)            
