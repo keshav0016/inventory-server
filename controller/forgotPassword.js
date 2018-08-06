@@ -20,7 +20,7 @@ function forgotPasswordHandler(req, res, next){
                 .then(hashed => {
                     user.password = hashed
                     msg.subject = "Temporary Password for IMS"
-                    msg.html = `<h4>Your Temporary password is ${randomAdminPassword}<br /><br />Thanks,<br />Team Admin</h4>`
+                    msg.html = `<p>Your Temporary password is ${randomAdminPassword}<br /><br />Thanks,<br />Team Admin</p>`
                     return user.save()
                 })
                 .then(user => {
