@@ -38,30 +38,37 @@ function forgotPasswordHandler(req, res, next){
 
             models.Admin.findOne({where : { email : req.body.email}})
             .then(admin => {
-                sgMail.setApiKey(api)
-                    const msg = {
-                        to : req.body.email,
-                        from : 'hr@westagilelabs.com'
-                    }
-                let randomAdminsPassword = Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6)
-                return argon2.hash(randomAdminsPassword)
-                .then(hashed => {
-                    admin.password = hashed
-                    msg.subject = "Temporary Password for IMS"
-                    msg.html = `<p>Your Temporary password is ${randomAdminsPassword}<br /><br />Thanks,<br />Team Admin</p>`
-                    return admin.save()
+                if(admin){
 
-                })
-                .then(admin => {
-                    res.json({message : 'Check Your Email'})
-                    return sgMail.send(msg)
-                })
-                .then(() => {
-                    console.log('mail sent')
-                })
-                .catch(error => {
-                    res.json({error : error})
-                })
+                    sgMail.setApiKey(api)
+                        const msg = {
+                            to : req.body.email,
+                            from : 'hr@westagilelabs.com'
+                        }
+                    let randomAdminsPassword = Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6)
+                    return argon2.hash(randomAdminsPassword)
+                    .then(hashed => {
+                        admin.password = hashed
+                        msg.subject = "Temporary Password for IMS"
+                        msg.html = `<p>Your Temporary password is ${randomAdminsPassword}<br /><br />Thanks,<br />Team Admin</p>`
+                        return admin.save()
+
+                    })
+                    .then(admin => {
+                        res.json({message : 'Check Your Email'})
+                        return sgMail.send(msg)
+                    })
+                    .then(() => {
+                        console.log('mail sent')
+                    })
+                    .catch(error => {
+                        res.json({error : error})
+                    })
+                }else{
+                    res.json({
+                        message: 'admin not found'
+                    })
+                }
 
             })
         }
