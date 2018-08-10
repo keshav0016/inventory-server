@@ -34,8 +34,8 @@ var employeeDetails = {};
 var repairDetails = {}
 var adminsDetails = []
 
-var sched = later.parse.recur().every(30).second(),
-    // var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
+// var sched = later.parse.recur().every(30).second(),
+    var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
     t = later.setInterval(itemStatusReportEmail, sched);
 var limitDate = new Date(Number(new Date()))
 console.log('scheduler has started')
