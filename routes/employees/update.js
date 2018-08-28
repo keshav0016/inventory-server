@@ -23,7 +23,8 @@ function updateEmployee(req, res) {
                     designation: req.body.designation,
                     department:req.body.department,
                     email: req.body.email,
-                    role : req.body.role
+                    role : req.body.role,
+                    idSerialNo : req.body.idNo
                 })
                 .then(user => {
                     return models.Admin.create({
@@ -81,7 +82,8 @@ function updateEmployee(req, res) {
                         designation: req.body.designation,
                         department:req.body.department,
                         email: req.body.email,
-                        role : req.body.role
+                        role : req.body.role,
+                        idSerialNo : req.body.idNo
                     })
                     .then(function (user) {
                         res.json({message: 'employee has been updated'});
@@ -103,7 +105,8 @@ function updateEmployee(req, res) {
                     designation: req.body.designation,
                     department:req.body.department,
                     email: req.body.email,
-                    role : req.body.role
+                    role : req.body.role,
+                    idSerialNo : req.body.idNo
                 })
                 .then(function (user) {
                     res.json({message: 'employee has been updated'});

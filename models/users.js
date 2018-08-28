@@ -60,6 +60,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     first_login: {
       type: DataTypes.INTEGER
+    },
+    idSerialNo: {
+      type: DataTypes.STRING
     }
   }, {
     scopes: {
