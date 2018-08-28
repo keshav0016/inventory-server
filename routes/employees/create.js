@@ -23,6 +23,7 @@ function createEmployee(req, res) {
             disable: 0
             ,email : req.body.email
             ,first_login: 1
+            ,idSerialNo : req.body.idNo
         })
         .then(user => {
             sgMail.setApiKey(api)
@@ -82,6 +83,7 @@ function createEmployee(req, res) {
             disable: 0
             ,email : req.body.email
             ,first_login: 1
+            ,idSerialNo : req.body.idNo
         })
         .then(user => {
             sgMail.setApiKey(api)
