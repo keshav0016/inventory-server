@@ -62,7 +62,7 @@ function checkAssetName(req, res, next){
             to : user.email,
             from : 'hr@westagilelabs.com'
             ,subject : 'An Asset assigned to you'
-        ,html : `<p>Hello ${user.first_name},<br/><br/>An Asset called ${assetName} ${assetType} has been assigned to you.Asset would be recovered on ${req.body.expected_recovery}. For further queries feel free to reach admin department.<br /><br />Thanks,<br />Team Admin</p>`
+        ,html : `<p>Hello ${user.first_name},<br/><br/>An Asset called ${assetName} ${assetType} has been assigned to you. For further queries feel free to reach admin department.<br /><br />Thanks,<br />Team Admin</p>`
         }  
         return sgMail.send(msg)      
        
