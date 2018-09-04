@@ -21,7 +21,7 @@ function createTicket(req,res){
 
     sgMail.setApiKey(api)
     const msg = {
-        to : ['kasiah@westagilelabs.com', 'siva@westagilelabs.com']
+        to : ['kasiah@westagilelabs.com', 'siva@westagilelabs.com', 'varun@westagilelabs.com']
         , from : 'noreply@westagilelabs.com'
     }
 
