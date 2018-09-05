@@ -19,7 +19,7 @@ function createConsumablePurchasedDetails(req,res,next,consumableid){return mode
 }
 
 function createConsumableHandler(req, res, next){
-    models.consumables.findOne({ where : {name : req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase()}})
+    models.consumables.findOne({ where : {name : req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1)}})
     .then((consumables) => {
         if(consumables){
                 var prevDescription = consumables.description
@@ -34,7 +34,7 @@ function createConsumableHandler(req, res, next){
         }
         else {
             return models.consumables.build({
-                name : req.body.name.charAt(0).toUpperCase()+req.body.name.slice(1).toLowerCase(),
+                name : req.body.name.charAt(0).toUpperCase()+req.body.name.slice(1),
                 quantity : req.body.purchased_quantity,
                 disable: 0  ,
                 description: req.body.description              

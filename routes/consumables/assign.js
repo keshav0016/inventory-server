@@ -43,7 +43,7 @@ function assignConsumableHandler(req, res, next){
             to : user.email,
             from : 'hr@westagilelabs.com'
             ,subject : 'A Consumable assigned to you'
-        ,html : `<p>Hello ${user.first_name},<br/><br/>A Consumable called ${consumableName} has been assigned to you.<br /><br />Thanks,<br />Team Admin</p>`
+        ,html : `<p>Hello ${user.first_name},<br/><br/>A Consumable called <b>${consumableName}</b> has been assigned to you.<br /><br />Thanks,<br />Team Admin</p>`
         }  
         return sgMail.send(msg)      
        
