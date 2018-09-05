@@ -6,7 +6,7 @@ function updateAssetHandler(req, res, next){
     models.assets.findOne({ where : {asset_id : req.body.asset_id}})
     .then(asset => {
         asset.serial_number = req.body.serial_number
-        asset.asset_name = req.body.asset_name.charAt(0).toUpperCase() + req.body.asset_name.slice(1).toLowerCase()
+        asset.asset_name = req.body.asset_name.charAt(0).toUpperCase() + req.body.asset_name.slice(1)
         asset.purchase_date = req.body.purchase_date
         asset.description = req.body.description
         asset.invoice_number = req.body.invoice_number
@@ -17,6 +17,7 @@ function updateAssetHandler(req, res, next){
         asset.category = req.body.category
         asset.condition = req.body.condition
         asset.location = req.body.location
+        asset.assetType = req.body.assetType
         // asset.assetType = req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1).toLowerCase()
         return asset.save()
     })
