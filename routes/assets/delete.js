@@ -5,9 +5,16 @@ const router = require('express').Router()
 function deleteAssetHandler(req, res, next){
     models.assets.destroy({ where : {asset_id : req.body.asset_id}})
     .then(assets => {
-        res.json({
-            message : 'Asset deleted successfully'
-        })
+        if(assets === 0) {
+            res.json({
+                message : 'Asset can not be deleted',
+                assets : assets
+            })
+        } else {
+            res.json({
+                message : 'Asset has been deleted'
+            })
+        }
     })
     .catch(error => {
         res.json({

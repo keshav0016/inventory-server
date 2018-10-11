@@ -3,19 +3,22 @@ const router = require('express').Router()
 
 
 function deleteConsumableHandler(req, res, next){
-    models.consumables.findOne({ where : {consumable_id : req.body.consumable_id}})
+    models.consumables.destroy({ where : {consumable_id : req.body.consumable_id}})
     .then(consumables => {
-        consumables.disable = 1;
-        return consumables.save()
-    })
-    .then(consumables => {
-        res.json({
-            message : 'Consumable disabled successfully'
-        })
+        if(consumables === 0) {
+            res.json({
+                message : 'consumable can not be deleted',
+                consumables : consumables
+            })
+        } else {
+            res.json({
+                message : 'consumable has been deleted'
+            })
+        }
     })
     .catch(error => {
         res.json({
-            error :  'Some error occurred deleting the Consumable'
+            error : 'Some error occurred deleting the consumable'
         })
     })
 }

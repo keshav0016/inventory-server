@@ -65,7 +65,6 @@ function checkAssetName(req, res, next){
         ,html : `<p>Hello ${user.first_name},<br/><br/>An Asset called <b>${assetName}</b> ${assetType} has been assigned to you. For further queries feel free to reach admin department.<br /><br />Thanks,<br />Team Admin</p>`
         }  
         return sgMail.send(msg)      
-       
     })
     .then(() => {
         res.json({
