@@ -40,8 +40,6 @@ var adminsDetails = []
 var limitDate = new Date(Number(new Date()))
 console.log('scheduler has started')
 
-
-
 // Function to send the resource request email
 function itemStatusReportEmail() {
     models.ticket.findAll({
