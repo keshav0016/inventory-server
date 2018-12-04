@@ -34,8 +34,8 @@ var employeeDetails = {};
 var repairDetails = {}
 var adminsDetails = []
 
-// var sched = later.parse.recur().every(15).second(),
-    var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
+var sched = later.parse.recur().every(5).minute(),
+    // var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
     t = later.setInterval(itemStatusReportEmail, sched);
 var limitDate = new Date(Number(new Date()))
 console.log('scheduler has started')
@@ -43,17 +43,17 @@ console.log('scheduler has started')
 // Function to send the resource request email
 function itemStatusReportEmail() {
     models.ticket.findAll({
-            include: [{
-                model: models.users,
-                attributes: ['first_name', 'last_name']
-            }],
-            where: {
-                item_type: 'consumables',
-                createdAt: {
-                    lte: limitDate
-                }
+        include: [{
+            model: models.users,
+            attributes: ['first_name', 'last_name']
+        }],
+        where: {
+            item_type: 'consumables',
+            createdAt: {
+                lte: limitDate
             }
-        })
+        }
+    })
         .then(totalConsumable => {
             consumableTickets.push(...totalConsumable);
             return models.ticket.findAll({
@@ -84,7 +84,7 @@ function itemStatusReportEmail() {
             return models.consumables_assigned.findAll({
                 include: [{
                     model: models.users,
-                    attributes: ['first_name', 'last_name']
+                    attributes: ['first_name', 'last_name'],
                 }],
                 where: {
                     createdAt: {
@@ -97,7 +97,7 @@ function itemStatusReportEmail() {
             consumablesAssignedDetails.push(...consumablesassigned)
             return models.consumables_purchased.findAll({
                 include: [{
-                    model: models.consumables
+                    model: models.consumables, required: true
                 }],
                 where: {
                     createdAt: {
@@ -175,7 +175,7 @@ function itemStatusReportEmail() {
 
                     return AssetRequests.push(
                         [
-                            `${e.user ? e.user.first_name+ "" + e.user.last_name : "Nil"}`,
+                            `${e.user ? e.user.first_name + "" + e.user.last_name : "Nil"}`,
                             `${e.ticket_number}`,
                             `${e.requested_asset_item}`,
                             `${e.asset_name}`,
@@ -205,7 +205,7 @@ function itemStatusReportEmail() {
                 consumableTickets.map(e => {
                     return ConsumableRequests.push(
                         [
-                            `${e.user ? e.user.first_name+ "" + e.user.last_name : "Nil"}`,
+                            `${e.user ? e.user.first_name + "" + e.user.last_name : "Nil"}`,
                             `${e.ticket_number}`,
                             `${e.requested_consumable_item}`,
                             `${e.quantity}`,
@@ -234,14 +234,14 @@ function itemStatusReportEmail() {
                 assetDetails.map(e => {
                     return AssetPurchaseDetails.push(
                         [`${e.asset_id}`,
-                            `${e.assetType}`,
-                            `${e.asset_name}`,
-                            `${e.category}`,
-                            `${e.amount}`,
-                            `${e.gst}`,
-                            `${e.total}`,
-                            `${e.vendor}`,
-                            `${moment(e.purchase_date).format('DD/MM/YYYY')}`
+                        `${e.assetType}`,
+                        `${e.asset_name}`,
+                        `${e.category}`,
+                        `${e.amount}`,
+                        `${e.gst}`,
+                        `${e.total}`,
+                        `${e.vendor}`,
+                        `${moment(e.purchase_date).format('DD/MM/YYYY')}`
                         ])
                 })
 
@@ -267,7 +267,7 @@ function itemStatusReportEmail() {
                 assetsAssignedDetails.map(element => {
                     return AssetAssignedDetails.push([
                         `${element.user_id}`,
-                        `${element.user ? element.user.first_name+""+ element.user.last_name : "Nil"}`,
+                        `${element.user ? element.user.first_name + "" + element.user.last_name : "Nil"}`,
                         `${element.ticket_number ? element.ticket_number : "Nil"}`,
                         `${moment(element.from).format('DD/MM/YYYY')}`,
                         // `${moment(element.expected_recovery).format('DD/MM/YYYY')}`,
@@ -387,7 +387,7 @@ function itemStatusReportEmail() {
                         `${element.name}`,
                         `${element.address}`,
                         `${element.contact}`,
-                        `${element.landline.code}-${element.landline.number}`,
+                        `${element.landline ? element.landline.code : 'Nil'}-${element.landline ? element.landline.number : 'Nil'}`,
 
                     ])
 
@@ -455,14 +455,14 @@ function itemStatusReportEmail() {
             }
             // console.log(JSON.stringify(tokenContent))
 
-
-            fs.writeFile('token.json', JSON.stringify(tokenContent), (err) => {
-                if (err) {
-                    console.log(err)
-                } else {
-                    console.log('token.json file has been created')
-                }
-            })
+            //Comment the below function after the token generation
+            // fs.writeFile('token.json', JSON.stringify(tokenContent), (err) => {
+            //     if (err) {
+            //         console.log(err)
+            //     } else {
+            //         console.log('token.json file has been created')
+            //     }
+            // })
 
             // If modifying these scopes, delete credentials.json.
             const SCOPES = ['https://www.googleapis.com/auth/drive'];
@@ -572,41 +572,41 @@ function itemStatusReportEmail() {
 
             }
             var buffer = xlsx.build([{
-                    name: 'Asset Requests',
-                    data: AssetRequests
-                },
-                {
-                    name: 'Consumable Requests',
-                    data: ConsumableRequests
-                },
-                {
-                    name: 'Asset Details',
-                    data: AssetPurchaseDetails
-                },
-                {
-                    name: 'Asset Assigned Details',
-                    data: AssetAssignedDetails
-                },
-                {
-                    name: 'Asset Repair Details',
-                    data: AssetRepairDetails
-                },
-                {
-                    name: 'Consumables Details',
-                    data: ConsumableDetails
-                },
-                {
-                    name: 'Consumables Assigned details',
-                    data: ConsumableAssignedDetails
-                },
-                {
-                    name: 'Vendors',
-                    data: VendorsList
-                },
-                {
-                    name: "Employees",
-                    data: EmployeeList
-                },
+                name: 'Asset Requests',
+                data: AssetRequests
+            },
+            {
+                name: 'Consumable Requests',
+                data: ConsumableRequests
+            },
+            {
+                name: 'Asset Details',
+                data: AssetPurchaseDetails
+            },
+            {
+                name: 'Asset Assigned Details',
+                data: AssetAssignedDetails
+            },
+            {
+                name: 'Asset Repair Details',
+                data: AssetRepairDetails
+            },
+            {
+                name: 'Consumables Details',
+                data: ConsumableDetails
+            },
+            {
+                name: 'Consumables Assigned details',
+                data: ConsumableAssignedDetails
+            },
+            {
+                name: 'Vendors',
+                data: VendorsList
+            },
+            {
+                name: "Employees",
+                data: EmployeeList
+            },
             ]);
             fs.writeFileSync('report.xlsx', buffer, 'binary');
             //google drive api to update a file  
@@ -644,10 +644,10 @@ function itemStatusReportEmail() {
                 };
 
                 drive.files.update({
-                        fileId,
-                        media,
-                        // folderId
-                    },
+                    fileId,
+                    media,
+                    // folderId
+                },
                     function (err, file) {
                         if (err) {
                             console.error(err);
