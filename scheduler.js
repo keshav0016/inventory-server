@@ -24,8 +24,8 @@ var consumableDetails = [];
 var fileId = process.env.FILE_ID
 var folderId = process.env.FOLDER_ID
 
-var sched = later.parse.recur().every(1).minute(),
-    // var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
+// var sched = later.parse.recur().every(1).minute(),
+var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
 t = later.setInterval(itemStatusReportEmail, sched);
 var limitDate = new Date(Number(new Date()))
 console.log('scheduler has started')
