@@ -1,11 +1,11 @@
-const xlsx = require('node-xlsx')
-var later = require('later');
-const sgMail = require('@sendgrid/mail');
 const fs = require('fs')
-const models = require('./models/index')
-const api = require('./config/sendGrid')
-const moment = require('moment')
 require('dotenv').config();
+var later = require('later');
+const moment = require('moment')
+const xlsx = require('node-xlsx')
+const api = require('./config/sendGrid')
+const models = require('./models/index')
+const sgMail = require('@sendgrid/mail')
 
 
 // sgMail.setApiKey(api);
@@ -15,33 +15,34 @@ var credentials = {
     redirect_uris: process.env.REDIRECT_URIS.split(",")[0]
 }
 
-var folderId = process.env.FOLDER_ID
 var filesId;
-var fileId = process.env.FILE_ID
-var assetTickets = [];
-var consumableTickets = [];
-var assetDetails = [];
-var consumableDetails = [];
-var consumablesPurchaseDetails = [];
-var consumablesAssignedDetails = [];
-var assetsAssignedDetails = [];
-var assetsRepairDetails = [];
-var allEmployeeDetails = []
-var vendorDetails = [];
-var historyAssigned = []
 var historyRepair = []
-var employeeDetails = {};
 var repairDetails = {}
-var adminsDetails = []
+var employeeDetails = {};
+var historyAssigned = []
+var consumableDetails = [];
+var fileId = process.env.FILE_ID
+var folderId = process.env.FOLDER_ID
 
-var sched = later.parse.recur().every(5).minute(),
+var sched = later.parse.recur().every(1).minute(),
     // var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
-    t = later.setInterval(itemStatusReportEmail, sched);
+t = later.setInterval(itemStatusReportEmail, sched);
 var limitDate = new Date(Number(new Date()))
 console.log('scheduler has started')
 
 // Function to send the resource request email
 function itemStatusReportEmail() {
+    var assetDetails = [];
+    var assetTickets = [];
+    var adminsDetails = [];
+    var vendorDetails = [];
+    var consumableTickets = [];
+    var allEmployeeDetails = [];
+    var assetsRepairDetails = [];
+    var assetsAssignedDetails = [];
+    var consumablesAssignedDetails = [];
+    var consumablesPurchaseDetails = [];
+
     models.ticket.findAll({
         include: [{
             model: models.users,
@@ -56,6 +57,7 @@ function itemStatusReportEmail() {
     })
         .then(totalConsumable => {
             consumableTickets.push(...totalConsumable);
+
             return models.ticket.findAll({
                 include: [{
                     model: models.users,
@@ -71,6 +73,7 @@ function itemStatusReportEmail() {
         })
         .then(assets => {
             assetTickets.push(...assets);
+
             return models.vendor.findAll({
                 where: {
                     createdAt: {
@@ -81,6 +84,7 @@ function itemStatusReportEmail() {
         })
         .then(vendor => {
             vendorDetails.push(...vendor);
+
             return models.consumables_assigned.findAll({
                 include: [{
                     model: models.users,
@@ -95,6 +99,7 @@ function itemStatusReportEmail() {
         })
         .then(consumablesassigned => {
             consumablesAssignedDetails.push(...consumablesassigned)
+
             return models.consumables_purchased.findAll({
                 include: [{
                     model: models.consumables, required: true
@@ -108,6 +113,7 @@ function itemStatusReportEmail() {
         })
         .then(consumablespurchased => {
             consumablesPurchaseDetails.push(...consumablespurchased)
+
             return models.assets.findAll({
                 where: {
                     createdAt: {
@@ -118,6 +124,7 @@ function itemStatusReportEmail() {
         })
         .then(assets => {
             assetDetails.push(...assets)
+
             return models.assets_assigned.findAll({
                 include: [{
                     model: models.users,
@@ -132,6 +139,7 @@ function itemStatusReportEmail() {
         })
         .then(assetsassigned => {
             assetsAssignedDetails.push(...assetsassigned)
+
             return models.assets_repair.findAll({
                 where: {
                     createdAt: {
@@ -142,6 +150,7 @@ function itemStatusReportEmail() {
         })
         .then(assetsrepair => {
             assetsRepairDetails.push(...assetsrepair)
+
             return models.users.scope('withoutPassword').findAll({
                 where: {
                     createdAt: {
@@ -152,6 +161,7 @@ function itemStatusReportEmail() {
         })
         .then(employeedetails => {
             allEmployeeDetails.push(...employeedetails)
+
             return models.Admin.scope('withoutPassword').findAll({
                 where: {
                     createdAt: {
@@ -196,12 +206,14 @@ function itemStatusReportEmail() {
                     ]
                 ]
             }
+
             if (consumableTickets.length !== 0) {
                 var ConsumableRequests = [
                     [
                         "User", "Ticket No", "Consumable Name", "Quantity", "Status", "Admin", "Reason"
                     ]
                 ]
+
                 consumableTickets.map(e => {
                     return ConsumableRequests.push(
                         [
@@ -225,12 +237,14 @@ function itemStatusReportEmail() {
                     ]
                 ]
             }
+
             if (assetDetails.length !== 0) {
                 var AssetPurchaseDetails = [
                     [
                         "Asset Id", "Asset Type", "Asset Name", "Category", "Amount", "GST", "Total", "Vendor name", "Purchased Date"
                     ]
                 ]
+
                 assetDetails.map(e => {
                     return AssetPurchaseDetails.push(
                         [`${e.asset_id}`,
@@ -256,6 +270,7 @@ function itemStatusReportEmail() {
                 ]
 
             }
+
             if (assetsAssignedDetails.length !== 0) {
                 var AssetAssignedDetails = [
                     [
@@ -264,6 +279,7 @@ function itemStatusReportEmail() {
 
                     ]
                 ]
+
                 assetsAssignedDetails.map(element => {
                     return AssetAssignedDetails.push([
                         `${element.user_id}`,
@@ -286,12 +302,14 @@ function itemStatusReportEmail() {
                     ]
                 ]
             }
+
             if (assetsRepairDetails.length !== 0) {
                 var AssetRepairDetails = [
                     [
                         "Asset Id", "Servicer Name", "From", "Expected Delivery", "To", "Repair Invoice", "Amount", "GST", "Total"
                     ]
                 ]
+
                 assetsRepairDetails.map(element => {
                     return AssetRepairDetails.push([
                         `${element.asset_id}`,
@@ -315,12 +333,14 @@ function itemStatusReportEmail() {
                     ]
                 ]
             }
+
             if (consumablesPurchaseDetails.length !== 0) {
                 var ConsumableDetails = [
                     [
                         'Id', 'Name', 'Purchase Quantity', 'Present Quantity', 'Vendor', 'Purchase Date', 'Individual Price', 'Collective Price', 'GST', 'Total'
                     ]
                 ]
+
                 consumablesPurchaseDetails.map(element => {
                     if (!element.user) {
                         return ConsumableDetails.push([
@@ -347,12 +367,14 @@ function itemStatusReportEmail() {
                     ]
                 ]
             }
+
             if (consumablesAssignedDetails.length !== 0) {
                 var ConsumableAssignedDetails = [
                     [
                         "Employee Id", 'Employee Name', "Assigned Quantity", "Assigned Date", "Ticket Number", "Assigned by"
                     ]
                 ]
+
                 consumablesAssignedDetails.map(element => {
                     if (element.user) {
                         return ConsumableAssignedDetails.push([
@@ -376,12 +398,14 @@ function itemStatusReportEmail() {
                     ]
                 ]
             }
+
             if (vendorDetails.length !== 0) {
                 var VendorsList = [
                     [
                         'Vendor Name', "Address", "Mobile No", "Landline No"
                     ]
                 ]
+
                 vendorDetails.map(element => {
                     return VendorsList.push([
                         `${element.name}`,
@@ -402,12 +426,14 @@ function itemStatusReportEmail() {
                     ]
                 ]
             }
+
             if (allEmployeeDetails.length !== 0) {
                 var EmployeeList = [
                     [
                         'Employee Id', 'Employee Name', "Email", "Department", "Designation", "Age", "Gender"
                     ]
                 ]
+
                 allEmployeeDetails.map(element => {
 
                     return EmployeeList.push([
@@ -433,36 +459,29 @@ function itemStatusReportEmail() {
                 ]
             }
 
-
-
-
             //google api
-
-
             const readline = require('readline');
-            const {
-                google
-            } = require('googleapis');
+            const { google } = require('googleapis');
 
             //create token.json file
 
             var tokenContent = {
-                access_token: process.env.ACCESS_TOKEN,
                 token_type: process.env.TOKEN_TYPE,
+                expiry_date: process.env.EXPIRY_DATE,
+                access_token: process.env.ACCESS_TOKEN,
                 refresh_token: process.env.REFRESH_TOKEN,
-                expiry_date: process.env.EXPIRY_DATE
 
             }
             // console.log(JSON.stringify(tokenContent))
 
             //Comment the below function after the token generation
-            // fs.writeFile('token.json', JSON.stringify(tokenContent), (err) => {
-            //     if (err) {
-            //         console.log(err)
-            //     } else {
-            //         console.log('token.json file has been created')
-            //     }
-            // })
+            fs.writeFile('token.json', JSON.stringify(tokenContent), (err) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log('token.json file has been created')
+                }
+            })
 
             // If modifying these scopes, delete credentials.json.
             const SCOPES = ['https://www.googleapis.com/auth/drive'];
@@ -484,12 +503,16 @@ function itemStatusReportEmail() {
              */
             function authorize(credentials, callback) {
                 const {
-                    client_secret,
                     client_id,
-                    redirect_uris
+                    client_secret,
+                    redirect_uris,
                 } = credentials;
+
                 const oAuth2Client = new google.auth.OAuth2(
-                    client_id, client_secret, redirect_uris);
+                    client_id,
+                    client_secret,
+                    redirect_uris
+                );
 
                 // Check if we have previously stored a token.
                 fs.readFile(TOKEN_PATH, (err, token) => {
@@ -653,6 +676,7 @@ function itemStatusReportEmail() {
                             console.error(err);
                         } else {
                             console.log('file has been updated')
+                            fs.unlinkSync('./report.xlsx')
                         }
                     })
             }
