@@ -33,6 +33,7 @@ function login(req,res,next){
                 admin.token = [newToken]
             }
             // res.cookie('token',user.token[user.token.length-1],{encode:String})
+            res.set('token', newToken);
             res.cookie('token', newToken, {encode : String, maxAge : 1000 * 60 * 15});     
             return admin.update({
                 token : admin.token
@@ -84,6 +85,7 @@ function login(req,res,next){
                 user.token = [newToken]
             }
             // res.cookie('token',user.token[user.token.length-1],{encode:String})
+            res.set('token', newToken);
             res.cookie('token', newToken, {encode : String, maxAge : 1000 * 60 * 15});     
             return user.update({
                 token : user.token
