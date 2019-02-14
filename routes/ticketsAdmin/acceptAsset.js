@@ -36,7 +36,7 @@ function acceptAssetTicketHandler(req, res){
         return ticket.save()
     })
     .then(ticket => {
-        return models.assets.findOne({ where : {asset_name : ticket.asset_name}})
+        return models.assets.findOne({ where : {asset_name : ticket.asset_name, current_status: 'Available'}})
     })
     .then(asset => {
         assetName = asset.asset_name;
