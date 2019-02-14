@@ -21,7 +21,7 @@ function createTicket(req,res){
 
     sgMail.setApiKey(api)
     const msg = {
-        to : ['deekshith.k@westagilelabs.com', 'varun@westagilelabs.com']
+        to : ['anchal.g@westagilelabs.com']
         , from : 'noreply@westagilelabs.com'
     }
 
@@ -75,8 +75,10 @@ function createTicket(req,res){
             console.log('promise stopped in middle')
         })
         .catch(error=>{
+            
             res.json({
-                error: 'ticket can not be created'
+                error: 'ticket can not be created',
+                trueError: error,
             })
         })
     }
@@ -136,7 +138,8 @@ function createTicket(req,res){
         })
         .catch(error=>{
             res.json({
-                error: 'ticket can not be created'
+                error: 'ticket can not be created',
+                trueError: error,
             })
         })
     }
