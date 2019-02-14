@@ -18,7 +18,7 @@ function acceptAssetTicketHandler(req, res){
         }else{
             admin = "Admin"
         }
-        return  models.assets.findOne({where: {asset_name: decodeURIComponent(req.body.asset)}})
+        return  models.assets.findOne({where: {asset_name: decodeURIComponent(req.body.asset), current_status: 'Available'}})
 
     })
     .then(asset => {
