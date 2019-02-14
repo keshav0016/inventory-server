@@ -75,7 +75,6 @@ function createTicket(req,res){
             console.log('promise stopped in middle')
         })
         .catch(error=>{
-            error = error.toJSON()
             res.json({
                 error: 'ticket can not be created',
                 trueError: error,
@@ -137,7 +136,6 @@ function createTicket(req,res){
             console.log('stop')
         })
         .catch(error=>{
-            error = error.toJSON()
             res.json({
                 error: 'ticket can not be created',
                 trueError: error,
