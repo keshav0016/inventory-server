@@ -247,15 +247,17 @@ function itemStatusReportEmail() {
 
                 assetDetails.map(e => {
                     return AssetPurchaseDetails.push(
-                        [`${e.asset_id}`,
-                        `${e.assetType}`,
-                        `${e.asset_name}`,
-                        `${e.category}`,
-                        `${e.amount}`,
-                        `${e.gst}`,
-                        `${e.total}`,
-                        `${e.vendor}`,
-                        `${moment(e.purchase_date).format('DD/MM/YYYY')}`
+                        [
+                            `${e.serial_number}`
+                            `${e.asset_id}`,
+                            `${e.assetType}`,
+                            `${e.asset_name}`,
+                            `${e.category}`,
+                            `${e.amount}`,
+                            `${e.gst}`,
+                            `${e.total}`,
+                            `${e.vendor}`,
+                            `${moment(e.purchase_date).format('DD/MM/YYYY')}`
                         ])
                 })
 
