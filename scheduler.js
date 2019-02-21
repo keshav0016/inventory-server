@@ -24,7 +24,7 @@ var consumableDetails = [];
 var fileId = process.env.FILE_ID
 var folderId = process.env.FOLDER_ID
 
-// var sched = later.parse.recur().every(1).minute(),
+// var sched = later.parse.recur().every(30).second(),
 var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
 t = later.setInterval(itemStatusReportEmail, sched);
 var limitDate = new Date(Number(new Date()))
@@ -275,13 +275,14 @@ function itemStatusReportEmail() {
                 var AssetAssignedDetails = [
                     [
                         // "User Id","Employee Name","Ticket Number","From","Expected Recovery","To"
-                        "User Id", "Employee Name", "Ticket Number", "From", "To", "Assigned by"
+                        "Asset Id", "User Id", "Employee Name", "Ticket Number", "From", "To", "Assigned by"
 
                     ]
                 ]
 
                 assetsAssignedDetails.map(element => {
                     return AssetAssignedDetails.push([
+                        `${element.asset_id}`,
                         `${element.user_id}`,
                         `${element.user ? element.user.first_name + "" + element.user.last_name : "Nil"}`,
                         `${element.ticket_number ? element.ticket_number : "Nil"}`,
