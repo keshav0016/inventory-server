@@ -126,10 +126,16 @@ function itemStatusReportEmail() {
             assetDetails.push(...assets)
 
             return models.assets_assigned.findAll({
-                include: [{
-                    model: models.users,
-                    attributes: ['first_name', 'last_name']
-                }],
+                include: [
+                    {
+                        model: models.users,
+                        attributes: ['first_name', 'last_name']
+                    },
+                    {
+                        model: models.assets,
+                        attributes: ['serial_number']
+                    }
+                ],
                 where: {
                     createdAt: {
                         lte: limitDate
@@ -277,7 +283,7 @@ function itemStatusReportEmail() {
                 var AssetAssignedDetails = [
                     [
                         // "User Id","Employee Name","Ticket Number","From","Expected Recovery","To"
-                        "Asset Id", "User Id", "Employee Name", "Ticket Number", "From", "To", "Assigned by"
+                        "Asset Id", "User Id", "Employee Name", "Serial number", "Ticket Number", "From", "To", "Assigned by"
 
                     ]
                 ]
@@ -287,6 +293,7 @@ function itemStatusReportEmail() {
                         `${element.asset_id}`,
                         `${element.user_id}`,
                         `${element.user ? element.user.first_name + "" + element.user.last_name : "Nil"}`,
+                        `${element.asset ? element.asset.serial_number : "Nil"}`,
                         `${element.ticket_number ? element.ticket_number : "Nil"}`,
                         `${moment(element.from).format('DD/MM/YYYY')}`,
                         // `${moment(element.expected_recovery).format('DD/MM/YYYY')}`,
