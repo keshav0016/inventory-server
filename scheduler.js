@@ -241,15 +241,15 @@ function itemStatusReportEmail() {
             if (assetDetails.length !== 0) {
                 var AssetPurchaseDetails = [
                     [
-                        "Asset Id", "Asset Type", "Asset Name", "Category", "Amount", "GST", "Total", "Vendor name", "Purchased Date"
+                        "Asset Id", "serialNumber", "Asset Type", "Asset Name", "Category", "Amount", "GST", "Total", "Vendor name", "Purchased Date"
                     ]
                 ]
 
                 assetDetails.map(e => {
                     return AssetPurchaseDetails.push(
                         [
-                            `${e.serial_number}`
                             `${e.asset_id}`,
+                            `${e.serial_number}`,
                             `${e.assetType}`,
                             `${e.asset_name}`,
                             `${e.category}`,
