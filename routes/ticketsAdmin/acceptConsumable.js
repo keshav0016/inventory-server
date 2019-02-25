@@ -27,7 +27,7 @@ function acceptConsumableTicketHandler(req, res){
     .then(consumable => {
         if(consumable.disable === 0){
                 consumableName = consumable.name;
-            if(ticketQuantity < consumable.quantity){
+            if(ticketQuantity <= consumable.quantity){
                 models.ticket.findOne({ where: {ticket_number : req.body.ticket_number}})
                 .then(ticket => {
                     ticket.status = 'Accepted'
