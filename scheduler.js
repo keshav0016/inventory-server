@@ -5,6 +5,7 @@ const moment = require('moment')
 const xlsx = require('node-xlsx')
 const api = require('./config/sendGrid')
 const models = require('./models/index')
+const { sequelize } = require('./models/index')
 const sgMail = require('@sendgrid/mail')
 
 
@@ -24,9 +25,9 @@ var consumableDetails = [];
 var fileId = process.env.FILE_ID
 var folderId = process.env.FOLDER_ID
 
-// var sched = later.parse.recur().every(30).second(),
-var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
-t = later.setInterval(itemStatusReportEmail, sched);
+var sched = later.parse.recur().every(10).second(),
+    // var sched = later.parse.recur().on('11:30:00').time().onWeekday() ,
+    t = later.setInterval(itemStatusReportEmail, sched);
 var limitDate = new Date(Number(new Date()))
 console.log('scheduler has started')
 
@@ -113,17 +114,35 @@ function itemStatusReportEmail() {
         })
         .then(consumablespurchased => {
             consumablesPurchaseDetails.push(...consumablespurchased)
+            // return models.assets.findAll({
+            //     where: {
+            //         createdAt: {
+            //             lte: limitDate
+            //         }
+            //     }
+            // })
 
-            return models.assets.findAll({
-                where: {
-                    createdAt: {
-                        lte: limitDate
-                    }
-                }
-            })
+            return sequelize.query(
+                `
+                SELECT DISTINCT ON("assets"."asset_id") "assets"."asset_id", 
+                "assets"."serial_number", 
+                "assets_assigneds"."user_id",
+                "assets"."assetType", 
+                "assets"."asset_name", 
+                "assets"."category",
+                "assets"."amount", 
+                "assets"."gst", 
+                "assets"."total",
+                "assets"."vendor", 
+                "assets"."purchase_date", 
+                "assets_assigneds"."createdAt" FROM assets LEFT OUTER JOIN assets_assigneds
+                ON "assets"."asset_id" = "assets_assigneds"."asset_id" 
+                ORDER BY "assets"."asset_id" DESC, "assets_assigneds"."createdAt" DESC;
+                `
+            )
         })
         .then(assets => {
-            assetDetails.push(...assets)
+            assetDetails.push(...assets[0])
 
             return models.assets_assigned.findAll({
                 include: [
@@ -247,7 +266,7 @@ function itemStatusReportEmail() {
             if (assetDetails.length !== 0) {
                 var AssetPurchaseDetails = [
                     [
-                        "Asset Id", "serialNumber", "Asset Type", "Asset Name", "Category", "Amount", "GST", "Total", "Vendor name", "Purchased Date"
+                        "Asset Id", "serialNumber", "User Id", "Asset Type", "Asset Name", "Category", "Amount", "GST", "Total", "Vendor name", "Purchased Date"
                     ]
                 ]
 
@@ -256,6 +275,7 @@ function itemStatusReportEmail() {
                         [
                             `${e.asset_id}`,
                             `${e.serial_number}`,
+                            `${e.user_id}`,
                             `${e.assetType}`,
                             `${e.asset_name}`,
                             `${e.category}`,
