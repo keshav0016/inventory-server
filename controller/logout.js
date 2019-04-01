@@ -7,8 +7,9 @@ const cookie =require('cookie-parser')
 // const sequelize = require('sequelize')
 
 
-function logout(req,res,next){
-    var receivedToken=req.cookies && req.cookies.token ? req.cookies.token : req.headers.token;
+function logout(req, res, next) {
+    const webApi = req.cookies && req.cookies.token
+    var receivedToken= webApi ? req.cookies.token : req.headers.token;
     models.users.findOne({ where : {user_id : req.currentUser.user_id}})
     .then(user => {
         if(user){
@@ -26,8 +27,10 @@ function logout(req,res,next){
         }
     })
     .then(user => {
-        if(user.role === 'Employee'){
-            res.clearCookie('token')
+        if (user.role === 'Employee') {
+            if (webApi) {
+                res.clearCookie('token')
+            }
             res.json({success:true})
         }else{
             user.token.forEach((singleToken, index) => {
@@ -43,8 +46,10 @@ function logout(req,res,next){
 
     })
     .then(user => {
-        res.clearCookie('token')
-        res.json({success:true})
+        if (webApi) {
+            res.clearCookie('token')
+        }
+        res.json({ success: true })
     })
     .catch(error => {
         res.json({
