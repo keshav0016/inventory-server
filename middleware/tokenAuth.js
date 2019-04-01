@@ -11,17 +11,21 @@ function tokenMiddleware(req, res, next) {
     console.log('date', req.body.date)
     console.log('quantity', req.body.quantity)
     console.log('token', req.headers.token)
-    var receivedToken=req.cookies && req.cookies.token ? req.cookies.token : req.headers.token;
+    const webApi = req.cookies && req.cookies.token
+    var receivedToken= webApi ? req.cookies.token : req.headers.token;
     if(receivedToken){
         var decodedtoken = jwt.verify(receivedToken,'lovevolleyball');
         models.users.scope('withoutPassword').findOne({ where : {user_id:decodedtoken.user_id,token :{$contains : [receivedToken]}  }})
         .then(user=>{
             if(user){
-                req.currentUser=user;
-                res.clearCookie('passwordChange')
-                res.cookie('token', receivedToken, {encode : String, maxAge : 1000 * 60 * 15});
+                req.currentUser = user;
+                if (webApi) {
+                    res.clearCookie('passwordChange')
+                    res.cookie('token', receivedToken, {encode : String, maxAge : 1000 * 60 * 15});
+                } else {
+                    res.set('token', receivedToken)
+                }
                 next()
-                
             }else{
                 res.status(403).send('Employee not found' )
             }
@@ -30,8 +34,10 @@ function tokenMiddleware(req, res, next) {
             next(error)
         })
     }
-    else{
-        res.clearCookie('passwordChange')        
+    else {
+        if (webApi) {
+            res.clearCookie('passwordChange')        
+        }
         res.status(401).send('No token found')
     }
 }

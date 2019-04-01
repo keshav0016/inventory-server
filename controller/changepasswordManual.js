@@ -3,64 +3,69 @@ const router = require('express').Router()
 const argon2 = require('argon2')
 const jwt = require('jsonwebtoken')
 
-function PasswordChange(req,res){
+function PasswordChange(req, res) {
     var hashedPassword
     var currentUser = req.currentUser
     var passwordChange = true
-    return  argon2.hash(req.body.password)
-    .then((hash) => {
-        hashedPassword =hash
-        return argon2.verify(currentUser.password, req.body.currentPassword)
-        
-    })
-    .then(match => {
-        if(match){
-            if(currentUser.user_id){
+    const webApi = req.cookies && req.cookies.token
+    return argon2.hash(req.body.password)
+        .then((hash) => {
+            hashedPassword = hash
+            return argon2.verify(currentUser.password, req.body.currentPassword)
 
-                return models.users.findOne({
-                    where: {user_id : currentUser.user_id}
-                })
-            }else if(user.email){
-                return models.Admin.findOne({
-                    where: {email : currentUser.email}
+        })
+        .then(match => {
+            if (match) {
+                if (currentUser.user_id) {
+
+                    return models.users.findOne({
+                        where: { user_id: currentUser.user_id }
+                    })
+                } else if (user.email) {
+                    return models.Admin.findOne({
+                        where: { email: currentUser.email }
+                    })
+                }
+            } else {
+                res.json({
+                    message: 'Current password is wrong'
                 })
             }
-        } else{
+        })
+        .then((user) => {
+            user.password = hashedPassword;
+            // admin.email = req.body.email;
+            return user.save()
+        })
+        .then(user => {
+            if (currentUser.email) {
+                user.token = [jwt.sign({ email: user.email }, 'lovevolleyball')]
+            } else if (currentUser.user_id) {
+                user.token = [jwt.sign({ user_id: user.user_id }, 'lovevolleyball')]
+            }
+            // res.json({message:'no need to change'})
+            return user.save()
+
+        })
+        .then(user => {
+            if (webApi) {
+                res.clearCookie('token')
+                res.cookie('passwordChange', passwordChange)
+            } else {
+                res.set('passwordChange', passwordChange)
+            }
             res.json({
-                message : 'Current password is wrong'
+                message: 'password has been changed',
+
             })
-        }
-    })
-    .then((user) => {
-        user.password = hashedPassword;
-        // admin.email = req.body.email;
-        return user.save()
-    })
-    .then(user=>{
-        if(currentUser.email){
-            user.token=[jwt.sign({ email : user.email},'lovevolleyball')]
-        }else if(currentUser.user_id){
-            user.token=[jwt.sign({ user_id : user.user_id},'lovevolleyball')]
-        }
-        // res.json({message:'no need to change'})
-        return user.save()       
-        
-    })     
-    .then(user => {
-        res.clearCookie('token')
-        res.cookie('passwordChange',passwordChange)
-        res.json({
-            message: 'password has been changed',
-            
         })
-    }) 
-    .catch(error=>{
-        res.json({
-            error : error
+        .catch(error => {
+            res.json({
+                error: error
+            })
         })
-    })
-   
+
 }
 
-router.post('/changespassword',PasswordChange)
+router.post('/changespassword', PasswordChange)
 module.exports = exports = router
