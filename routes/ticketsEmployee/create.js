@@ -14,7 +14,7 @@ function createTicket(req, res) {
     console.log('item_type', req.body.item_type)
     console.log('assetName', req.body.assetName)
     console.log('date', req.body.date)
-    console.log('quatity', req.body.quatity)
+    console.log('quantity', req.body.quantity)
     console.log('token', req.headers.token)
     var ticketObj = {
         user_id: req.currentUser.user_id,
