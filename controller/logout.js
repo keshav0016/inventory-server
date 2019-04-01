@@ -8,7 +8,7 @@ const cookie =require('cookie-parser')
 
 
 function logout(req,res,next){
-    var receivedToken=req.cookies ? req.cookies.token : req.headers.token;
+    var receivedToken=req.cookies && req.cookies.token ? req.cookies.token : req.headers.token;
     models.users.findOne({ where : {user_id : req.currentUser.user_id}})
     .then(user => {
         if(user){

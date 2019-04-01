@@ -5,7 +5,7 @@ const jwt= require('jsonwebtoken')
 
 
 function tokenMiddleware(req,res,next){
-    var receivedToken=req.cookies ? req.cookies.token : req.headers.token;
+    var receivedToken=req.cookies && req.cookies.token ? req.cookies.token : req.headers.token;
     if(receivedToken){
         var decodedtoken = jwt.verify(receivedToken,'lovevolleyball');
         models.users.scope('withoutPassword').findOne({ where : {user_id:decodedtoken.user_id,token :{$contains : [receivedToken]}  }})
