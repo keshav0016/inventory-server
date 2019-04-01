@@ -6,7 +6,7 @@ const jwt= require('jsonwebtoken')
 
 function verify(req,res,next){
     console.log('user token')
-    var token = req.cookies.token ? req.cookies.token : req.headers.token;
+    var token = req.cookies ? req.cookies.token : req.headers.token;
     if (token){
         var decodedtoken = jwt.verify(token,'lovevolleyball');
         if(decodedtoken.user_id){

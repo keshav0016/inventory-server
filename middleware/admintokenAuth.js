@@ -6,7 +6,7 @@ const jwt= require('jsonwebtoken')
 
 
 function admintokenMiddleware(req,res,next){
-    var receivedToken=req.cookies.token ? req.cookies.token : req.headers.token;
+    var receivedToken=req.cookies ? req.cookies.token : req.headers.token;
     if(receivedToken){
         var decodedtoken = jwt.verify(receivedToken,'lovevolleyball');
         if(decodedtoken.email){
