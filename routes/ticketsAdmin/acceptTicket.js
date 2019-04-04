@@ -4,7 +4,6 @@ const acceptAsset = require('./acceptAsset')
 const acceptConsumable = require('./acceptConsumable')
 
 
-
 function acceptTicketHandler(req, res, next){
     models.ticket.findOne({where : {ticket_number : req.body.ticket_number}})
     .then(ticket => {

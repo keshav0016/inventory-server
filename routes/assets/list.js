@@ -1,7 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 const Sequelize = require('sequelize')
-
+const sequelize = models.sequelize;
 
 function listAssetHandler(req, res, next){
    var page = Number(req.query.page) || 1

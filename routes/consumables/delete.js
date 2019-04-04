@@ -1,9 +1,11 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-
+const sequelize = models.sequelize;
 
 function deleteConsumableHandler(req, res, next){
-    models.consumables.destroy({ where : {consumable_id : req.body.consumable_id}})
+    return sequelize.transaction((t) => {
+        return models.consumables.destroy({ where : {consumable_id : req.body.consumable_id}, transaction: t})
+    })
     .then(consumables => {
         if(consumables === 0) {
             res.json({

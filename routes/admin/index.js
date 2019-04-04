@@ -3,7 +3,7 @@ const admintokenAuth = require('../../middleware/admintokenAuth')
 const router = require('express').Router()
 
 router.use(adminListHandler)
-router.use(admintokenAuth)
+// router.use(admintokenAuth)
 
 
 

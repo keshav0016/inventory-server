@@ -1,15 +1,19 @@
 const models = require('../../models/index');
 const router = require('express').Router();
-
+const sequelize = models.sequelize;
 
 function updateConsumableHandler(req, res, next){
-    models.consumables.findOne({ where : {consumable_id : req.body.consumable_id}})
+    return sequelize.transaction((t) => {
+        models.consumables.findOne({ where : {consumable_id : req.body.consumable_id}})
     .then(consumables => {
         consumables.consumable_id = req.body.consumable_id,
         consumables.name = req.body.name,
         consumables.quantity = req.body.quantity
         consumables.description = req.body.description
-        return consumables.save()
+        return consumables.save({
+            transaction: t,
+        })
+    })
     })
     .then(consumables => {
         res.json({

@@ -1,6 +1,6 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-
+const sequelize = models.sequelize;
 
 function repairInfoHandler(req,res,next){
     models.assets_repair.findOne({ where: {asset_id : req.query.asset_id, to : null}, include : [{model : models.assets, where : {asset_id : req.query.asset_id}}]})

@@ -1,7 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
 const db = require('../../models/index')
-const sequelize = require('sequelize')
+const sequelize = models.sequelize;
 
 
 function employeeHistoryHandler(req, res, next){
