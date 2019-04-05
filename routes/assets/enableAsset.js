@@ -4,7 +4,7 @@ const sequelize = models.sequelize;
 
 function enableAssetHandler(req, res, next) {
     return sequelize.transaction((t) => {
-        models.assets.findOne({ where: { asset_id: req.body.asset_id } })
+        return models.assets.findOne({ where: { asset_id: req.body.asset_id } })
             .then(asset => {
                 asset.disabled = 0;
                 return asset.save({

@@ -52,7 +52,7 @@ function updateVendorHandler(req, res, next) {
             })
             .then(vendor => {
                 vendor.name = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1).toLowerCase(),
-                    vendor.address = req.body.address
+                vendor.address = req.body.address
                 vendor.contact = req.body.contact
                 vendor.landline = req.body.landline
                 saveAllUserPromise.push(vendor.save({

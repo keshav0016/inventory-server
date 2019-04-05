@@ -22,9 +22,11 @@ function assignConsumableHandler(req, res, next) {
                 consumableName = consumables.name
                 var updated_quantity = consumables.quantity - req.body.quantity
                 consumables.quantity = updated_quantity
-                return consumables.save({
-                    transaction:t,
-                })
+                return consumables.save(
+                    {
+                      transaction: t,
+                    }
+                )
             })
             .then(consumables => {
                 var newConsumableAssign = models.consumables_assigned.build({
@@ -34,9 +36,11 @@ function assignConsumableHandler(req, res, next) {
                     quantity: req.body.quantity,
                     adminName: admin
                 })
-                return newConsumableAssign.save({
-                    transaction: t,
-                })
+                return newConsumableAssign.save(
+                    {
+                      transaction: t,
+                    }
+                )
             })
             .then(consumableAssign => {
                 return models.users.findOne({ where: { user_id: req.body.user_id } })

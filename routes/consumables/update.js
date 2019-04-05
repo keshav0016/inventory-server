@@ -4,7 +4,7 @@ const sequelize = models.sequelize;
 
 function updateConsumableHandler(req, res, next){
     return sequelize.transaction((t) => {
-        models.consumables.findOne({ where : {consumable_id : req.body.consumable_id}})
+        return models.consumables.findOne({ where : {consumable_id : req.body.consumable_id}})
     .then(consumables => {
         consumables.consumable_id = req.body.consumable_id,
         consumables.name = req.body.name,

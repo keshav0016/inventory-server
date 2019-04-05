@@ -6,9 +6,6 @@ function updateAssetTypeHandler(req, res, next) {
     return sequelize.transaction((t) => {
         return models.type.findOne({ where: { id: req.body.id } })
             .then(type => {
-                // type.assetType = req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1)
-                // type.maxRequest = req.body.maxRequest
-                // return type.save()
                 return type.update(
                     { 
                         maxRequest: req.body.maxRequest 

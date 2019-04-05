@@ -7,7 +7,7 @@ var previousConsumableQuantity;
 
 function updateConsumablePurchaseHandler(req, res, next) {
     return sequelize.transaction((t) => {
-        models.consumables_purchased.findOne({ where: { consumable_id: req.body.consumable_id, vendor_name: req.body.vendor_name } })
+        return models.consumables_purchased.findOne({ where: { consumable_id: req.body.consumable_id, vendor_name: req.body.vendor_name } })
             .then(consumablesPurchased => {
 
                 previousPurchasedQuantity = consumablesPurchased.quantity
@@ -27,15 +27,15 @@ function updateConsumablePurchaseHandler(req, res, next) {
                 })
             })
             .then(consumables => {
-                models.consumables.findOne({ where: { consumable_id: consumables.consumable_id } })
-                    .then(consumables => {
-                        previousConsumableQuantity = consumables.quantity
-                        consumables.quantity = previousConsumableQuantity + changeInQuantity
-                        consumables.save({
-                            transaction: t,
-                        })
-                    })
+                return models.consumables.findOne({ where: { consumable_id: consumables.consumable_id } })
 
+            })
+            .then(consumables => {
+                previousConsumableQuantity = consumables.quantity
+                consumables.quantity = previousConsumableQuantity + changeInQuantity
+                return consumables.save({
+                    transaction: t,
+                })
             })
     })
         .then(() => {

@@ -1,6 +1,5 @@
 const models = require('../../models/index');
 const router = require('express').Router();
-const sequelize = models.sequelize;
 
 function formAssignAssetHandler(req, res, next){
     var allEmployees = []
