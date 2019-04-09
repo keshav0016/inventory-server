@@ -1,12 +1,18 @@
 const models = require('../../models/index')
 const router = require('express').Router()
+const sequelize = models.sequelize;
 
 function createNewAssetTypeHandler(req, res, next){
-    var newType = models.type.build({
-        assetType : req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1).toLowerCase()
-        ,maxRequest : req.body.maxRequest
+    return sequelize.transaction((t) => {
+        var newType = models.type.build({
+            assetType : req.body.assetType.charAt(0).toUpperCase() + req.body.assetType.slice(1).toLowerCase()
+            ,maxRequest : req.body.maxRequest
+        })
+        return newType.save({
+            transaction: t,
+        })
     })
-    return newType.save()
+    
     .then(type => {
         res.json({
             message : 'New type created'

@@ -1,7 +1,7 @@
 const models = require('../../models/index')
 const router = require('express').Router()
+// const sequelize = models.sequelize;
 const Sequelize = require('sequelize')
-
 function listEmployee(req, res) {
     var page = Number(req.query.page) || 1
     var department = req.query.department || "%"

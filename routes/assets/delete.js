@@ -1,9 +1,11 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-
+const sequelize = models.sequelize;
 
 function deleteAssetHandler(req, res, next){
-    models.assets.destroy({ where : {asset_id : req.body.asset_id}})
+    return sequelize.transaction((t) => {
+        return models.assets.destroy({ where : {asset_id : req.body.asset_id}, transaction : t});
+    })
     .then(assets => {
         if(assets === 0) {
             res.json({

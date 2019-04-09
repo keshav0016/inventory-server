@@ -3,13 +3,14 @@ const router = require('express').Router()
 const sgMail = require('@sendgrid/mail');
 const api = require('../../config/sendGrid')
 //req.currentuser.user_id
-
+const sequelize = models.sequelize;
 function calculateFifteenDays(date){
 }
 
 
 //Creating a ticket
 function createTicket(req,res){
+
     var ticketObj = {
         user_id: req.currentUser.user_id,
         date: req.body.date,

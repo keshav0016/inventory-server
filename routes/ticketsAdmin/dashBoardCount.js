@@ -12,7 +12,7 @@ var repairDateNear;
 
 function dashBoardCount(req, res, next){
     var assetsPendingArray = [];
-    models.ticket.count({ where: {item_type : 'consumables', status : 'Pending'}})
+    return models.ticket.count({ where: {item_type : 'consumables', status : 'Pending'}})
     .then(pending => {
         consumablePendingCount = pending;
         return models.ticket.count({where: {item_type : 'consumables', status : 'Accepted'}})
