@@ -31,7 +31,7 @@ function createTicket(req,res){
         ticketObj.requested_consumable_item = req.body.item
         var limitDate = new Date(Number(new Date()) - (15*24*60*60*1000))
         let consumableId;
-        models.consumables.findOne({where: {name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1).toLowerCase(), quantity:{gt:0}}})
+        models.consumables.findOne({where: {name : req.body.item.charAt(0).toUpperCase() + req.body.item.slice(1), quantity:{gt:0}}})
         .then(consumable => {
             consumableId = consumable.consumable_id
             return models.ticket.findOne({where : {user_id : req.currentUser.user_id, requested_consumable_id : consumable.consumable_id, status : 'Accepted', updatedAt : {gt : limitDate}}})
