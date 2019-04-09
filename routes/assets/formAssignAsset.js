@@ -1,7 +1,6 @@
 const models = require('../../models/index');
 const router = require('express').Router();
 
-
 function formAssignAssetHandler(req, res, next){
     var allEmployees = []
     models.users.findAll({ where : {role : 'Employee' ,disable: 0}, attributes : ['user_id', 'first_name','last_name', 'department'],order:[['first_name','ASC']]})

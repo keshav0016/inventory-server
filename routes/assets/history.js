@@ -1,6 +1,6 @@
 const models = require('../../models/index')
 const router = require('express').Router()
-
+const sequelize = models.sequelize;
 
 
 function assetHistoryHandler(req, res, next){
