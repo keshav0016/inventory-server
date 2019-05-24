@@ -91,7 +91,12 @@ module.exports = (sequelize, DataTypes) => {
           sourceKey: 'user_id',
           onDelete: 'cascade',
           hooks: true
-        })
+        });
+        /**
+         * User and Visitor -> One to Many
+         */
+        users.hasMany(models.Visitor,{foreignKey: 'employeeId', sourceKey:'user_id'});
+        models.Visitor.belongsTo(users, {foreignKey: 'employeeId', targetKey:'user_id'});
       }
     }
   });
