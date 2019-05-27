@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       employeeId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       visitorName: {
         type: Sequelize.STRING
@@ -25,6 +25,9 @@ module.exports = {
       },
       approved: {
         type: Sequelize.BOOLEAN,
+      },
+      vehicleNumber: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

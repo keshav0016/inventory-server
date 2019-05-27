@@ -48,6 +48,8 @@ const qrCodeRouter = require('./routes/assets/qrCode')
 
 const qrAllRouter = require('./qrAll.js')
 
+//Reception
+const reception = require('./routes/reception');
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true
@@ -122,6 +124,8 @@ app.use('/api/assetType', assetTypeRouter)
 
 // employee tickets routes
 app.use('/api/employee/ticket', employeeTicketRouter)
+
+app.use('/api/reception', reception);
 
 app.get("*", (req,res,next)=>{
     res.sendFile(path.resolve(__dirname, './public/index.html'))
