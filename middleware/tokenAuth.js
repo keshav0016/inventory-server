@@ -5,6 +5,12 @@ const jwt= require('jsonwebtoken')
 
 
 function tokenMiddleware(req, res, next) {
+    console.log('item', req.body.item)
+    console.log('item_type', req.body.item_type)
+    console.log('assetName', req.body.assetName)
+    console.log('date', req.body.date)
+    console.log('quantity', req.body.quantity)
+    console.log('token', req.headers.token)
     const webApi = req.cookies && req.cookies.token
     var receivedToken= webApi ? req.cookies.token : req.headers.token;
     if(receivedToken){
