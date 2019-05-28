@@ -20,6 +20,18 @@ module.exports = {
       date: {
         type: Sequelize.DATE
       },
+      purpose: {
+        type: Sequelize.STRING
+      },
+      description: {
+        type: Sequelize.STRING
+      },
+      approved: {
+        type: Sequelize.BOOLEAN,
+      },
+      vehicleNumber: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

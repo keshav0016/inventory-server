@@ -14,6 +14,9 @@ const addVisitor = async (req, res, next) => {
             entryTime: req.body.entryTime,
             exitTime: req.body.exitTime,
             date: req.body.date,
+            purpose: req.body.purpose,
+            description: req.body.description,
+            vehicleNumber: req.body.vehicleNumber,
         }
         const isEmployee = await models.users.findOne({
             where: {
@@ -35,9 +38,6 @@ const addVisitor = async (req, res, next) => {
                     employeeId: req.body.employeeId,
                     visitorName: req.body.visitorName,
                     contactNumber: req.body.contactNumber,
-                    purpose: req.body.purpose,
-                    description: req.body.description,
-                    vehicleNumber: req.body.vehicleNumber
                 }
                 const visitor = await models.Visitor.create({
                     ...visitorObj,

@@ -4,13 +4,6 @@ module.exports = function(sequelize, DataTypes) {
     employeeId: DataTypes.STRING,
     visitorName: DataTypes.STRING,
     contactNumber: DataTypes.STRING,
-    purpose: DataTypes.STRING,
-    description: DataTypes.STRING,
-    vehicleNumber: DataTypes.STRING,
-    approved: {
-      type:DataTypes.BOOLEAN,
-      defaultValue: true,
-    }
   }, {
     classMethods: {
       associate: function(models) {
