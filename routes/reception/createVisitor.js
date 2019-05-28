@@ -31,6 +31,7 @@ const addVisitor = async (req, res, next) => {
             const isVisitor = await models.Visitor.findOne({
                 where: {
                     contactNumber: req.body.contactNumber,
+                    employeeId: req.body.employeeId,
                 }
             });
             if (! isVisitor) {
