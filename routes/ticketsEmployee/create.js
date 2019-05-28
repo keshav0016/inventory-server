@@ -10,12 +10,6 @@ function calculateFifteenDays(date){
 
 //Creating a ticket
 function createTicket(req, res) {
-    console.log('item', req.body.item)
-    console.log('item_type', req.body.item_type)
-    console.log('assetName', req.body.assetName)
-    console.log('date', req.body.date)
-    console.log('quantity', req.body.quantity)
-    console.log('token', req.headers.token)
     var ticketObj = {
         user_id: req.currentUser.user_id,
         date: req.body.date,
