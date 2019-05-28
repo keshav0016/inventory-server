@@ -5,6 +5,13 @@ module.exports = function(sequelize, DataTypes) {
     entryTime: DataTypes.DATE,
     exitTime: DataTypes.DATE,
     date:DataTypes.DATE,
+    purpose: DataTypes.STRING,
+    description: DataTypes.STRING,
+    vehicleNumber: DataTypes.STRING,
+    approved: {
+      type:DataTypes.BOOLEAN,
+      defaultValue: true,
+    }
   }, {
     classMethods: {
       associate: function(models) {

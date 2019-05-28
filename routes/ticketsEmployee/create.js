@@ -9,7 +9,7 @@ function calculateFifteenDays(date){
 
 
 //Creating a ticket
-function createTicket(req,res){
+function createTicket(req, res) {
     var ticketObj = {
         user_id: req.currentUser.user_id,
         date: req.body.date,

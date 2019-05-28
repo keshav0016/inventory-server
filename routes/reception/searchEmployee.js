@@ -68,8 +68,8 @@ function whereObject(name) {
 
 const searchEmployee = async (req, res, next) => {
     try {
-        let limit = req.params.limit || 10;
-        let offset = req.params.offset;
+        let limit = req.query.limit || 10;
+        let offset = req.query.offset;
         if (req.body.name) {
         const employees = await models.users.findAll({
             ...whereObject(req.body.name.split(" ")),
@@ -86,7 +86,10 @@ const searchEmployee = async (req, res, next) => {
             })
         }
         } else {
-            const employees = await models.users.findAll({});
+            const employees = await models.users.findAll({
+                offset,
+                limit,
+            });
             res.json({
                 employees,
             })

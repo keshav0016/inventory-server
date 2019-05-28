@@ -17,18 +17,7 @@ module.exports = {
       contactNumber: {
         type: Sequelize.STRING
       },
-      purpose: {
-        type: Sequelize.STRING
-      },
-      description: {
-        type: Sequelize.STRING
-      },
-      approved: {
-        type: Sequelize.BOOLEAN,
-      },
-      vehicleNumber: {
-        type: Sequelize.STRING,
-      },
+      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
