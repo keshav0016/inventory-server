@@ -75,6 +75,7 @@ const searchEmployee = async (req, res, next) => {
             ...whereObject(req.body.name.split(" ")),
             offset,
             limit,
+            attributes: ['user_id', 'first_name', 'last_name'],
         });
         if (employees.length > 0) {
             return res.json({
@@ -89,6 +90,7 @@ const searchEmployee = async (req, res, next) => {
             const employees = await models.users.findAll({
                 offset,
                 limit,
+                attributes: ['user_id', 'first_name', 'last_name'],
             });
             res.json({
                 employees,

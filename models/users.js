@@ -95,8 +95,8 @@ module.exports = (sequelize, DataTypes) => {
         /**
          * User and Visitor -> One to Many
          */
-        users.hasMany(models.Visitor,{foreignKey: 'employeeId', sourceKey:'user_id'});
-        models.Visitor.belongsTo(users, {foreignKey: 'employeeId', targetKey:'user_id'});
+        users.hasMany(models.visit,{foreignKey: 'employeeId', sourceKey:'user_id'});
+        models.visit.belongsTo(users, {foreignKey: 'employeeId', targetKey:'user_id'});
       }
     }
   });
