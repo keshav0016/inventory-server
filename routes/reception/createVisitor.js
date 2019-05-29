@@ -1,7 +1,7 @@
 const models = require('../../models');
 const sendMail = require('./visitorMail');
 /**
- * @description: Function to add records to the visitor table, add visit details and send mail to the admin.
+ * @description: Function to add new records to the visitor table, add visit details and send mail.
  * @param {request} req 
  * @param {response} res 
  * @param {next} next 
@@ -11,6 +11,7 @@ const addVisitor = async (req, res, next) => {
         transaction = await models.sequelize.transaction();
         let visitorId;
         const visitObj = {
+            employeeId: req.body.employeeId,
             entryTime: req.body.entryTime,
             exitTime: req.body.exitTime,
             date: req.body.date,
@@ -35,7 +36,6 @@ const addVisitor = async (req, res, next) => {
             });
             if (! isVisitor) {
                 const visitorObj = {
-                    employeeId: req.body.employeeId,
                     visitorName: req.body.visitorName,
                     contactNumber: req.body.contactNumber,
                 }
@@ -47,6 +47,11 @@ const addVisitor = async (req, res, next) => {
                 visitorId = visitor.id;
 
             } else {
+                if (req.body.visitorName !== isVisitor.name) {
+                    return res.json({
+                        error: `Visitor name doesn't match with the exixting phone number.`,
+                    });
+                }
                 visitorId = isVisitor.id;
             }
                 const visit = await models.visit.create({

@@ -1,6 +1,11 @@
 const sgMail = require('@sendgrid/mail');
 const api = require('../../config/sendGrid')
 
+/**
+ * @description: Send mail api for sending mail to the employee on the arrival of the visitor.
+ * @param {String} employeeEmail 
+ * @param {String} visitorName 
+ */
 const sendMail = async (employeeEmail, visitorName) => {
     try {
         const msg = {
